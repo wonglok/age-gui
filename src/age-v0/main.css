@@ -74,7 +74,7 @@
   border-radius: 8px 8px 0px 0px;
   position: relative;
   border: hsla(0, 0%, 90%, 1) solid 1px;
-  border-bottom: none;
+  /* border-bottom: none; */
   background-color: transparent;
 }
 
@@ -91,8 +91,11 @@
 }
 .win-content{
   height: calc(100% - 26px);
+  /* background: rgb(255, 255, 255); */
+  background-color: transparent;
+}
+.connectorsarea{
   background: rgb(255, 255, 255);
-  /* background-color: transparent; */
 }
 .connectors-area{
   background-color: white;
@@ -194,7 +197,7 @@
 
 .age-preview-area{
   width: calc(100%);
-  margin: 0px auto;
+  /* margin: 0px auto; */
   height: 200px;
   /* border: #ccc solid 1px; */
   /* background: linear-gradient(45deg, grey, white); */

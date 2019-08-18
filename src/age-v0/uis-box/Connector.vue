@@ -1,6 +1,6 @@
 <template>
-  <div :id="`${rID}`" class="age-connnector" :style="getStyle()" @click="onClick()" v-if="userdata" :io="userdata.io" v-drag v-drop :userdata="userdata" :drop="onDrop">
-    <div class="age-connnector-after nosel" :style="getStyle()" :io="userdata.io" v-drag v-drop :userdata="userdata" :drop="onDrop"></div>
+  <div :id="`${rID}`" class="age-connnector" :style="getStyle()" @click="onClick()" v-if="userdata" :connections="connections" :io="userdata.io" v-drag v-drop :userdata="userdata" :drop="onDrop">
+    <div class="age-connnector-after nosel" :style="getStyle()" :connections="connections" :io="userdata.io" v-drag v-drop :userdata="userdata" :drop="onDrop"></div>
     <div class="age-connnector-label nosel" :class="{ [userdata.io]: true }"  v-drag v-drop :userdata="userdata" :drop="onDrop">{{ userdata.label }}</div>
   </div>
 </template>
@@ -32,16 +32,27 @@ const DnDFactory = () => {
     return false
   }
 
-  let canDrop = ({ landData, handData }) => {
-    return landData && handData && landData.boxID !== handData.boxID && landData.io !== handData.io && landData.type === handData.type
-  }
   return () => {
     let mod = {
       drag: {
         // When the bound element is bind into the DOM...
         bind (el, binding, vnode) {
+          let connections = vnode.data.attrs.connections
           let handData = vnode.data.attrs.userdata
           let dropHandler = vnode.data.attrs.drop || (() => {})
+
+          let canDrop = ({ landData, handData }) => {
+            let noDuplicate = true
+            if (landData && handData && connections) {
+              let connected = connections.reduce((acc, item) => {
+                acc.push(item.input._id)
+                acc.push(item.output._id)
+                return acc
+              }, [])
+              noDuplicate = !connected.some(e => e === landData._id) && !connected.some(e => e === handData._id)
+            }
+            return noDuplicate && landData && handData && landData.boxID !== handData.boxID && landData.io !== handData.io && landData.type === handData.type
+          }
 
           // Focus the element
           // el.omg()
@@ -119,6 +130,7 @@ let dragServices = DnDFactory()()
 
 export default {
   props: {
+    connections: {},
     connectorDOMs: {},
     userdata: {}
   },
@@ -159,10 +171,12 @@ export default {
       }
     },
     onClick () {
-      console.log(this.userdata)
+      this.$emit('clicker', this.userdata)
+      // console.log(this.userdata)
     },
     onDrop (v) {
-      console.log(JSON.stringify(v, null, '\t'))
+      this.$emit('drop', v)
+      // console.log(JSON.stringify(v, null, '\t'))
     }
   }
 }

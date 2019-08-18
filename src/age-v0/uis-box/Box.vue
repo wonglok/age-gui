@@ -1,6 +1,6 @@
 <template>
   <div class="win-wrap" :style="getBoxLayoutStyle()" @click="focusApp">
-    <BoxDefault :win="win" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs"></BoxDefault>
+    <BoxDefault @drop="$emit('drop', $event)" @clicker="$emit('clicker', $event)" :connections="connections" :win="win" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs"></BoxDefault>
     <div class="win-resize win-box-top-left" ref="top-left"></div>
     <div class="win-resize win-box-top-right" ref="top-right"></div>
     <div class="win-resize win-box-bottom-left" ref="bottom-left"></div>
@@ -18,6 +18,7 @@ export default {
   props: {
     win: {},
     wins: {},
+    connections: {},
     previewDOMs: {},
     connectorDOMs: {}
   },
@@ -67,6 +68,8 @@ export default {
         onMM: ({ api }) => {
           this.win.pos.x += api.dX
           this.win.pos.y += api.dY
+
+          window.dispatchEvent(new Event('plot'))
         }
       })
     }
@@ -78,6 +81,7 @@ export default {
     let makeDrag = AGE.makeDrag
 
     let resize = () => {
+      window.dispatchEvent(new Event('plot'))
       window.dispatchEvent(new Event('resize'))
     }
 

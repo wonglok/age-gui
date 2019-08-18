@@ -76,6 +76,8 @@ export default {
       var height = rect.bottom - rect.top
       var left = rect.left
       var bottom = renderer.domElement.clientHeight - rect.bottom
+
+      //
       renderer.setViewport(left, bottom, width, height)
       renderer.setScissor(left, bottom, width, height)
 

@@ -1,6 +1,6 @@
 <template>
-  <div class="full noclick">
-    <canvas class="full noclick" ref="canvas"></canvas>
+  <div class="full">
+    <canvas class="full" ref="canvas"></canvas>
   </div>
 </template>
 

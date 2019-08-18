@@ -1,8 +1,8 @@
 <template>
   <div class="age-editor full scroller age-layers">
     <ConnectionLines class="age-layer" :connections="connections" :connectorDOMs="connectorDOMs"></ConnectionLines>
-    <Box class="age-layer" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
-    <PreviewArea class="age-layer noclick" :previewDOMs="previewDOMs"></PreviewArea>
+    <PreviewArea class="age-layer" :previewDOMs="previewDOMs"></PreviewArea>
+    <Box @drop="onDropConnection" @clicker="onClickConnector" class="age-layer" :connections="connections" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
     <button class="posabs top-right" @click="createWin">Create</button>
     <!-- <pre>{{ connectorDOMs }}</pre> -->
   </div>
@@ -31,6 +31,22 @@ export default {
     this.createWin()
   },
   methods: {
+    onDropConnection (v) {
+      let arr = [v.hand, v.land]
+      let stuff = {
+        [arr[0].io]: arr[0],
+        [arr[1].io]: arr[1]
+      }
+
+      this.connections.push({
+        input: stuff.input,
+        output: stuff.output
+      })
+      console.log(JSON.stringify(this.connections, null, ' '))
+    },
+    onClickConnector (v) {
+      console.log(JSON.stringify(v, null, ' '))
+    },
     createWin () {
       let win = AGE.getWin()
       win.title = 'happy'
