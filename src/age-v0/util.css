@@ -73,6 +73,11 @@ body, html {
   position: absolute;
 }
 
+.top-right{
+  top: 20px;
+  right: 20px;
+}
+
 .space-between{
   display: flex;
   justify-content: space-between;
@@ -103,3 +108,13 @@ body, html {
 .max100{
   max-width: 100%;
 }
+
+.scroller{
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.restrict-flow{
+  overflow: hidden;
+}
+

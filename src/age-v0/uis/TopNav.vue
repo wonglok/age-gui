@@ -2,7 +2,7 @@
   <div class="navbar-top">
     <div class="padbox space-between">
       <div>
-        <div class="nav-top-item click">Assisted Graphics Engineering</div>
+        <div class="nav-top-item click">Assisted Graphics Editing</div>
         <div class="nav-top-item click">Get Started</div>
         <div class="nav-top-item click">Github</div>
       </div>

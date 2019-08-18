@@ -31,6 +31,7 @@
 
 
 .full-menu{
+  position: fixed;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -52,16 +53,6 @@
   text-align: center;
 }
 
-.scroller{
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.restrict-flow{
-  overflow: hidden;
-}
-
-
 .age-hero{
   background-color: hsl(133, 51%, 47%);
   height: 500px;
@@ -71,3 +62,64 @@
   justify-content: center;
 }
 
+.win-title{
+  cursor: grab;
+  padding-left: 6px;
+  padding-right: 6px;
+  width: calc(100% - 6px * 2);
+  font-size: 12px;
+  line-height: 26px;
+  height: 26px;
+  background: rgb(170, 170, 170);
+}
+.win-content{
+  height: calc(100% - 26px);
+  background: rgb(207, 207, 207);
+}
+.win-box{
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+}
+.win-wrap{
+  position: relative;
+}
+.win-resize{
+  opacity: 0;
+  border-radius: 8px;
+  width: 12px;
+  height: 12px;
+  background-color: rgba(43, 43, 43, 0.74);
+  transition: opacity 0.3s;
+  border: white solid 1px;
+}
+.win-resize:hover{
+  cursor: grab;
+  opacity: 1;
+}
+.win-box-top-left{
+  position: absolute;
+  top: -6px;
+  left: -6px;
+}
+.win-box-top-right{
+  position: absolute;
+  top: -6px;
+  right: -6px;
+}
+.win-box-bottom-left{
+  position: absolute;
+  bottom: -6px;
+  left: -6px;
+}
+.win-box-bottom-right{
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+}
+
+.dndot{
+  width: 50px;
+  height: 50px;
+  background-color: rgb(161, 125, 125);
+}
