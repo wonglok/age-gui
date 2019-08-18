@@ -1,7 +1,8 @@
 <template>
   <div class="age-editor full scroller age-layers">
     <ConnectionLines class="age-layer" :connections="connections" :connectorDOMs="connectorDOMs"></ConnectionLines>
-    <Box :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
+    <PreviewArea :previewDOMs="previewDOMs"></PreviewArea>
+    <Box :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
     <button class="posabs top-right" @click="createWin">Create</button>
     <!-- <pre>{{ connectorDOMs }}</pre> -->
   </div>
@@ -12,11 +13,13 @@ import * as AGE from '../api/age'
 
 export default {
   components: {
+    PreviewArea: require('../uis/PreviewArea.vue').default,
     ConnectionLines: require('../uis-box/ConnectionLines.vue').default,
     Box: require('../uis-box/Box.vue').default
   },
   data () {
     return {
+      previewDOMs: [],
       connectorDOMs: [],
       connections: [],
       wins: []
@@ -33,7 +36,6 @@ export default {
       win.title = 'happy'
       win.type = 'statement'
       win.pos.w = 300
-      win.pos.h = 150
 
       win.inputs.push(
         AGE.getIO({ boxID: win._id, io: 'input', type: 'sampler2D', label: 'mapTexture' }),
@@ -50,6 +52,7 @@ export default {
       )
 
       this.wins.push(win)
+      win.pos.h = 150
       win.pos.y = (this.wins.length - 1) * (win.pos.h + 10)
       win.pos.x = (this.wins.length - 1) * (win.pos.w + 10)
     }

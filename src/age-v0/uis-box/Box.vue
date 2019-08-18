@@ -1,6 +1,6 @@
 <template>
   <div class="win-wrap" :style="getBoxLayoutStyle()" @click="focusApp">
-    <BoxDefault :connectorDOMs="connectorDOMs"></BoxDefault>
+    <BoxDefault :win="win" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs"></BoxDefault>
     <div class="win-resize win-box-top-left" ref="top-left"></div>
     <div class="win-resize win-box-top-right" ref="top-right"></div>
     <div class="win-resize win-box-bottom-left" ref="bottom-left"></div>
@@ -18,6 +18,7 @@ export default {
   props: {
     win: {},
     wins: {},
+    previewDOMs: {},
     connectorDOMs: {}
   },
   data () {
@@ -76,6 +77,10 @@ export default {
 
     let makeDrag = AGE.makeDrag
 
+    let resize = () => {
+      window.dispatchEvent(new Event('resize'))
+    }
+
     makeDrag({
       dom: this.$refs['top-left'],
       onMM: ({ api }) => {
@@ -90,6 +95,7 @@ export default {
         if (this.win.pos.h < 100) {
           this.win.pos.h = 100
         }
+        resize()
       }
     })
 
@@ -107,6 +113,7 @@ export default {
         if (this.win.pos.h < 100) {
           this.win.pos.h = 100
         }
+        resize()
       }
     })
 
@@ -124,6 +131,7 @@ export default {
         if (this.win.pos.h < 100) {
           this.win.pos.h = 100
         }
+        resize()
       }
     })
 
@@ -141,6 +149,7 @@ export default {
         if (this.win.pos.h < 100) {
           this.win.pos.h = 100
         }
+        resize()
       }
     })
   }

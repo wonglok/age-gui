@@ -1,5 +1,18 @@
 // import Vue from 'vue'
 
+export const getDOM = async ({ domID }) => {
+  return new Promise((resolve) => {
+    let tout = 0
+    tout = setInterval(() => {
+      let val = document.getElementById(domID)
+      if (val) {
+        resolve(val)
+        clearTimeout(tout)
+      }
+    })
+  })
+}
+
 export const getID = () => {
   return `_${Number(100000000 * Math.random()).toFixed(0)}_`
 }

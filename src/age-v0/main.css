@@ -65,6 +65,7 @@
 /* ---------------------- EDITOR ----------------- */
 
 .age-editor{
+  overflow: hidden;
   background-color: #F5F5F5;
 }
 
@@ -73,6 +74,7 @@
   border-radius: 8px;
   position: relative;
   border: hsla(0, 0%, 90%, 1) solid 1px;
+  background-color: transparent;
 }
 
 .win-title{
@@ -88,9 +90,12 @@
 }
 .win-content{
   height: calc(100% - 26px);
-  background: rgb(255, 255, 255);
+  /* background: rgb(255, 255, 255); */
+  /* background-color: transparent; */
 }
-
+.connectors-area{
+  background-color: white;
+}
 .win-wrap{
   position: relative;
 }
@@ -187,8 +192,9 @@
 }
 
 .age-preview-area{
-  width: calc(100% - 20px * 2);
+  width: calc(100%);
   margin: 0px auto;
   height: 200px;
-  background: linear-gradient(45deg, grey, white);
+  /* border: #ccc solid 1px; */
+  /* background: linear-gradient(45deg, grey, white); */
 }

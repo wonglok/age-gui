@@ -12,7 +12,7 @@
     </div>
     <!-- OMG -->
     <div class="win-content" ref="win-content">
-      <div class="space-between">
+      <div class="space-between connectors-area" ref="connectorsarea">
         <div class="flex-list age-connector-list">
           <Connector :connectorDOMs="connectorDOMs" class="age-input" :key="input._id" v-for="input in $parent.win.inputs" :userdata="input"></Connector>
         </div>
@@ -24,21 +24,30 @@
         </div>
       </div>
       <div class="center">
-        <div class="age-preview-area"></div>
+        <PreviewRect :win="win" :previewDOMs="previewDOMs"></PreviewRect>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// import * as AGE from '../api/age'
 export default {
   props: {
+    win: {},
+    previewDOMs: {},
     connectorDOMs: {}
   },
   components: {
+    PreviewRect: require('./PreviewRect.vue').default,
     Connector: require('./Connector.vue').default
   },
+  data () {
+    return {
+    }
+  },
   mounted () {
+    this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 200 + 26
     this.$parent.setupSubCompo({ subCompo: this })
   }
 }
