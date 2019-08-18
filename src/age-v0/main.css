@@ -1,0 +1,73 @@
+.navbar-top{
+  width: 100%;
+  height: 56px;
+  line-height: 56px;
+  position: fixed;
+  top: 0px;
+  background-color: white;
+  box-shadow: 0px 0px 20px 0px rgb(174, 230, 172);
+}
+
+.contentbox{
+  margin-top: 56px;
+  width: 100%;
+  height: calc(100% - 56px);
+}
+
+.nav-top-item{
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 25px;
+}
+
+.nav-top-item:hover{
+  text-decoration: underline;
+}
+
+.nav-top-item.last{
+  margin-right: 0px;
+}
+
+
+.full-menu{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.full-menu-close{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.full-menu-taller{
+  height: 70px;
+}
+.full-menu-item{
+  height: 72px;
+  line-height: 72px;
+  text-align: center;
+}
+
+.scroller{
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.restrict-flow{
+  overflow: hidden;
+}
+
+
+.age-hero{
+  background-color: hsl(133, 51%, 47%);
+  height: 500px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
