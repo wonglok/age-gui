@@ -37,8 +37,8 @@ export default {
     let camera = this.group.camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
     camera.position.z = 16
     var controls = new THREE.OrbitControls(camera, dom)
-    controls.minDistance = 2
-    controls.maxDistance = 5
+    controls.minDistance = 0
+    controls.maxDistance = 16
     controls.enablePan = false
     controls.enableZoom = false
 
@@ -55,7 +55,14 @@ export default {
     light.position.set(1, 1, 1)
     scene.add(light)
 
+    window.addEventListener('resize', () => {
+      let size = dom.getBoundingClientRect()
+      camera.aspect = size.width / size.height
+      camera.updateProjectionMatrix()
+    })
+
     this.group.render = ({ renderer }) => {
+      controls.update()
       scene.children[0].rotation.y += 0.01
       let rect = dom.getBoundingClientRect()
 
