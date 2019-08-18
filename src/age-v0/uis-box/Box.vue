@@ -1,13 +1,6 @@
 <template>
-  <div class="win-wrap" :style="getStyle()" @click="focusApp">
-    <div class="win-box full">
-      <div class="win-title nosel" ref="win-title">
-        123
-      </div>
-      <div class="win-content" ref="win-content">
-        <DDDot v-if="ready" :userdata="{ _id: omg, val: omg }"></DDDot>
-      </div>
-    </div>
+  <div class="win-wrap" :style="getBoxLayoutStyle()" @click="focusApp">
+    <BoxDefault :connectorDOMs="connectorDOMs"></BoxDefault>
     <div class="win-resize win-box-top-left" ref="top-left"></div>
     <div class="win-resize win-box-top-right" ref="top-right"></div>
     <div class="win-resize win-box-bottom-left" ref="bottom-left"></div>
@@ -20,11 +13,12 @@ import * as AGE from '../api/age'
 
 export default {
   components: {
-    DDDot: require('./DDDot.vue').default
+    BoxDefault: require('./BoxDefault.vue').default
   },
   props: {
     win: {},
-    wins: {}
+    wins: {},
+    connectorDOMs: {}
   },
   data () {
     return {
@@ -33,10 +27,27 @@ export default {
     }
   },
   methods: {
+    // { _id: omg, val: omg, io: 'input', type: 'sampler2D', label: 'vec4' }
     focusApp () {
       AGE.focusApp({ wins: this.wins, win: this.win })
     },
-    getStyle () {
+    getTitleStyle () {
+      let types = {
+        statement: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
+        uniform: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
+        attribute: `linear-gradient(251deg, rgba(255,192,192,0.72) 9%, #FF1B1B 100%)`,
+        varying: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
+        function: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`,
+        default: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`
+      }
+      // console.log(types[this.win.type])
+      return {
+        color: 'white',
+        textShadow: 'rgb(37, 37, 37) 0px 0px 3px',
+        backgroundImage: types[this.win.type] || ''
+      }
+    },
+    getBoxLayoutStyle () {
       return {
         position: 'absolute',
         top: '0px',
@@ -47,6 +58,16 @@ export default {
         minWidth: `calc(100px)`,
         transform: `translate3d(${this.win.pos.x}px, ${this.win.pos.y}px, 1px)`
       }
+    },
+    setupSubCompo ({ subCompo }) {
+      let makeDrag = AGE.makeDrag
+      makeDrag({
+        dom: subCompo.$refs['win-title'],
+        onMM: ({ api }) => {
+          this.win.pos.x += api.dX
+          this.win.pos.y += api.dY
+        }
+      })
     }
   },
   mounted () {
@@ -54,14 +75,6 @@ export default {
     this.ready = true
 
     let makeDrag = AGE.makeDrag
-
-    makeDrag({
-      dom: this.$refs['win-title'],
-      onMM: ({ api }) => {
-        this.win.pos.x += api.dX
-        this.win.pos.y += api.dY
-      }
-    })
 
     makeDrag({
       dom: this.$refs['top-left'],

@@ -1,21 +1,55 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 
 export const getID = () => {
-  return `_${Number(100000000 * Math.random()).toFixed(0)}`
+  return `_${Number(100000000 * Math.random()).toFixed(0)}_`
+}
+
+/*
+win.inputs.push(
+  AGE.getIO({ boxID: win._id, io: 'input', type: 'sampler2D', label: 'Happy' }),
+  AGE.getIO({ boxID: win._id, io: 'input', type: 'float', label: 'Happy' }),
+  AGE.getIO({ boxID: win._id, io: 'input', type: 'vec3', label: 'Happy' }),
+  AGE.getIO({ boxID: win._id, io: 'input', type: 'mat3', label: 'Happy' })
+)
+
+win.outputs.push(
+  AGE.getIO({ boxID: win._id, io: 'output', type: 'sampler2D', label: 'Happy' }),
+  AGE.getIO({ boxID: win._id, io: 'output', type: 'float', label: 'Happy' }),
+  AGE.getIO({ boxID: win._id, io: 'output', type: 'vec3', label: 'Happy' }),
+  AGE.getIO({ boxID: win._id, io: 'output', type: 'mat3', label: 'Happy' })
+)
+*/
+
+export const getIO = ({ boxID, io = 'output', type = 'sampler2D', label = 'Happy' }) => {
+  return {
+    _id: getID(),
+    boxID,
+    io,
+    type,
+    label
+  }
 }
 
 export const getWin = () => {
   return {
     _id: getID(),
+    title: '',
+    type: '',
     transition: '',
     order: 0,
     pos: {
       x: 0,
       y: 0,
-      w: 400,
-      h: 300,
+      w: 150,
+      h: 100,
       s: 1
-    }
+    },
+    inputs: [
+
+    ],
+    outputs: [
+
+    ]
   }
 }
 
@@ -146,94 +180,154 @@ export const makeDrag = ({ dom, onMM = () => {}, onDown = () => {}, onUp = () =>
   window.addEventListener('touchcancel', mod.onTE, false)
 }
 
-export const DnDFactory = () => {
-  let hand = new Vue({})
-  let indicator = document.createElement('div')
-  indicator.style.display = 'none'
-  document.body.appendChild(indicator)
+// export const DnDFactory = () => {
+// /*
+// <template>
+//   <div class="dndot" @click="onClick()" v-if="userdata" v-dragme v-dropme :userdata="userdata" :drop="onDrop">
+//     123123
+//   </div>
+// </template>
 
-  return () => {
-    let mod = {
-      dragme: {
-        // When the bound element is bind into the DOM...
-        bind (el, binding, vnode) {
-          let data = vnode.data.attrs.userdata
-          console.log(data)
-          // Focus the element
-          // el.omg()
-          let sent = false
-          makeDrag({
-            dom: el,
-            onDown: ({ api }) => {
-              sent = false
-              indicator.style.display = 'block'
-              indicator.style.opacity = '0'
-              indicator.style.transform = `translate3d(${api.pageX}px, ${30 + api.pageY}px, 0px)`
-              indicator.style.backgroundColor = 'white'
-              indicator.style.zIndex = '100000000'
-              indicator.style.position = 'fixed'
-              indicator.style.top = '0'
-              indicator.style.left = '0'
-              indicator.style.fontFamily = `'Avenir', Helvetica, Arial, sans-serif`
-              indicator.style.padding = '10px'
-              indicator.style.borderRadius = '10px'
-              indicator.style.boxShadow = `0px 0px 10px 0px grey`
-              indicator.innerHTML = el.innerHTML
-              indicator.style.transition = ''
-              indicator.style.userSelect = 'none'
-            },
-            onMM: ({ api }) => {
-              indicator.style.opacity = '1'
-              indicator.style.transform = `translate3d(${api.pageX}px, ${30 + api.pageY}px, 0px)`
-              let rect = indicator.getBoundingClientRect()
-              hand.x = rect.left - 30
-              hand.y = rect.top - 30
-              hand.data = data
-            },
-            onUp: ({ api, ev }) => {
-              indicator.display = 'none'
-              let hoverAt = document.elementFromPoint(api.pageX, api.pageY)
-              indicator.style.opacity = '0'
-              indicator.style.transform = ''
-              indicator.style.userSelect = ''
-              if (!sent) {
-                hand.$emit('send', { hoverAt, handdata: data })
-                sent = true
-              }
-            }
-          })
-        }
-      },
-      dropme: {
-        // When the bound element is bind into the DOM...
-        bind (el, binding, vnode) {
-          let dropHandler = vnode.data.attrs.drop || (() => {})
-          let userdata = vnode.data.attrs.userdata
+// <script>
+// import * as AGE from '../api/age'
+// let directive = AGE.DnDFactory()()
 
-          hand.$on('send', ({ hoverAt, handdata }) => {
-            if (hoverAt === el || el.contains(hoverAt) || hoverAt.contains(el)) {
-              if (JSON.stringify(handdata) !== JSON.stringify(userdata)) {
-                console.log('-----found dropzone')
-                console.log('-----drop data', userdata)
-                console.log('-----hand data', handdata)
-                dropHandler({ hand: handdata, land: userdata })
-              }
-            }
-          })
+// export default {
+//   props: {
+//     userdata: {}
+//   },
+//   directives: {
+//     ...directive
+//   },
+//   data () {
+//     return {
+//     }
+//   },
+//   methods: {
+//     onClick () {
+//       console.log(this.userdata)
+//     },
+//     onDrop (v) {
+//       console.log(v)
+//     }
+//   }
+// }
+// </script>
 
-          // el.addEventListener('mouseover', () => {
-          //   let rect = el.getBoundingClientRect()
-          //   let { x, y } = hand
-          //   console.log(el)
+// <style>
 
-          //   if (x >= rect.left && x <= (rect.left + rect.width) && y <= (rect.top + rect.height) && y >= rect.top) {
-          //     dropHandler({ hand: hand.data, land: userdata })
-          //   }
-          //   console.log(x >= rect.left, x <= (rect.left + rect.width), y <= (rect.top + rect.height), y >= rect.top)
-          // })
-        }
-      }
-    }
-    return mod
-  }
-}
+// </style>
+//   */
+//   let hand = new Vue({})
+//   let indicator = document.createElement('div')
+//   indicator.style.display = 'none'
+//   document.body.appendChild(indicator)
+
+//   return () => {
+//     let mod = {
+//       dragme: {
+//         // When the bound element is bind into the DOM...
+//         bind (el, binding, vnode) {
+//           let data = vnode.data.attrs.userdata
+//           console.log(data)
+//           // Focus the element
+//           // el.omg()
+//           let sent = false
+//           makeDrag({
+//             dom: el,
+//             onDown: ({ api }) => {
+//               sent = false
+//               indicator.style.display = 'block'
+//               indicator.style.opacity = '0'
+//               indicator.style.transform = `translate3d(${api.pageX}px, ${30 + api.pageY}px, 0px)`
+//               indicator.style.backgroundColor = 'white'
+//               indicator.style.zIndex = '100000000'
+//               indicator.style.position = 'fixed'
+//               indicator.style.top = '0'
+//               indicator.style.left = '0'
+//               indicator.style.fontFamily = `'Avenir', Helvetica, Arial, sans-serif`
+//               indicator.style.padding = '10px'
+//               indicator.style.borderRadius = '10px'
+//               indicator.style.boxShadow = `0px 0px 10px 0px grey`
+//               indicator.innerText = data.label || ''
+//               indicator.style.transition = ''
+//               indicator.style.userSelect = 'none'
+//             },
+//             onMM: ({ api }) => {
+//               indicator.style.opacity = '1'
+//               indicator.style.transform = `translate3d(${api.pageX}px, ${30 + api.pageY}px, 0px)`
+//               let rect = indicator.getBoundingClientRect()
+
+//               let hoverAt = document.elementFromPoint(api.pageX, api.pageY)
+//               if (hoverAt) {
+//                 let json = hoverAt.getAttribute('json')
+//                 if (json) {
+//                   try {
+//                     json = JSON.parse(json)
+//                   } catch (e) {
+//                     json = false
+//                   }
+//                 } else {
+//                   json = false
+//                 }
+//                 if (json && JSON.stringify(json) !== JSON.stringify(data) && json._id !== data._id) {
+//                   indicator.style.backgroundColor = 'lime'
+//                   hand.canDrop = true
+//                 } else {
+//                   indicator.style.backgroundColor = 'white'
+//                   hand.canDrop = false
+//                 }
+//               }
+
+//               hand.x = rect.left - 30
+//               hand.y = rect.top - 30
+//               hand.data = data
+//             },
+//             onUp: ({ api, ev }) => {
+//               indicator.display = 'none'
+//               let hoverAt = document.elementFromPoint(api.pageX, api.pageY)
+//               indicator.style.opacity = '0'
+//               indicator.style.transform = ''
+//               indicator.style.userSelect = ''
+//               if (!sent && hand.canDrop) {
+//                 hand.$emit('send', { hoverAt, handdata: data })
+//                 sent = true
+//               }
+//             }
+//           })
+//         }
+//       },
+//       dropme: {
+//         // When the bound element is bind into the DOM...
+//         bind (el, binding, vnode) {
+//           let dropHandler = vnode.data.attrs.drop || (() => {})
+//           let userdata = vnode.data.attrs.userdata
+//           el.setAttribute('json', JSON.stringify(userdata))
+
+//           hand.$on('send', ({ hoverAt, handdata }) => {
+//             if (hoverAt === el || el.contains(hoverAt) || hoverAt.contains(el)) {
+//               if (JSON.stringify(handdata) !== JSON.stringify(userdata)) {
+//                 console.log('-----found dropzone')
+//                 console.log('-----drop data', userdata)
+//                 console.log('-----hand data', handdata)
+//                 dropHandler({ hand: handdata, land: userdata })
+//               }
+//             }
+//           })
+
+//           // el.addEventListener('mouseover', () => {
+//           //   let rect = el.getBoundingClientRect()
+//           //   let { x, y } = hand
+//           //   console.log(el)
+
+//           //   if (x >= rect.left && x <= (rect.left + rect.width) && y <= (rect.top + rect.height) && y >= rect.top) {
+//           //     dropHandler({ hand: hand.data, land: userdata })
+//           //   }
+//           //   console.log(x >= rect.left, x <= (rect.left + rect.width), y <= (rect.top + rect.height), y >= rect.top)
+//           // })
+//         }
+//       }
+//     }
+//     return mod
+//   }
+// }

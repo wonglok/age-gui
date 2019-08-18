@@ -10,10 +10,10 @@ export default new Router({
     {
       path: '/',
       // component: () => import(/* webpackChunkName: "landing" */ './views/Home.vue')
-      redirect: '/app-v0'
+      redirect: '/v0'
     },
     {
-      path: '/app-v0',
+      path: '/v0',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
@@ -28,7 +28,7 @@ export default new Router({
           component: () => import(/* webpackChunkName: "application" */ './age-v0/pages/Landing.vue')
         },
         {
-          path: 'age-editor',
+          path: 'age',
           component: () => import(/* webpackChunkName: "application" */ './age-v0/pages/AgeEditor.vue')
         }
       ]

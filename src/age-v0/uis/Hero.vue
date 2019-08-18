@@ -5,7 +5,7 @@
         Graphics Code (GLSL) is hard to guess.
       </h1>
       <h2>
-        We make it more Visual.
+        <router-link to="/v0/age">We make it more Visual.</router-link>
       </h2>
     </div>
     <div>

@@ -62,25 +62,35 @@
   justify-content: center;
 }
 
+/* ---------------------- EDITOR ----------------- */
+
+.age-editor{
+  background-color: #F5F5F5;
+}
+
+.win-box{
+  overflow: hidden;
+  border-radius: 8px;
+  position: relative;
+  border: hsla(0, 0%, 90%, 1) solid 1px;
+}
+
 .win-title{
   cursor: grab;
   padding-left: 6px;
   padding-right: 6px;
   width: calc(100% - 6px * 2);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 26px;
   height: 26px;
-  background: rgb(170, 170, 170);
+  text-shadow: rgba(0, 0, 0, 0.5) 0px 2px 3px;
+  background-color: rgb(170, 170, 170);
 }
 .win-content{
   height: calc(100% - 26px);
-  background: rgb(207, 207, 207);
+  background: rgb(255, 255, 255);
 }
-.win-box{
-  overflow: hidden;
-  border-radius: 8px;
-  position: relative;
-}
+
 .win-wrap{
   position: relative;
 }
@@ -118,8 +128,67 @@
   right: -6px;
 }
 
-.dndot{
-  width: 50px;
-  height: 50px;
-  background-color: rgb(161, 125, 125);
+.age-gear{
+  border-radius: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+
+/* ---------------------- Connectors ----------------- */
+
+.age-connector-list .age-connnector:first-child{
+  margin-top: 10px;
+}
+.age-connector-list .age-connnector.age-input{
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+.age-connector-list .age-connnector.age-output{
+  margin-bottom: 10px;
+  margin-right: 14px;
+}
+
+.age-connnector{
+  display: inline-block;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  background-color: rgb(199, 199, 199);
+  cursor: pointer;
+}
+.age-connnector-after{
+  pointer-events: none;
+  cursor: pointer;
+  content: '';
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 16px;
+  height: 16px;
+  background-color: rgb(199, 199, 199);
+  -webkit-transform: rotate(45deg) scale(0.8);
+  transform: translateX(7px) rotate(45deg) scale(0.7);
+}
+.age-connnector-label{
+  font-size: 14px;
+}
+.age-connnector-label.input{
+  position: absolute;
+  top: 0px;
+  left: 30px;
+}
+
+.age-connnector-label.output{
+  position: absolute;
+  top: 0px;
+  right: 20px;
+}
+
+.age-preview-area{
+  width: calc(100% - 20px * 2);
+  margin: 0px auto;
+  height: 200px;
+  background: linear-gradient(45deg, grey, white);
 }
