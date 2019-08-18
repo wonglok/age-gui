@@ -60,6 +60,7 @@ export default {
       camera.aspect = size.width / size.height
       camera.updateProjectionMatrix()
     })
+    scene.background = new THREE.Color('rgb(192,223,255)')
 
     this.group.render = ({ renderer }) => {
       controls.update()

@@ -71,9 +71,10 @@
 
 .win-box{
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 8px 8px 0px 0px;
   position: relative;
   border: hsla(0, 0%, 90%, 1) solid 1px;
+  border-bottom: none;
   background-color: transparent;
 }
 
@@ -90,7 +91,7 @@
 }
 .win-content{
   height: calc(100% - 26px);
-  /* background: rgb(255, 255, 255); */
+  background: rgb(255, 255, 255);
   /* background-color: transparent; */
 }
 .connectors-area{

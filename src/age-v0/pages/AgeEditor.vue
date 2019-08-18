@@ -1,8 +1,8 @@
 <template>
   <div class="age-editor full scroller age-layers">
     <ConnectionLines class="age-layer" :connections="connections" :connectorDOMs="connectorDOMs"></ConnectionLines>
-    <PreviewArea :previewDOMs="previewDOMs"></PreviewArea>
-    <Box :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
+    <Box class="age-layer" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
+    <PreviewArea class="age-layer noclick" :previewDOMs="previewDOMs"></PreviewArea>
     <button class="posabs top-right" @click="createWin">Create</button>
     <!-- <pre>{{ connectorDOMs }}</pre> -->
   </div>

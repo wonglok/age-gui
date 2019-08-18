@@ -12,7 +12,7 @@
     </div>
     <!-- OMG -->
     <div class="win-content" ref="win-content">
-      <div class="space-between connectors-area" ref="connectorsarea">
+      <div class="space-between" ref="connectorsarea">
         <div class="flex-list age-connector-list">
           <Connector :connectorDOMs="connectorDOMs" class="age-input" :key="input._id" v-for="input in $parent.win.inputs" :userdata="input"></Connector>
         </div>
@@ -23,9 +23,10 @@
           <Connector :connectorDOMs="connectorDOMs" class="age-output" :key="output._id" v-for="output in $parent.win.outputs" :userdata="output"></Connector>
         </div>
       </div>
-      <div class="center">
-        <PreviewRect :win="win" :previewDOMs="previewDOMs"></PreviewRect>
-      </div>
+    </div>
+
+    <div class="center">
+      <PreviewRect :win="win" :previewDOMs="previewDOMs"></PreviewRect>
     </div>
   </div>
 </template>
@@ -47,7 +48,7 @@ export default {
     }
   },
   mounted () {
-    this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 200 + 26
+    this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 26
     this.$parent.setupSubCompo({ subCompo: this })
   }
 }
