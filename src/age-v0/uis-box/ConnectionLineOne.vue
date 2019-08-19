@@ -1,9 +1,28 @@
 <template>
-  <path fill="none" stroke="black" stroke-linecap="round" v-if="path" :d="path" />
+  <g v-if="connection.input.type === 'vec3'">
+    <path :fill="'transparent'" stroke-width="1" :stroke="getStroke('r')" stroke-linecap="round" v-if="path" :d="path" />
+    <path style="transform: translateY(3px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('g')" stroke-linecap="round" v-if="path" :d="path" />
+    <path style="transform: translateY(-3px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('b')" stroke-linecap="round" v-if="path" :d="path" />
+  </g>
+  <g v-else-if="connection.input.type === 'vec2'">
+    <path style="transform: translateY(2px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke()" stroke-linecap="round" v-if="path" :d="path" />
+    <path style="transform: translateY(-2px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke()" stroke-linecap="round" v-if="path" :d="path" />
+  </g>
+  <g v-else-if="connection.input.type === 'mat4'">
+    <!-- <path :fill="'transparent'" stroke-width="1" :stroke="getStroke('r')" stroke-linecap="round" v-if="path" :d="path" /> -->
+    <path style="transform: translateY(-4px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('r')" stroke-linecap="round" v-if="path" :d="path" />
+    <path style="transform: translateY(-2px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('g')" stroke-linecap="round" v-if="path" :d="path" />
+    <path style="transform: translateY(1px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('b')" stroke-linecap="round" v-if="path" :d="path" />
+    <path style="transform: translateY(3px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('a')" stroke-linecap="round" v-if="path" :d="path" />
+  </g>
+  <g v-else>
+    <path :fill="'transparent'" stroke-width="1" :stroke="getStroke()" stroke-linecap="round" v-if="path" :d="path" />
+  </g>
 </template>
 
 <script>
 import * as AGE from '../api/age'
+
 export default {
   props: {
     connection: {},
@@ -13,6 +32,11 @@ export default {
   data () {
     return {
       path: ``
+    }
+  },
+  methods: {
+    getStroke (v = this.connection.input.type) {
+      return AGE.colorTypes[v]
     }
   },
   async mounted () {
@@ -40,6 +64,10 @@ export default {
 
       // console.log(ri, ro)
       this.path = `M${ix},${iy} C${ix + dx},${iy} ${ox - dx},${oy} ${ox},${oy}`
+    })
+
+    window.addEventListener('resize', () => {
+      window.dispatchEvent(new Event('plot'))
     })
 
     window.dispatchEvent(new Event('plot'))

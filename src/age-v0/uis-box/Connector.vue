@@ -157,15 +157,7 @@ export default {
   },
   methods: {
     getStyle () {
-      let colors = {
-        'sampler2D': `#F72626`,
-        'float': `#1FC938`,
-        'vec4': `#F7AB26`,
-        'vec3': `#F7AB26`,
-        'vec2': `#F7AB26`,
-        'mat3': `#1F59C9`,
-        'mat4': `#1F59C9`
-      }
+      let colors = AGE.colorTypes
       return {
         backgroundColor: colors[this.userdata.type]
       }

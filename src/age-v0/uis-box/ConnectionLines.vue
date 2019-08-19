@@ -28,6 +28,11 @@ export default {
   },
   mounted () {
     this.viewBox = this.calcViewBox()
+    window.addEventListener('resize', () => {
+      this.screen.ww = window.innerWidth
+      this.screen.hh = window.innerHeight
+      this.viewBox = this.calcViewBox()
+    })
   },
   methods: {
     calcViewBox () {

@@ -13,6 +13,21 @@ export const getDOM = async ({ domID }) => {
   })
 }
 
+export const colorTypes = {
+  'a': `#b1b1b1`,
+  'r': `#F72626`,
+  'g': `#1FC938`,
+  'b': `#1F59C9`,
+
+  'sampler2D': `#F72626`,
+  'float': `#1FC938`,
+  'vec4': `#F7AB26`,
+  'vec3': `#F7AB26`,
+  'vec2': `#F7AB26`,
+  'mat3': `#1F59C9`,
+  'mat4': `#1F59C9`
+}
+
 export const getID = () => {
   return `_${Number(100000000 * Math.random()).toFixed(0)}_`
 }
