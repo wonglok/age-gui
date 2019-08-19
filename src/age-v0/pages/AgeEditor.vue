@@ -44,26 +44,47 @@ export default {
       })
       console.log(JSON.stringify(this.connections, null, ' '))
     },
-    onClickConnector (v) {
-      console.log(JSON.stringify(v, null, ' '))
+    onClickConnector (conn) {
+      let idx = -1
+      this.connections.forEach((c, idxo) => {
+        if (c.input._id === conn._id || c.output._id === conn._id) {
+          idx = idxo
+        }
+      })
+      if (idx !== -1) {
+        this.connections.splice(idx, 1)
+      }
+
+      console.log(JSON.stringify(conn, null, ' '))
     },
     createWin () {
       let win = AGE.getWin()
-      win.title = 'happy'
+      win.title = 'Inputs'
       win.type = 'statement'
       win.pos.w = 300
 
+      win.declare = `
+      `
+      win.function = `
+      `
+
       win.inputs.push(
-        AGE.getIO({ boxID: win._id, io: 'input', type: 'sampler2D', label: 'mapTexture' }),
-        AGE.getIO({ boxID: win._id, io: 'input', type: 'float', label: 'apple' }),
+        AGE.getIO({ boxID: win._id, io: 'input', type: 'sampler2D', label: 'texture' }),
+        AGE.getIO({ boxID: win._id, io: 'input', type: 'float', label: 'speed' }),
+        AGE.getIO({ boxID: win._id, io: 'input', type: 'vec2', label: 'uv' }),
         AGE.getIO({ boxID: win._id, io: 'input', type: 'vec3', label: 'position' }),
+        AGE.getIO({ boxID: win._id, io: 'input', type: 'vec4', label: 'color' }),
+        AGE.getIO({ boxID: win._id, io: 'input', type: 'mat4', label: 'projectionMatrix' }),
         AGE.getIO({ boxID: win._id, io: 'input', type: 'mat4', label: 'modelViewMatrix' })
       )
 
       win.outputs.push(
-        AGE.getIO({ boxID: win._id, io: 'output', type: 'sampler2D', label: 'mapTexture' }),
-        AGE.getIO({ boxID: win._id, io: 'output', type: 'float', label: 'apple' }),
+        AGE.getIO({ boxID: win._id, io: 'output', type: 'sampler2D', label: 'texture' }),
+        AGE.getIO({ boxID: win._id, io: 'output', type: 'float', label: 'speed' }),
+        AGE.getIO({ boxID: win._id, io: 'output', type: 'vec2', label: 'uv' }),
         AGE.getIO({ boxID: win._id, io: 'output', type: 'vec3', label: 'position' }),
+        AGE.getIO({ boxID: win._id, io: 'output', type: 'vec4', label: 'color' }),
+        AGE.getIO({ boxID: win._id, io: 'output', type: 'mat4', label: 'projectionMatrix' }),
         AGE.getIO({ boxID: win._id, io: 'output', type: 'mat4', label: 'modelViewMatrix' })
       )
 

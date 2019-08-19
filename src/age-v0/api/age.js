@@ -13,7 +13,15 @@ export const getDOM = async ({ domID }) => {
   })
 }
 
+export const makeGLSLCode = ({ wins, connetions }) => {
+
+}
+
 export const colorTypes = {
+  'u': `#ccc`,
+  'v': `#b1b1b1`,
+
+  'ccc': `#ccc`,
   'a': `#b1b1b1`,
   'r': `#F72626`,
   'g': `#1FC938`,
@@ -21,9 +29,9 @@ export const colorTypes = {
 
   'sampler2D': `#F72626`,
   'float': `#1FC938`,
-  'vec4': `#F7AB26`,
-  'vec3': `#F7AB26`,
-  'vec2': `#F7AB26`,
+  'vec2': `hsl(38, 93%, 66%)`,
+  'vec3': `hsl(38, 93%, 55%)`,
+  'vec4': `hsl(38, 93%, 45%)`,
   'mat3': `#1F59C9`,
   'mat4': `#1F59C9`
 }
@@ -65,6 +73,7 @@ export const getWin = () => {
     type: '',
     transition: '',
     order: 0,
+    preview: 'uniform',
     pos: {
       x: 0,
       y: 0,
@@ -73,11 +82,11 @@ export const getWin = () => {
       s: 1
     },
     inputs: [
-
     ],
     outputs: [
-
-    ]
+    ],
+    declare: '',
+    function: ''
   }
 }
 

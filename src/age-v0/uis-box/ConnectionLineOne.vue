@@ -5,15 +5,22 @@
     <path style="transform: translateY(-3px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('b')" stroke-linecap="round" v-if="path" :d="path" />
   </g>
   <g v-else-if="connection.input.type === 'vec2'">
-    <path style="transform: translateY(2px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke()" stroke-linecap="round" v-if="path" :d="path" />
-    <path style="transform: translateY(-2px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke()" stroke-linecap="round" v-if="path" :d="path" />
+    <path style="transform: translateY(2px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('u')" stroke-linecap="round" v-if="path" :d="path" />
+    <path style="transform: translateY(-2px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('v')" stroke-linecap="round" v-if="path" :d="path" />
   </g>
   <g v-else-if="connection.input.type === 'mat4'">
     <!-- <path :fill="'transparent'" stroke-width="1" :stroke="getStroke('r')" stroke-linecap="round" v-if="path" :d="path" /> -->
-    <path style="transform: translateY(-4px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('r')" stroke-linecap="round" v-if="path" :d="path" />
-    <path style="transform: translateY(-2px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('g')" stroke-linecap="round" v-if="path" :d="path" />
-    <path style="transform: translateY(1px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('b')" stroke-linecap="round" v-if="path" :d="path" />
-    <path style="transform: translateY(3px)" :fill="'transparent'" stroke-width="1" :stroke="getStroke('a')" stroke-linecap="round" v-if="path" :d="path" />
+    <path :style="`transform: translateY(${1 * 3 - 8}px)`" :fill="'transparent'" stroke-width="1" :stroke="getStroke('ccc')" stroke-linecap="round" v-if="path" :d="path" />
+    <path :style="`transform: translateY(${2 * 3 - 8}px)`" :fill="'transparent'" stroke-width="1" :stroke="getStroke('ccc')" stroke-linecap="round" v-if="path" :d="path" />
+    <path :style="`transform: translateY(${3 * 3 - 8}px)`" :fill="'transparent'" stroke-width="1" :stroke="getStroke('ccc')" stroke-linecap="round" v-if="path" :d="path" />
+    <path :style="`transform: translateY(${4 * 3 - 8}px)`" :fill="'transparent'" stroke-width="1" :stroke="getStroke('ccc')" stroke-linecap="round" v-if="path" :d="path" />
+  </g>
+  <g v-else-if="connection.input.type === 'vec4'">
+    <!-- <path :fill="'transparent'" stroke-width="1" :stroke="getStroke('r')" stroke-linecap="round" v-if="path" :d="path" /> -->
+    <path :style="`transform: translateY(${1 * 3 - 8}px)`" :fill="'transparent'" stroke-width="1" :stroke="getStroke('r')" stroke-linecap="round" v-if="path" :d="path" />
+    <path :style="`transform: translateY(${2 * 3 - 8}px)`" :fill="'transparent'" stroke-width="1" :stroke="getStroke('g')" stroke-linecap="round" v-if="path" :d="path" />
+    <path :style="`transform: translateY(${3 * 3 - 8}px)`" :fill="'transparent'" stroke-width="1" :stroke="getStroke('b')" stroke-linecap="round" v-if="path" :d="path" />
+    <path :style="`transform: translateY(${4 * 3 - 8}px)`" :fill="'transparent'" stroke-width="1" :stroke="getStroke('a')" stroke-linecap="round" v-if="path" :d="path" />
   </g>
   <g v-else>
     <path :fill="'transparent'" stroke-width="1" :stroke="getStroke()" stroke-linecap="round" v-if="path" :d="path" />
