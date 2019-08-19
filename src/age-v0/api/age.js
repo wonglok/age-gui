@@ -13,10 +13,6 @@ export const getDOM = async ({ domID }) => {
   })
 }
 
-export const makeGLSLCode = ({ wins, connetions }) => {
-
-}
-
 export const colorTypes = {
   'u': `#ccc`,
   'v': `#b1b1b1`,
@@ -56,12 +52,16 @@ win.outputs.push(
 )
 */
 
-export const getIO = ({ boxID, io = 'output', type = 'sampler2D', label = 'Happy' }) => {
+export const getIO = ({ func = '', declare = '', spread = '', boxID, io = 'output', type = 'sampler2D', label = 'Happy', code = '' }) => {
   return {
     _id: getID(),
     boxID,
+    func,
+    declare,
+    spread,
     io,
     type,
+    code,
     label
   }
 }
@@ -86,7 +86,11 @@ export const getWin = () => {
     outputs: [
     ],
     declare: '',
-    function: ''
+    func: '',
+    spread: '',
+    eval: '',
+    isRoot: false,
+    shaderType: ''
   }
 }
 
@@ -368,3 +372,122 @@ export const makeDrag = ({ dom, onMM = () => {}, onDown = () => {}, onUp = () =>
 //     return mod
 //   }
 // }
+
+export const makeInputs = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Inputs'
+  win.type = 'statement'
+  win.shaderType = `vertex`
+
+  win.inputs.push(
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'sampler2D', label: 'texture' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'float', label: 'speed' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'vec2', label: 'uv' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'vec3', label: 'position' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'vec4', label: 'color' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'mat4', label: 'projectionMatrix' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'mat4', label: 'modelViewMatrix' })
+  )
+
+  win.outputs.push(
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'sampler2D', label: 'texture' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'float', label: 'speed' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'vec2', label: 'uv' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'vec3', label: 'position' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'vec4', label: 'color' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'mat4', label: 'projectionMatrix' }),
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'mat4', label: 'modelViewMatrix' })
+  )
+  win.declare = `
+  `
+  win.func = `
+  `
+  win.spread = `
+  `
+  win.eval = `
+  `
+  win.isRoot = `
+  `
+
+  wins.push(win)
+
+  win.pos.w = 300
+  win.pos.h = 150
+  win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+
+  // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+}
+
+export const NS = {
+  SHADER_TYPES: {
+    VERTEX: 'vertexShader',
+    FRAGMENT: 'fragmentShader'
+  },
+  PREVIEW_TYPES: {
+    VERTEX: 'vertex_root',
+    FRAGMENT: 'fragment_root'
+  },
+  IO_TYPES: {
+    INPUT: 'input',
+    OUTPUT: 'output'
+  },
+  DATA_TYPES: {
+    VEC4: 'vec4',
+    VEC3: 'vec3',
+    VEC2: 'vec2',
+    FLOAT: 'float'
+  }
+}
+
+export const makeVertexRoot = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Vertex Shader Output'
+  win.type = 'statement'
+  win.shaderType = NS.SHADER_TYPES.VERTEX
+  win.preview = NS.PREVIEW_TYPES.VERTEX
+
+  win.inputs.push(
+    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.outputs.push(
+    // getIO({ func: '', declare: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+  win.declare = `
+  `
+  win.func = `
+  `
+  win.spread = `
+  `
+  win.eval = `
+  `
+  win.isRoot = true
+
+  wins.push(win)
+
+  win.pos.w = 300
+  win.pos.h = 150
+  win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+}
+
+export const getCode = ({ wins, connetions }) => {
+  let delcares = ``
+  wins.forEach((win) => {
+    delcares += '\n'
+    delcares += win.declare
+  })
+
+  let functions = ``
+  wins.forEach((win) => {
+    functions += '\n'
+    functions += `${win.func}`
+    functions += '\n'
+    functions += `${win.spread}`
+  })
+
+  return `
+    ${delcares}
+    ${functions}
+  `
+}

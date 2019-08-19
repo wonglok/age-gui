@@ -4,7 +4,7 @@
     <PreviewArea class="age-layer" :previewDOMs="previewDOMs"></PreviewArea>
     <Box @drop="onDropConnection" @clicker="onClickConnector" class="age-layer" :connections="connections" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
     <button class="posabs top-right" @click="createWin">Create</button>
-    <!-- <pre>{{ connectorDOMs }}</pre> -->
+    <pre>{{ getCode() }}</pre>
   </div>
 </template>
 
@@ -27,10 +27,11 @@ export default {
   },
   mounted () {
     this.createWin()
-    this.createWin()
-    this.createWin()
   },
   methods: {
+    getCode () {
+      return AGE.getCode({ wins: this.wins, connetions: this.connections })
+    },
     onDropConnection (v) {
       let arr = [v.hand, v.land]
       let stuff = {
@@ -58,40 +59,7 @@ export default {
       console.log(JSON.stringify(conn, null, ' '))
     },
     createWin () {
-      let win = AGE.getWin()
-      win.title = 'Inputs'
-      win.type = 'statement'
-      win.pos.w = 300
-
-      win.declare = `
-      `
-      win.function = `
-      `
-
-      win.inputs.push(
-        AGE.getIO({ boxID: win._id, io: 'input', type: 'sampler2D', label: 'texture' }),
-        AGE.getIO({ boxID: win._id, io: 'input', type: 'float', label: 'speed' }),
-        AGE.getIO({ boxID: win._id, io: 'input', type: 'vec2', label: 'uv' }),
-        AGE.getIO({ boxID: win._id, io: 'input', type: 'vec3', label: 'position' }),
-        AGE.getIO({ boxID: win._id, io: 'input', type: 'vec4', label: 'color' }),
-        AGE.getIO({ boxID: win._id, io: 'input', type: 'mat4', label: 'projectionMatrix' }),
-        AGE.getIO({ boxID: win._id, io: 'input', type: 'mat4', label: 'modelViewMatrix' })
-      )
-
-      win.outputs.push(
-        AGE.getIO({ boxID: win._id, io: 'output', type: 'sampler2D', label: 'texture' }),
-        AGE.getIO({ boxID: win._id, io: 'output', type: 'float', label: 'speed' }),
-        AGE.getIO({ boxID: win._id, io: 'output', type: 'vec2', label: 'uv' }),
-        AGE.getIO({ boxID: win._id, io: 'output', type: 'vec3', label: 'position' }),
-        AGE.getIO({ boxID: win._id, io: 'output', type: 'vec4', label: 'color' }),
-        AGE.getIO({ boxID: win._id, io: 'output', type: 'mat4', label: 'projectionMatrix' }),
-        AGE.getIO({ boxID: win._id, io: 'output', type: 'mat4', label: 'modelViewMatrix' })
-      )
-
-      this.wins.push(win)
-      win.pos.h = 150
-      win.pos.y = (this.wins.length - 1) * (win.pos.h + 10)
-      win.pos.x = (this.wins.length - 1) * (win.pos.w + 10)
+      AGE.makeVertexRoot({ wins: this.wins })
     }
   }
 }
