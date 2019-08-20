@@ -1,5 +1,5 @@
 <template>
-  <div :id="`${rID}`" class="age-preview-area"></div>
+  <div :id="`${rID}`" :style="{ height: height }" class="age-preview-area"></div>
 </template>
 
 <script>
@@ -12,6 +12,7 @@ export default {
   },
   data () {
     return {
+      height: 200,
       rID: AGE.getID()
     }
   },
@@ -19,6 +20,19 @@ export default {
     this.previewDOMs.push({
       ...this.win,
       domID: this.rID
+    })
+
+    window.addEventListener('resize', () => {
+      let dom = this.$parent.$refs['win-content']
+      if (dom) {
+        this.height = dom.getBoundingClientRect().height + 'px'
+      }
+    }, false)
+
+    window.dispatchEvent(new Event('resize'))
+
+    this.$nextTick(() => {
+      window.dispatchEvent(new Event('resize'))
     })
   }
 }

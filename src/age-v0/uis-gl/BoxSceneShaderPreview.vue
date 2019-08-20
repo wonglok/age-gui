@@ -5,12 +5,16 @@
 
 <script>
 import * as AGE from '../api/age'
+
 let THREE = {
   ...require('three'),
   ...require('three/examples/jsm/controls/OrbitControls.js')
 }
+
 export default {
   props: {
+    wins: {},
+    win: {},
     scenes: {},
     preview: {}
   },
@@ -26,6 +30,8 @@ export default {
     delete this.scenes[this.preview.domID]
   },
   async mounted () {
+    console.log(this.preview, this.wins, this.win, this.scenes)
+
     let dom = await AGE.getDOM({ domID: this.preview.domID })
     let rect = dom.getBoundingClientRect()
     let scene = this.group.scene = new THREE.Scene()
@@ -43,11 +49,11 @@ export default {
     controls.enableZoom = false
 
     let geometry = new THREE.DodecahedronBufferGeometry(6.5)
-    var material = new THREE.MeshStandardMaterial({
-      color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
-      roughness: 0.5,
-      metalness: 0,
-      flatShading: true
+    var material = new THREE.ShaderMaterial({
+      // color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
+      // roughness: 0.5,
+      // metalness: 0,
+      // flatShading: true
     })
     scene.add(new THREE.Mesh(geometry, material))
     scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444))

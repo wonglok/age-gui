@@ -1,10 +1,10 @@
 <template>
   <div class="win-wrap" :style="getBoxLayoutStyle()" @click="focusApp">
     <BoxDefault @drop="$emit('drop', $event)" @clicker="$emit('clicker', $event)" :connections="connections" :win="win" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs"></BoxDefault>
-    <div class="win-resize win-box-top-left" ref="top-left"></div>
-    <div class="win-resize win-box-top-right" ref="top-right"></div>
-    <div class="win-resize win-box-bottom-left" ref="bottom-left"></div>
-    <div class="win-resize win-box-bottom-right" ref="bottom-right"></div>
+    <div v-if="useResize" class="win-resize win-box-top-left" ref="top-left"></div>
+    <div v-if="useResize" class="win-resize win-box-top-right" ref="top-right"></div>
+    <div v-if="useResize" class="win-resize win-box-bottom-left" ref="bottom-left"></div>
+    <div v-if="useResize" class="win-resize win-box-bottom-right" ref="bottom-right"></div>
   </div>
 </template>
 
@@ -16,6 +16,7 @@ export default {
     BoxDefault: require('./BoxDefault.vue').default
   },
   props: {
+    type: {},
     win: {},
     wins: {},
     connections: {},
@@ -24,24 +25,101 @@ export default {
   },
   data () {
     return {
+      useResize: false,
       ready: false,
       omg: 0
     }
   },
   methods: {
+    enableResize ({ subCompo }) {
+      this.useResize = true
+      this.$nextTick(() => {
+        let makeDrag = AGE.makeDrag
+
+        let resize = () => {
+          window.dispatchEvent(new Event('plot'))
+          window.dispatchEvent(new Event('resize'))
+        }
+
+        makeDrag({
+          dom: this.$refs['top-left'],
+          onMM: ({ api }) => {
+            this.win.pos.x += api.dX
+            this.win.pos.y += api.dY
+            this.win.pos.w -= api.dX
+            this.win.pos.h -= api.dY
+
+            if (this.win.pos.w < 76) {
+              this.win.pos.w = 76
+            }
+            if (this.win.pos.h < 100) {
+              this.win.pos.h = 100
+            }
+            resize()
+          }
+        })
+
+        makeDrag({
+          dom: this.$refs['top-right'],
+          onMM: ({ api }) => {
+            // this.win.pos.x += api.dX
+            this.win.pos.y += api.dY
+            this.win.pos.w += api.dX
+            this.win.pos.h -= api.dY
+
+            if (this.win.pos.w < 76) {
+              this.win.pos.w = 76
+            }
+            if (this.win.pos.h < 100) {
+              this.win.pos.h = 100
+            }
+            resize()
+          }
+        })
+
+        makeDrag({
+          dom: this.$refs['bottom-right'],
+          onMM: ({ api }) => {
+            // this.win.pos.x += api.dX
+            // this.win.pos.y += api.dY
+            this.win.pos.w += api.dX
+            this.win.pos.h += api.dY
+
+            if (this.win.pos.w < 76) {
+              this.win.pos.w = 76
+            }
+            if (this.win.pos.h < 100) {
+              this.win.pos.h = 100
+            }
+            resize()
+          }
+        })
+
+        makeDrag({
+          dom: this.$refs['bottom-left'],
+          onMM: ({ api }) => {
+            this.win.pos.x += api.dX
+            // this.win.pos.y += api.dY
+            this.win.pos.w -= api.dX
+            this.win.pos.h += api.dY
+
+            if (this.win.pos.w < 76) {
+              this.win.pos.w = 76
+            }
+            if (this.win.pos.h < 100) {
+              this.win.pos.h = 100
+            }
+            resize()
+          }
+        })
+      })
+    },
     // { _id: omg, val: omg, io: 'input', type: 'sampler2D', label: 'vec4' }
     focusApp () {
       AGE.focusApp({ wins: this.wins, win: this.win })
     },
     getTitleStyle () {
-      let types = {
-        statement: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
-        uniform: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
-        attribute: `linear-gradient(251deg, rgba(255,192,192,0.72) 9%, #FF1B1B 100%)`,
-        varying: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
-        function: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`,
-        default: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`
-      }
+      let types = AGE.boxColorTypes
       // console.log(types[this.win.type])
       return {
         color: 'white',
@@ -56,7 +134,7 @@ export default {
         left: '0px',
         width: `${this.win.pos.w}px`,
         height: `${this.win.pos.h}px`,
-        minHeight: `calc(76px)`,
+        minHeight: `calc(56px)`,
         minWidth: `calc(100px)`,
         transform: `translate3d(${this.win.pos.x}px, ${this.win.pos.y}px, 1px)`
       }
@@ -75,87 +153,10 @@ export default {
     }
   },
   mounted () {
-    this.omg = Math.random()
     this.ready = true
-
-    let makeDrag = AGE.makeDrag
-
-    let resize = () => {
-      window.dispatchEvent(new Event('plot'))
-      window.dispatchEvent(new Event('resize'))
+    if (this.win.resize) {
+      this.enableResize({ subCompo: this })
     }
-
-    makeDrag({
-      dom: this.$refs['top-left'],
-      onMM: ({ api }) => {
-        this.win.pos.x += api.dX
-        this.win.pos.y += api.dY
-        this.win.pos.w -= api.dX
-        this.win.pos.h -= api.dY
-
-        if (this.win.pos.w < 76) {
-          this.win.pos.w = 76
-        }
-        if (this.win.pos.h < 100) {
-          this.win.pos.h = 100
-        }
-        resize()
-      }
-    })
-
-    makeDrag({
-      dom: this.$refs['top-right'],
-      onMM: ({ api }) => {
-        // this.win.pos.x += api.dX
-        this.win.pos.y += api.dY
-        this.win.pos.w += api.dX
-        this.win.pos.h -= api.dY
-
-        if (this.win.pos.w < 76) {
-          this.win.pos.w = 76
-        }
-        if (this.win.pos.h < 100) {
-          this.win.pos.h = 100
-        }
-        resize()
-      }
-    })
-
-    makeDrag({
-      dom: this.$refs['bottom-right'],
-      onMM: ({ api }) => {
-        // this.win.pos.x += api.dX
-        // this.win.pos.y += api.dY
-        this.win.pos.w += api.dX
-        this.win.pos.h += api.dY
-
-        if (this.win.pos.w < 76) {
-          this.win.pos.w = 76
-        }
-        if (this.win.pos.h < 100) {
-          this.win.pos.h = 100
-        }
-        resize()
-      }
-    })
-
-    makeDrag({
-      dom: this.$refs['bottom-left'],
-      onMM: ({ api }) => {
-        this.win.pos.x += api.dX
-        // this.win.pos.y += api.dY
-        this.win.pos.w -= api.dX
-        this.win.pos.h += api.dY
-
-        if (this.win.pos.w < 76) {
-          this.win.pos.w = 76
-        }
-        if (this.win.pos.h < 100) {
-          this.win.pos.h = 100
-        }
-        resize()
-      }
-    })
   }
 }
 </script>

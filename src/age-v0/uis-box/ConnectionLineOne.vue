@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     getStroke (v = this.connection.input.type) {
-      return AGE.colorTypes[v]
+      return AGE.connectorColorTypes[v]
     }
   },
   async mounted () {

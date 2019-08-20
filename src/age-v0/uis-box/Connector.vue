@@ -94,7 +94,6 @@ const DnDFactory = () => {
               hand.y = rect.top - 30
             },
             onUp: ({ api, ev }) => {
-              indicator.display = 'none'
               // let hoverAt = document.elementFromPoint(api.pageX, api.pageY)
               let landData = getLandData({ api })
               if (!sent && dropHandler && canDrop({ handData, landData })) {
@@ -106,6 +105,7 @@ const DnDFactory = () => {
               indicator.style.opacity = '0'
               indicator.style.transform = ''
               indicator.style.userSelect = ''
+              indicator.style.display = 'none'
               // if (!sent) {
               //   hand.$emit('send', { hoverAt, handData: data })
               //   sent = true
@@ -157,7 +157,7 @@ export default {
   },
   methods: {
     getStyle () {
-      let colors = AGE.colorTypes
+      let colors = AGE.connectorColorTypes
       return {
         backgroundColor: colors[this.userdata.type]
       }

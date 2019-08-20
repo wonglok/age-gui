@@ -23,7 +23,7 @@
           <Connector @drop="$emit('drop', $event)" @clicker="$emit('clicker', $event)" :connectorDOMs="connectorDOMs" :connections="connections" class="age-output" :key="output._id" v-for="output in $parent.win.outputs" :userdata="output"></Connector>
         </div>
       </div>
-      <div class="center">
+      <div class="center full" v-if="win.preview">
         <PreviewRect :win="win" :previewDOMs="previewDOMs"></PreviewRect>
       </div>
     </div>
@@ -49,7 +49,11 @@ export default {
     }
   },
   mounted () {
-    this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 200 + 26
+    if (this.win.preview) {
+      this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 200 + 26
+    } else {
+      this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 26
+    }
     this.$parent.setupSubCompo({ subCompo: this })
   }
 }

@@ -197,8 +197,73 @@
 
 .age-preview-area{
   width: calc(100%);
-  /* margin: 0px auto; */
   height: 200px;
+  /* margin: 0px auto; */
   /* border: #ccc solid 1px; */
   /* background: linear-gradient(45deg, grey, white); */
+}
+
+.age-addbox-wrap {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.age-addbox-close-plane {
+  background-color: rgba(26, 26, 26, 0.747);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.age-addbox-close {
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 100px;
+  border: #ccc solid 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.age-addbox-content{
+  position: absolute;
+  top: 20px;
+  left: calc(20px);
+  right: calc(20px);
+  bottom: calc(20px);
+
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media screen and (min-width: 767px) {
+  .age-addbox-close {
+    top: 10px;
+    right: 10px;
+  }
+  .age-addbox-content {
+    top: 40px;
+    bottom: 40px;
+    left: calc(40px);
+    right: calc(40px);
+  }
+}
+
+.age-addbox-menu-item{
+  width: calc(210px - 10px * 2 - 10px * 2);
+  height: calc(210px - 10px * 2 - 10px * 2);
+  background-color: #ccc;
+  padding: 10px;
+  padding: 10px;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }

@@ -1,6 +1,6 @@
 // import Vue from 'vue'
 
-export const getDOM = async ({ domID }) => {
+export const getDOM = ({ domID }) => {
   return new Promise((resolve) => {
     let tout = 0
     tout = setInterval(() => {
@@ -13,7 +13,32 @@ export const getDOM = async ({ domID }) => {
   })
 }
 
-export const colorTypes = {
+export const waitGet = ({ getter }) => {
+  return new Promise((resolve) => {
+    let tout = 0
+    tout = setInterval(() => {
+      let val = getter()
+      if (val) {
+        resolve(val)
+        clearTimeout(tout)
+      }
+    })
+  })
+}
+
+export const boxColorTypes = {
+  'preview-box': `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`,
+  output: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
+  statement: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
+  uniform: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
+  attribute: `linear-gradient(251deg, rgba(255,192,192,0.72) 9%, #FF1B1B 100%)`,
+  previewWin: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
+  varying: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
+  function: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`,
+  default: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`
+}
+
+export const connectorColorTypes = {
   'u': `#ccc`,
   'v': `#b1b1b1`,
 
@@ -52,7 +77,7 @@ win.outputs.push(
 )
 */
 
-export const getIO = ({ func = '', declare = '', spread = '', boxID, io = 'output', type = 'sampler2D', label = 'Happy', code = '' }) => {
+export const getIO = ({ func = '', declare = '', defaultValue = '', spread = '', boxID, io = 'output', type = 'sampler2D', label = 'Happy', code = '' }) => {
   return {
     _id: getID(),
     boxID,
@@ -62,6 +87,7 @@ export const getIO = ({ func = '', declare = '', spread = '', boxID, io = 'outpu
     io,
     type,
     code,
+    defaultValue,
     label
   }
 }
@@ -373,49 +399,14 @@ export const makeDrag = ({ dom, onMM = () => {}, onDown = () => {}, onUp = () =>
 //   }
 // }
 
-export const makeInputs = ({ wins }) => {
-  let win = getWin()
-  win.title = 'Inputs'
-  win.type = 'statement'
-  win.shaderType = `vertex`
+/*
+----------------------------------
 
-  win.inputs.push(
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'sampler2D', label: 'texture' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'float', label: 'speed' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'vec2', label: 'uv' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'vec3', label: 'position' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'vec4', label: 'color' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'mat4', label: 'projectionMatrix' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'mat4', label: 'modelViewMatrix' })
-  )
+----------------------------------
+*/
 
-  win.outputs.push(
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'sampler2D', label: 'texture' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'float', label: 'speed' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'vec2', label: 'uv' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'vec3', label: 'position' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'vec4', label: 'color' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'mat4', label: 'projectionMatrix' }),
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'mat4', label: 'modelViewMatrix' })
-  )
-  win.declare = `
-  `
-  win.func = `
-  `
-  win.spread = `
-  `
-  win.eval = `
-  `
-  win.isRoot = `
-  `
+export const ASM = {
 
-  wins.push(win)
-
-  win.pos.w = 300
-  win.pos.h = 150
-  win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
-
-  // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
 }
 
 export const NS = {
@@ -423,15 +414,21 @@ export const NS = {
     VERTEX: 'vertexShader',
     FRAGMENT: 'fragmentShader'
   },
-  PREVIEW_TYPES: {
-    VERTEX: 'vertex_root',
-    FRAGMENT: 'fragment_root'
-  },
+  // PREVIEW_TYPES: {
+  //   VERTEX: 'vertex_root',
+  //   FRAGMENT: 'fragment_root'
+  // },
   IO_TYPES: {
     INPUT: 'input',
     OUTPUT: 'output'
   },
+  DEFAULT_VALUES: {
+    gl_Position: 'projectionMatrix * modelViewMatrix * vec4(position)',
+    gl_PointSize: '1.0',
+    gl_FragColor: 'vec4(1.0, 0.4, 0.3, 0.5)'
+  },
   DATA_TYPES: {
+    SAMPLER_2D: 'sampler2D',
     VEC4: 'vec4',
     VEC3: 'vec3',
     VEC2: 'vec2',
@@ -439,30 +436,103 @@ export const NS = {
   }
 }
 
+// export const makeInputs = ({ wins }) => {
+//   let win = getWin()
+//   win.title = 'Inputs'
+//   win.type = 'statement'
+//   win.shaderType = `vertex`
+
+//   win.inputs.push(
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'sampler2D', label: 'texture' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'float', label: 'speed' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'vec2', label: 'uv' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'vec3', label: 'position' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'vec4', label: 'color' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'mat4', label: 'projectionMatrix' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'input', type: 'mat4', label: 'modelViewMatrix' })
+//   )
+
+//   win.outputs.push(
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'sampler2D', label: 'texture' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'float', label: 'speed' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'vec2', label: 'uv' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'vec3', label: 'position' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'vec4', label: 'color' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'mat4', label: 'projectionMatrix' }),
+//     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'mat4', label: 'modelViewMatrix' })
+//   )
+//   win.declare = `
+//   `
+//   win.func = `
+//   `
+//   win.spread = `
+//   `
+//   win.eval = `
+//   `
+//   win.isRoot = `
+//   `
+
+//   wins.push(win)
+
+//   win.pos.w = 300
+//   win.pos.h = 150
+//   win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+
+//   // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+// }
+
+// export const makeVertexInputs = ({ wins }) => {
+//   let win = getWin()
+//   win.title = 'Vertex Shader Output'
+//   win.type = 'statement'
+//   win.shaderType = NS.SHADER_TYPES.VERTEX
+//   win.previewType = NS.PREVIEW_TYPES.VERTEX
+//   win.preview = false
+
+//   win.inputs.push(
+//     getIO({ func: '', declare: '', defaultValue: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' })
+//   )
+
+//   win.outputs.push(
+//     // getIO({ func: '', declare: '', defaultValue: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+//   )
+//   win.declare = `
+//   `
+//   win.func = `
+//   `
+//   win.spread = `
+//   `
+//   win.eval = `
+//   `
+//   win.isRoot = false
+
+//   wins.push(win)
+
+//   win.pos.w = 300
+//   win.pos.h = 150
+
+//   win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+// }
+
 export const makeVertexRoot = ({ wins }) => {
   let win = getWin()
   win.title = 'Vertex Shader Output'
-  win.type = 'statement'
+  win.type = 'output'
   win.shaderType = NS.SHADER_TYPES.VERTEX
-  win.preview = NS.PREVIEW_TYPES.VERTEX
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = false
+  // win.boxLogicType = 'module'
 
   win.inputs.push(
-    getIO({ func: '', declare: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+    getIO({ func: '', declare: '', defaultValue: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' }),
+    getIO({ func: '', declare: '', defaultValue: NS.DEFAULT_VALUES.gl_PointSize, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'gl_PointSize' })
   )
 
   win.outputs.push(
-    // getIO({ func: '', declare: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+    // getIO({ func: '', declare: '', defaultValue: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
   )
-  win.declare = `
-  `
-  win.func = `
-  `
-  win.spread = `
-  `
-  win.eval = `
-  `
-  win.isRoot = true
 
+  win.isRoot = true
   wins.push(win)
 
   win.pos.w = 300
@@ -471,7 +541,60 @@ export const makeVertexRoot = ({ wins }) => {
   // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
 }
 
-export const getCode = ({ wins, connetions }) => {
+export const makeFragmentRoot = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Fragment Shader Output'
+  win.type = 'output'
+  win.shaderType = NS.SHADER_TYPES.FRAGMENT
+  // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    getIO({ func: '', declare: '', spread: '', defaultValue: NS.DEFAULT_VALUES.gl_FragColor, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_FragColor' })
+  )
+
+  win.outputs.push(
+    // getIO({ func: '', declare: '', defaultValue: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 300
+  win.pos.h = 150
+  // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+}
+
+export const makePreviwBox = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Shader Preview Box'
+  win.type = 'preview-box'
+
+  win.shaderType = NS.SHADER_TYPES.FRAGMENT
+  // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+  // win.boxLogicType = 'module'
+  win.preview = true
+
+  win.inputs.push(
+  )
+
+  win.outputs.push(
+    // getIO({ func: '', declare: '', defaultValue: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.resize = true
+  win.isRoot = true
+  wins.push(win)
+
+  win.pos.w = 300
+  win.pos.h = 150
+  // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+}
+
+export const getVertexCode = ({ wins, connetions }) => {
   let delcares = ``
   wins.forEach((win) => {
     delcares += '\n'
@@ -486,8 +609,48 @@ export const getCode = ({ wins, connetions }) => {
     functions += `${win.spread}`
   })
 
+  let main = `
+    void main () {
+    }
+  `
+
   return `
     ${delcares}
     ${functions}
+    ${main}
   `
+}
+
+export const getFragmentCode = ({ wins, connetions }) => {
+  let delcares = ``
+  wins.forEach((win) => {
+    delcares += '\n'
+    delcares += win.declare
+  })
+
+  let functions = ``
+  wins.forEach((win) => {
+    functions += '\n'
+    functions += `${win.func}`
+    functions += '\n'
+    functions += `${win.spread}`
+  })
+
+  let main = `
+void main () {
+}
+  `
+
+  return `
+    ${delcares}
+    ${functions}
+    ${main}
+  `
+}
+
+export const getCode = ({ wins, connetions }) => {
+  return {
+    vertexShader: getVertexCode({ wins, connetions }),
+    fragmentShader: getFragmentCode({ wins, connetions })
+  }
 }

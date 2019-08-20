@@ -124,3 +124,11 @@ body, html {
   display: flex;
   flex-direction: column;
 }
+.flex-row{
+  display: flex;
+  flex-direction: row;
+}
+
+pre{
+  margin: 10px;
+}
