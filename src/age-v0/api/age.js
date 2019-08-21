@@ -785,7 +785,7 @@ export const makeUINumber = ({ wins }) => {
 
 export const makeSpreadV4 = ({ wins }) => {
   let win = getWin()
-  win.title = 'Spread V4'
+  win.title = 'Spread Vector 4'
   win.type = 'output'
   win.shaderType = NS.SHADER_TYPES.BOTH
   win.preview = false
@@ -838,6 +838,120 @@ export const makeSpreadV4 = ({ wins }) => {
       outputIDX: 3,
       vari: 'float',
       name: 'f3'
+    }
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = 0
+
+  win.fnReturnType = ''
+  win.fnID = getID()
+  win.fnName = ''
+  win.fnInner = `
+  `
+}
+
+export const makeSpreadV3 = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Spread Vector 3'
+  win.type = 'output'
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  win.preview = false
+
+  win.inputs.push(
+    getIO({ argType: 'vec3', arg: `vec3Val`, spread: 'vec3Val', defaults: NS.DEFAULT_VALUES.VEC3_000, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC3, label: 'vec3' })
+  )
+
+  win.outputs.push(
+    getIO({ argType: 'float', arg: `float1`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' }),
+    getIO({ argType: 'float', arg: `float2`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' }),
+    getIO({ argType: 'float', arg: `float3`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' })
+    // getIO({ defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.spread.push(
+    {
+      _id: getID(),
+      type: 'sp-vec3',
+      winID: win._id,
+      outputID: win.outputs[0]._id,
+      outputIDX: 0,
+      vari: 'float',
+      name: 'f0'
+    },
+    {
+      _id: getID(),
+      type: 'sp-vec3',
+      winID: win._id,
+      outputID: win.outputs[1]._id,
+      outputIDX: 1,
+      vari: 'float',
+      name: 'f1'
+    },
+    {
+      _id: getID(),
+      type: 'sp-vec3',
+      winID: win._id,
+      outputID: win.outputs[2]._id,
+      outputIDX: 2,
+      vari: 'float',
+      name: 'f2'
+    }
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = 0
+
+  win.fnReturnType = ''
+  win.fnID = getID()
+  win.fnName = ''
+  win.fnInner = `
+  `
+}
+
+export const makeSpreadV2 = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Spread Vector 2'
+  win.type = 'output'
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  win.preview = false
+
+  win.inputs.push(
+    getIO({ argType: 'vec2', arg: `vec2Val`, spread: 'vec2Val', defaults: NS.DEFAULT_VALUES.VEC2_000, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC2, label: 'vec2' })
+  )
+
+  win.outputs.push(
+    getIO({ argType: 'float', arg: `float1`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' }),
+    getIO({ argType: 'float', arg: `float2`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' })
+    // getIO({ defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.spread.push(
+    {
+      _id: getID(),
+      type: 'sp-vec2',
+      winID: win._id,
+      outputID: win.outputs[0]._id,
+      outputIDX: 0,
+      vari: 'float',
+      name: 'f0'
+    },
+    {
+      _id: getID(),
+      type: 'sp-vec2',
+      winID: win._id,
+      outputID: win.outputs[1]._id,
+      outputIDX: 1,
+      vari: 'float',
+      name: 'f1'
     }
   )
 
@@ -1146,7 +1260,7 @@ export const getShaderCode = ({ wins, connections, shaderType }) => {
     functions += `${makeFunc({ win, wins, connections })}`
   })
 
-  let levels = getDepTree({ wins, connections, sType: NS.SHADER_TYPES.VERTEX })
+  let levels = getDepTree({ wins, connections, sType: shaderType })
   let depExecs = ``
   levels.slice().reverse().forEach((lvl) => {
     let win = lvl.origin
@@ -1221,9 +1335,10 @@ export const getCode = ({ wins, connections = [] }) => {
   // console.log(connections)
   return {
     vertexShader: getShaderCode({ wins, connections, shaderType: NS.SHADER_TYPES.VERTEX }),
+    fragmentShader: getShaderCode({ wins, connections, shaderType: NS.SHADER_TYPES.FRAGMENT })
     // fragmentShader: getFragmentCode({ wins, connections })
-    fragmentShader: `void main (void) {
-  gl_FragColor = vec4(0.0, 0.5, 0.0, 1.0);
-}`//
+    //     `void main (void) {
+    //   gl_FragColor = vec4(0.0, 0.5, 0.0, 1.0);
+    // }`//
   }
 }
