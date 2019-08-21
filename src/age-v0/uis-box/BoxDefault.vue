@@ -16,8 +16,10 @@
         <div class="flex-list age-connector-list">
           <Connector @drop="$emit('drop', $event)" @clicker="$emit('clicker', $event)" :connectorDOMs="connectorDOMs" :connections="connections" class="age-input" :key="input._id" v-for="input in $parent.win.inputs" :userdata="input"></Connector>
         </div>
-        <div>
-
+        <div class="flex-list age-ui-inputs">
+          <div :key="ui.id" v-for="ui in $parent.win.uis || []" class="full center">
+            <MagicInput :ui="ui"></MagicInput>
+          </div>
         </div>
         <div class="flex-list age-connector-list">
           <Connector @drop="$emit('drop', $event)" @clicker="$emit('clicker', $event)" :connectorDOMs="connectorDOMs" :connections="connections" class="age-output" :key="output._id" v-for="output in $parent.win.outputs" :userdata="output"></Connector>
@@ -41,6 +43,7 @@ export default {
     connectorDOMs: {}
   },
   components: {
+    MagicInput: require('./MagicInput.vue').default,
     PreviewRect: require('./PreviewRect.vue').default,
     Connector: require('./Connector.vue').default
   },

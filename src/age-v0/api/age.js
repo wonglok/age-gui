@@ -27,7 +27,8 @@ export const waitGet = ({ getter }) => {
 }
 
 export const boxColorTypes = {
-  'preview-box': `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`,
+  'preview-box': `linear-gradient(251deg, #ccc 9%, #b1b1b1 100%)`,
+  vertexinput: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   output: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   statement: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   uniform: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
@@ -77,18 +78,18 @@ win.outputs.push(
 )
 */
 
-export const getIO = ({ func = '', declare = '', defaultValue = '', spread = '', boxID, io = 'output', type = 'sampler2D', label = 'Happy', code = '' }) => {
+export const getIO = (args) => {
   return {
-    _id: getID(),
-    boxID,
-    func,
-    declare,
-    spread,
-    io,
-    type,
-    code,
-    defaultValue,
-    label
+    ...args,
+    _id: getID()
+    // boxID,
+    // arg,
+    // argType,
+    // io,
+    // type,
+    // code,
+    // defaults,
+    // label
   }
 }
 
@@ -111,9 +112,9 @@ export const getWin = () => {
     ],
     outputs: [
     ],
+    spread: [],
     declare: '',
     func: '',
-    spread: '',
     eval: '',
     isRoot: false,
     shaderType: ''
@@ -401,31 +402,26 @@ export const makeDrag = ({ dom, onMM = () => {}, onDown = () => {}, onUp = () =>
 
 /*
 ----------------------------------
-
 ----------------------------------
 */
-
-export const ASM = {
-
-}
 
 export const NS = {
   SHADER_TYPES: {
     VERTEX: 'vertexShader',
     FRAGMENT: 'fragmentShader'
   },
-  // PREVIEW_TYPES: {
-  //   VERTEX: 'vertex_root',
-  //   FRAGMENT: 'fragment_root'
-  // },
   IO_TYPES: {
+    BOTH: 'both',
     INPUT: 'input',
     OUTPUT: 'output'
   },
   DEFAULT_VALUES: {
-    gl_Position: 'projectionMatrix * modelViewMatrix * vec4(position)',
+    VEC4_0000: `vec4(0.0, 0.0, 0.0, 0.0)`,
+    float0: '0.0',
+    float1: '1.0',
+    gl_Position: 'vec4(position, 1.0)',
     gl_PointSize: '1.0',
-    gl_FragColor: 'vec4(1.0, 0.4, 0.3, 0.5)'
+    gl_FragColor: 'vec4(0.5, 0.5, 0.5, 0.5)'
   },
   DATA_TYPES: {
     SAMPLER_2D: 'sampler2D',
@@ -461,7 +457,7 @@ export const NS = {
 //     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'mat4', label: 'projectionMatrix' }),
 //     getIO({ func: '', declare: '', spread: '', boxID: win._id, io: 'output', type: 'mat4', label: 'modelViewMatrix' })
 //   )
-//   win.declare = `
+//   win.hasUIs = `
 //   `
 //   win.func = `
 //   `
@@ -474,7 +470,7 @@ export const NS = {
 
 //   wins.push(win)
 
-//   win.pos.w = 300
+//   win.pos.w = 275
 //   win.pos.h = 150
 //   win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
 
@@ -490,13 +486,13 @@ export const NS = {
 //   win.preview = false
 
 //   win.inputs.push(
-//     getIO({ func: '', declare: '', defaultValue: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' })
+//     getIO({ func: '', declare: '', defaults: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' })
 //   )
 
 //   win.outputs.push(
-//     // getIO({ func: '', declare: '', defaultValue: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+//     // getIO({ func: '', declare: '', defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
 //   )
-//   win.declare = `
+//   win.hasUIs = `
 //   `
 //   win.func = `
 //   `
@@ -508,7 +504,7 @@ export const NS = {
 
 //   wins.push(win)
 
-//   win.pos.w = 300
+//   win.pos.w = 275
 //   win.pos.h = 150
 
 //   win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
@@ -524,21 +520,339 @@ export const makeVertexRoot = ({ wins }) => {
   // win.boxLogicType = 'module'
 
   win.inputs.push(
-    getIO({ func: '', declare: '', defaultValue: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' }),
-    getIO({ func: '', declare: '', defaultValue: NS.DEFAULT_VALUES.gl_PointSize, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'gl_PointSize' })
+    getIO({ argType: 'vec4', arg: `newPos`, defaults: NS.DEFAULT_VALUES.gl_Position, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' }),
+    getIO({ argType: 'float', arg: `newPtSize`, defaults: NS.DEFAULT_VALUES.gl_PointSize, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'gl_PointSize' })
   )
 
   win.outputs.push(
-    // getIO({ func: '', declare: '', defaultValue: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+    // getIO({ defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
   )
 
   win.isRoot = true
   wins.push(win)
 
-  win.pos.w = 300
+  win.pos.w = 275
   win.pos.h = 150
   win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+
+  win.fnReturnType = 'void'
+  win.fnID = getID()
+  win.fnName = 'vertex_root'
+
+  win.fnInner = `
+  gl_Position = projectionMatrix * modelViewMatrix  * newPos;
+  gl_PointSize = newPtSize;
+`
   // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+}
+
+export const makeUIMultiply = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Float Multiply'
+  win.type = 'output'
+  win.shaderType = NS.SHADER_TYPES.VERTEX
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    getIO({ argType: 'float', arg: `float1`, defaults: NS.DEFAULT_VALUES.float1, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' }),
+    getIO({ argType: 'float', arg: `float2`, defaults: NS.DEFAULT_VALUES.float1, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' })
+  )
+
+  win.outputs.push(
+    getIO({ argType: 'float', arg: `float3`, defaults: NS.DEFAULT_VALUES.float1, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = 400
+
+  win.fnReturnType = 'float'
+  win.fnID = getID()
+  win.fnName = 'multiply'
+  win.fnInner = `
+  return float1 * float2;
+`
+
+  return win
+}
+
+export const makeUIVector4 = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Vector4 Input'
+  win.type = 'vertexinput'
+
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    // getIO({ argType: 'vec3', arg: `newPos`, defaults: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' }),
+  )
+
+  win.outputs.push(
+    getIO({ uisIndex: 0, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+    // getIO({ defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = (win.pos.h + 10 + 120)
+
+  win.fnReturnType = ''
+  win.fnID = getID()
+  win.fnName = ''
+  win.fnInner = ``
+
+  win.hasUIs = true
+  win.uis = [
+    {
+      _id: getID(),
+      type: 'ui-vec4',
+      vari: 'vec4',
+      name: 'vector4Value',
+      value0: '0.5',
+      value1: '0.5',
+      value2: '0.5',
+      value3: '1.0',
+      outputID: win.outputs[0]._id,
+      outputIDX: 0
+    }
+  ]
+
+  // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+
+  return win
+}
+
+export const makeUIVector3 = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Vector3 Input'
+  win.type = 'vertexinput'
+
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    // getIO({ argType: 'vec3', arg: `newPos`, defaults: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' }),
+  )
+
+  win.outputs.push(
+    getIO({ uisIndex: 0, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC3, label: 'vec3' })
+    // getIO({ defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = (win.pos.h + 10 + 120)
+
+  win.fnReturnType = ''
+  win.fnID = getID()
+  win.fnName = ''
+  win.fnInner = ``
+
+  win.hasUIs = true
+  win.uis = [
+    {
+      _id: getID(),
+      type: 'ui-vec3',
+      vari: 'vec3',
+      name: 'vector3Value',
+      value0: '0.5',
+      value1: '0.5',
+      value2: '0.5',
+      outputID: win.outputs[0]._id,
+      outputIDX: 0
+    }
+  ]
+
+  // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+
+  return win
+}
+
+export const makeUIVector2 = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Vector3 Input'
+  win.type = 'vertexinput'
+
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    // getIO({ argType: 'vec3', arg: `newPos`, defaults: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' }),
+  )
+
+  win.outputs.push(
+    getIO({ uisIndex: 0, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'vec2' })
+    // getIO({ defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = (win.pos.h + 10 + 120)
+
+  win.fnReturnType = ''
+  win.fnID = getID()
+  win.fnName = ''
+  win.fnInner = ``
+
+  win.hasUIs = true
+  win.uis = [
+    {
+      _id: getID(),
+      type: 'ui-vec2',
+      vari: 'vec2',
+      name: 'vector2Value',
+      value0: '0.5',
+      value1: '0.5',
+      outputID: win.outputs[0]._id,
+      outputIDX: 0
+    }
+  ]
+
+  // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+
+  return win
+}
+
+export const makeUINumber = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Number Input'
+  win.type = 'vertexinput'
+
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    // getIO({ argType: 'vec3', arg: `newPos`, defaults: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' }),
+  )
+
+  win.outputs.push(
+    getIO({ uisIndex: 0, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' })
+    // getIO({ defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = (win.pos.h + 10 + 120)
+
+  win.fnReturnType = ''
+  win.fnID = getID()
+  win.fnName = ''
+  win.fnInner = ``
+
+  win.hasUIs = true
+  win.uis = [
+    {
+      _id: getID(),
+      type: 'ui-float',
+      vari: 'float',
+      name: 'floatValue',
+      value: '0.5',
+      outputID: win.outputs[0]._id,
+      outputIDX: 0
+    }
+  ]
+
+  // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+
+  return win
+}
+
+export const makeSpreadV4 = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Spread V4'
+  win.type = 'output'
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  win.preview = false
+
+  win.inputs.push(
+    getIO({ argType: 'vec4', arg: `vec4Val`, spread: 'vec4Val', defaults: NS.DEFAULT_VALUES.VEC4_0000, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+  )
+
+  win.outputs.push(
+    getIO({ argType: 'float', arg: `float1`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' }),
+    getIO({ argType: 'float', arg: `float2`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' }),
+    getIO({ argType: 'float', arg: `float3`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' }),
+    getIO({ argType: 'float', arg: `float4`, defaults: NS.DEFAULT_VALUES.float1, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' })
+    // getIO({ defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.spread.push(
+    {
+      _id: getID(),
+      type: 'sp-vec4',
+      winID: win._id,
+      outputID: win.outputs[0]._id,
+      outputIDX: 0,
+      vari: 'float',
+      name: 'f0'
+    },
+    {
+      _id: getID(),
+      type: 'sp-vec4',
+      winID: win._id,
+      outputID: win.outputs[1]._id,
+      outputIDX: 1,
+      vari: 'float',
+      name: 'f1'
+    },
+    {
+      _id: getID(),
+      type: 'sp-vec4',
+      winID: win._id,
+      outputID: win.outputs[2]._id,
+      outputIDX: 2,
+      vari: 'float',
+      name: 'f2'
+    },
+    {
+      _id: getID(),
+      type: 'sp-vec4',
+      winID: win._id,
+      outputID: win.outputs[3]._id,
+      outputIDX: 3,
+      vari: 'float',
+      name: 'f3'
+    }
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = 0
+
+  win.fnReturnType = ''
+  win.fnID = getID()
+  win.fnName = ''
+  win.fnInner = `
+  `
 }
 
 export const makeFragmentRoot = ({ wins }) => {
@@ -551,106 +865,365 @@ export const makeFragmentRoot = ({ wins }) => {
   // win.boxLogicType = 'module'
 
   win.inputs.push(
-    getIO({ func: '', declare: '', spread: '', defaultValue: NS.DEFAULT_VALUES.gl_FragColor, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_FragColor' })
+    getIO({ argType: 'vec4', arg: `outputColor`, defaults: NS.DEFAULT_VALUES.gl_FragColor, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_FragColor' })
   )
 
   win.outputs.push(
-    // getIO({ func: '', declare: '', defaultValue: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+    // getIO({ func: '', declare: '', defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
   )
 
-  win.isRoot = false
+  win.isRoot = true
   wins.push(win)
 
-  win.pos.w = 300
+  win.pos.w = 275
   win.pos.h = 150
   // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
   win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+
+  win.fnReturnType = 'void'
+  win.fnID = getID()
+  win.fnName = 'fragment_root'
+  win.fnInner = `
+  gl_FragColor = outputColor;
+`
 }
 
 export const makePreviwBox = ({ wins }) => {
   let win = getWin()
   win.title = 'Shader Preview Box'
   win.type = 'preview-box'
-
-  win.shaderType = NS.SHADER_TYPES.FRAGMENT
+  win.shaderType = 'preview-box'
   // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
   // win.boxLogicType = 'module'
   win.preview = true
 
   win.inputs.push(
   )
-
   win.outputs.push(
-    // getIO({ func: '', declare: '', defaultValue: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
   )
+  // getIO({ func: '', declare: '', defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
 
   win.resize = true
   win.isRoot = true
   wins.push(win)
 
-  win.pos.w = 300
+  win.pos.w = 275
   win.pos.h = 150
   // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
   win.pos.x = (wins.length - 1) * (win.pos.w + 10)
 }
+export const getArgs = ({ win, wins, connections, depsConn = [] }) => {
+  let args = ``
 
-export const getVertexCode = ({ wins, connetions }) => {
-  let delcares = ``
-  wins.forEach((win) => {
-    delcares += '\n'
-    delcares += win.declare
-  })
+  let str = ({ inp }) => {
+    let defaults = inp.defaults
 
-  let functions = ``
-  wins.forEach((win) => {
-    functions += '\n'
-    functions += `${win.func}`
-    functions += '\n'
-    functions += `${win.spread}`
-  })
+    let foundConnection = connections.find(c => c.input._id === inp._id)
+    if (foundConnection) {
+      let remoteBoxID = foundConnection.output.boxID
 
-  let main = `
-    void main () {
+      // let localBoxID = foundConnection.input.boxID
+      // let currentDep = depsConn.find(con => con.output.boxID === remoteBoxID)
+      // let localBox = wins.find(w => w._id === localBoxID)
+
+      let remoteBox = wins.find(w => w._id === remoteBoxID)
+      let remoteOutputIdx = foundConnection.output.uisIndex
+
+      if (remoteBox) {
+        if (remoteOutputIdx) {
+          let uis = remoteBox.uis[remoteOutputIdx]
+          let val = `${uis.name}${uis._id}`
+          return `${val || defaults}`
+        } else if (remoteBox.fnReturnType && remoteBox.fnReturnType !== 'void') {
+          let w = remoteBox
+          return `winval${w._id}`
+        } else if (depsConn.length > 0 && remoteBox.uis) {
+          let w = foundConnection.output
+          let uis = remoteBox.uis.find(u => w._id === u.outputID)
+
+          // foundConnection.output
+
+          return `${uis.name}${uis._id}`
+        } else if (depsConn.length > 0 && remoteBox.spread) {
+          let w = foundConnection.output
+          let uis = remoteBox.spread.find(u => w._id === u.outputID)
+
+          // foundConnection.output
+
+          return `${uis.name}${uis._id}`
+        } else {
+          return `${defaults}`
+        }
+      } else {
+        return `${defaults}`
+      }
+    } else {
+      return `${defaults}`
     }
-  `
+  }
 
-  return `
-    ${delcares}
-    ${functions}
-    ${main}
-  `
+  let spreader = ({ spread }) => {
+    return `${spread.vari} ${spread.name}${spread._id}`
+  }
+
+  win.inputs.forEach((inp, idx) => {
+    if (idx === 0) {
+      args += `${str({ inp, idx })}`
+    } else {
+      args += `, ${str({ inp, idx })} `
+    }
+  })
+
+  win.spreads = win.spreads || []
+  win.spreads.forEach((spread, idx) => {
+    if (idx === 0) {
+      args += `${spreader({ spread, idx })}`
+    } else {
+      args += `, ${spreader({ spread, idx })} `
+    }
+  })
+
+  return args
 }
 
-export const getFragmentCode = ({ wins, connetions }) => {
-  let delcares = ``
-  wins.forEach((win) => {
-    delcares += '\n'
-    delcares += win.declare
+export const getFnArgs = ({ win, wins, connections }) => {
+  let args = ``
+  win.inputs.forEach((inp, i) => {
+    if (i === 0) {
+      args += `in ${inp.argType} ${inp.arg}`
+    } else {
+      args += `, in ${inp.argType} ${inp.arg} `
+    }
+  })
+
+  win.spread = win.spread || []
+  win.spread.forEach((sp, i) => {
+    if (i === 0) {
+      args += `out ${sp.vari} ${sp.name}`
+    } else {
+      args += `, out ${sp.vari} ${sp.name}`
+    }
+  })
+  return args
+}
+
+export const makeFunc = ({ win, wins, connections }) => {
+  let fnReturnType = win.fnReturnType
+  if (!fnReturnType) {
+    return ``
+  }
+
+  let fnName = win.fnName
+  let fnID = win.fnID
+  let fnInner = win.fnInner
+  let fnArgs = getFnArgs({ win, wins, connections })
+  return `
+${fnReturnType} ${fnName}${fnID} (${fnArgs}) {
+  ${fnInner}
+}
+`
+}
+
+export const makeSpreadStr = ({ win, wins, connections }) => {
+  let str = ``
+
+  let hasSpread = win.spread.length > 0
+  if (hasSpread) {
+    let spread = win.spread
+    let firstInput = win.inputs[0]
+
+    let foundConnection = connections.find(c => c.input._id === firstInput._id)
+
+    // let localBoxID = foundConnection.input.boxID
+    // let currentDep = depsConn.find(con => con.output.boxID === remoteBoxID)
+    // let localBox = wins.find(w => w._id === localBoxID)
+
+    if (foundConnection) {
+      let remoteBoxID = foundConnection.output.boxID
+      let remoteBox = wins.find(w => w._id === remoteBoxID)
+      let remoteOutputIdx = foundConnection.output.uisIndex
+      if (remoteBox.fnReturnType && remoteBox.fnReturnType !== 'void') {
+        let w = remoteBox
+        return `winval${w._id}`
+      } else if (remoteBox && remoteBox.hasUIs) {
+        let hasUIs = remoteBox.hasUIs
+        if (hasUIs) {
+          let uis = remoteBox.uis[remoteOutputIdx]
+          if (uis) {
+            str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${uis.name}${uis._id};\n`
+          }
+        } else {
+          str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${firstInput.defaults};\n`
+        }
+      }
+    } else {
+      str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${firstInput.defaults};\n`
+    }
+
+    spread.forEach((ui, idx) => {
+      if (idx === 0) {
+        str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.x; \n`
+      } else if (idx === 1) {
+        str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.y; \n`
+      } else if (idx === 2) {
+        str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.z; \n`
+      } else if (idx === 3) {
+        str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.w; \n`
+      }
+
+      // if (ui.type === 'sp-vec4') {
+      // } else if (ui.type === 'sp-vec3') {
+      //   str += `${ui.vari} ${ui.name}${ui._id} = vec3(${ui.value0}, ${ui.value1}, ${ui.value2}); \n`
+      // } else if (ui.type === 'sp-vec2') {
+      //   str += `${ui.vari} ${ui.name}${ui._id} = vec2(${ui.value0}, ${ui.value1}); \n`
+      // }
+    })
+    return `${str}`
+  }
+  return `${str}`
+}
+
+export const makeStatements = ({ win, wins, connections }) => {
+  let str = ``
+  let hasUIs = win.hasUIs
+  if (hasUIs) {
+    let uis = win.uis
+    uis.forEach((ui) => {
+      if (ui.type === 'ui-float') {
+        str += `${ui.vari} ${ui.name}${ui._id} = ${ui.value}; \n`
+      } else if (ui.type === 'ui-vec4') {
+        str += `${ui.vari} ${ui.name}${ui._id} = vec4(${ui.value0}, ${ui.value1}, ${ui.value2}, ${ui.value3}); \n`
+      } else if (ui.type === 'ui-vec3') {
+        str += `${ui.vari} ${ui.name}${ui._id} = vec3(${ui.value0}, ${ui.value1}, ${ui.value2}); \n`
+      } else if (ui.type === 'ui-vec2') {
+        str += `${ui.vari} ${ui.name}${ui._id} = vec2(${ui.value0}, ${ui.value1}); \n`
+      }
+    })
+    return `${str}`
+  }
+
+  return `${str}`
+}
+
+export const rGetTree = ({ root, bucket, wins, connections }) => {
+  let fragment = {}
+  fragment.origin = root
+  fragment.depsConn = connections.filter(c => root._id === c.input.boxID)
+  bucket.push(fragment)
+
+  if (fragment.depsConn.length === 0) {
+  } else {
+    fragment.depsConn.forEach((con) => {
+      let rootID = con.output.boxID
+      let root = wins.find(w => w._id === rootID)
+      rGetTree({ root, bucket, wins, connections })
+    })
+  }
+}
+
+export const getDepTree = ({ wins, connections, sType }) => {
+  let vwins = wins.filter(w => w.shaderType === sType || w.shaderType === NS.SHADER_TYPES.BOTH)
+  let vroot = vwins.filter(v => v.isRoot)
+  let bucket = []
+  vroot.forEach((root) => {
+    rGetTree({ root, bucket, wins, connections })
+  })
+  // console.log(bucket)
+  return bucket
+}
+
+export const getShaderCode = ({ wins, connections, shaderType }) => {
+  let uis = ``
+
+  let vwins = wins.filter(w => w.shaderType === shaderType || w.shaderType === NS.SHADER_TYPES.BOTH)
+
+  vwins.forEach((win) => {
+    uis += makeStatements({ win, wins, connections })
   })
 
   let functions = ``
-  wins.forEach((win) => {
-    functions += '\n'
-    functions += `${win.func}`
-    functions += '\n'
-    functions += `${win.spread}`
+  vwins.forEach((win) => {
+    functions += `${makeFunc({ win, wins, connections })}`
+  })
+
+  let levels = getDepTree({ wins, connections, sType: NS.SHADER_TYPES.VERTEX })
+  let depExecs = ``
+  levels.slice().reverse().forEach((lvl) => {
+    let win = lvl.origin
+    win.spread = win.spread || {}
+    let isSpread = win.spread.length > 0
+    if (win.fnReturnType || isSpread) {
+      let args = getArgs({ win: win, wins, connections, depsConn: lvl.depsConn })
+      if (win.fnReturnType && win.fnReturnType !== 'void') {
+        depExecs += `  ${win.fnReturnType} winval${win._id} = ${win.fnName}${win.fnID}(${args});\n`
+      } else if (isSpread) {
+        depExecs += `  ${makeSpreadStr({ win, wins, connections })}\n`
+      } else {
+        depExecs += `  ${win.fnName}${win.fnID}(${args});\n`
+      }
+    }
+    // console.log(lvl.origin)
   })
 
   let main = `
-void main () {
+void main (void) {
+${depExecs}
 }
-  `
+`
 
   return `
-    ${delcares}
-    ${functions}
-    ${main}
+${uis}
+${functions}
+${main}
   `
 }
 
-export const getCode = ({ wins, connetions }) => {
+// export const getFragmentCode = ({ wins, connections }) => {
+//   let delcares = ``
+
+//   let fwins = wins.filter(w => w.shaderType === NS.SHADER_TYPES.FRAGMENT || w.shaderType === NS.SHADER_TYPES.BOTH)
+
+//   fwins.forEach((win) => {
+//     delcares += win.hasUIs
+//   })
+
+//   let functions = ``
+//   fwins.forEach((win) => {
+//     functions += `${makeFunc({ win, wins, connections })}`
+//   })
+
+//   let getRootCalls = fwins.filter(w => w.isRoot)
+
+//   // console.log(getRootCalls)
+//   let rootCalls = ``
+//   getRootCalls.forEach((rc) => {
+//     if (!rc.fnReturnType) {
+//       return
+//     }
+//     let args = getArgs({ win: rc, wins, connections })
+//     rootCalls += `${rc.fnName}${rc.fnID}(${args});`
+//   })
+
+//   let main = `
+// void main (void) {
+//   ${rootCalls}
+// }
+// `
+
+//   return `
+//     ${delcares}
+//     ${functions}
+//     ${main}
+//   `
+// }
+
+export const getCode = ({ wins, connections = [] }) => {
+  // console.log(connections)
   return {
-    vertexShader: getVertexCode({ wins, connetions }),
-    fragmentShader: getFragmentCode({ wins, connetions })
+    vertexShader: getShaderCode({ wins, connections, shaderType: NS.SHADER_TYPES.VERTEX }),
+    // fragmentShader: getFragmentCode({ wins, connections })
+    fragmentShader: `void main (void) {
+  gl_FragColor = vec4(0.0, 0.5, 0.0, 1.0);
+}`//
   }
 }

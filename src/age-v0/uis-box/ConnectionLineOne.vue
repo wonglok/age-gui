@@ -47,8 +47,8 @@ export default {
     }
   },
   async mounted () {
-    console.log(this.connectorDOMs)
-    console.log(this.connections)
+    // console.log(this.connectorDOMs)
+    // console.log(this.connections)
 
     let input = this.connection.input
     let output = this.connection.output

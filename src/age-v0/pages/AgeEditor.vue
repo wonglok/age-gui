@@ -1,18 +1,17 @@
 <template>
   <div class="age-editor full scroller age-layers">
     <ConnectionLines class="age-layer" :connections="connections" :connectorDOMs="connectorDOMs"></ConnectionLines>
-    <PreviewArea class="age-layer" :wins="wins" :previewDOMs="previewDOMs"></PreviewArea>
-    <Box @drop="onDropConnection" @clicker="onClickConnector" class="age-layer" :connections="connections" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
+    <PreviewArea class="age-layer" :wins="wins" :previewDOMs="previewDOMs" :connections="connections"></PreviewArea>
+
     <div class="posabs top-right">
       <button @click="overlay = 'add-module'">Add Module +</button>
-      <div class="flex-row">
-        <pre>{{ getCode().vertexShader }}</pre>
-        <pre>{{ getCode().fragmentShader }}</pre>
-      </div>
     </div>
 
-    <AddBoxMenu class="age-layer" v-if="overlay === 'add-module'"></AddBoxMenu>
+    <!-- <span v-show="false">{{ connections }}</span> -->
 
+    <Box @drop="onDropConnection" @clicker="onClickConnector" class="age-layer" :connections="connections" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
+
+    <AddBoxMenu class="age-layer" v-if="overlay === 'add-module'"></AddBoxMenu>
   </div>
 </template>
 
@@ -37,11 +36,13 @@ export default {
   },
   mounted () {
     this.createDefaultWin()
+
+    // // can remove after removing the debug area
+    // window.addEventListener('compile-shader', () => {
+    //   this.$forceUpdate()
+    // })
   },
   methods: {
-    getCode () {
-      return AGE.getCode({ wins: this.wins, connetions: this.connections })
-    },
     onDropConnection (v) {
       let arr = [v.hand, v.land]
       let stuff = {
@@ -53,7 +54,9 @@ export default {
         input: stuff.input,
         output: stuff.output
       })
-      console.log(JSON.stringify(this.connections, null, ' '))
+
+      // this.$forceUpdate()
+      // console.log(JSON.stringify(this.connections, null, ' '))
     },
     onClickConnector (conn) {
       let idx = -1
@@ -65,8 +68,7 @@ export default {
       if (idx !== -1) {
         this.connections.splice(idx, 1)
       }
-
-      console.log(JSON.stringify(conn, null, ' '))
+      // console.log(JSON.stringify(conn, null, ' '))
     },
     popOpenWin () {
       // AGE.makeVertexRoot({ wins: this.wins })
@@ -75,11 +77,51 @@ export default {
       AGE.makeVertexRoot({ wins: this.wins })
       AGE.makeFragmentRoot({ wins: this.wins })
       AGE.makePreviwBox({ wins: this.wins })
+      AGE.makeUINumber({ wins: this.wins })
+      AGE.makeUINumber({ wins: this.wins })
+      AGE.makeUIMultiply({ wins: this.wins })
+      AGE.makeUIVector4({ wins: this.wins })
+      AGE.makeSpreadV4({ wins: this.wins })
+
+      // this.connections.push({
+      //   output: this.wins[3].outputs[0],
+      //   input: this.wins[0].inputs[1]
+      // })
+
+      this.connections.push({
+        output: this.wins[3].outputs[0],
+        input: this.wins[5].inputs[0]
+      })
+
+      this.connections.push({
+        output: this.wins[4].outputs[0],
+        input: this.wins[5].inputs[1]
+      })
+
+      this.connections.push({
+        output: this.wins[7].outputs[0],
+        input: this.wins[0].inputs[1]
+      })
+
+      this.connections.push({
+        output: this.wins[6].outputs[0],
+        input: this.wins[7].inputs[0]
+      })
+
+      /* eslint-disable */
+      this.wins[0].pos = {"x":782,"y":487,"w":275,"h":88,"s":1}
+      this.wins[5].pos = {"x":347,"y":441,"w":275,"h":88,"s":1}
+      this.wins[3].pos = {"x":0,"y":280,"w":275,"h":62,"s":1}
+      this.wins[4].pos = {"x":1,"y":601,"w":275,"h":62,"s":1}
+
+      this.wins[2].pos = {"x":388,"y":106,"w":275,"h":226,"s":1}
+
+      this.wins[6].pos = {"x":3,"y":739,"w":275,"h":62,"s":1}
+      this.wins[7].pos = {"x":405,"y":665,"w":275,"h":140,"s":1}
     }
   }
 }
 </script>
 
 <style>
-
 </style>

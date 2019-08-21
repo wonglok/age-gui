@@ -119,7 +119,6 @@ body, html {
 }
 
 
-
 .flex-list{
   display: flex;
   flex-direction: column;
@@ -131,4 +130,5 @@ body, html {
 
 pre{
   margin: 10px;
+  font-size: 12px;
 }

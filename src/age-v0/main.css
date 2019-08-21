@@ -267,3 +267,14 @@
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
+
+.ui-input{
+  border-bottom: black solid 1px;
+  font-size: 12px;
+}
+
+.vector-inputs .ui-input{
+  width: 35px;
+  text-align: center;
+  margin: 0px 3px;
+}

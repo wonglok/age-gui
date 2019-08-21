@@ -13,6 +13,7 @@ let THREE = {
 
 export default {
   props: {
+    connections: {},
     wins: {},
     win: {},
     scenes: {},
@@ -20,17 +21,47 @@ export default {
   },
   data () {
     return {
+      shader: false,
+      mesh: false,
       group: {
         scene: false,
         render () {}
       }
     }
   },
+  watch: {
+    connections: {
+      deep: true,
+      handler () {
+        this.makeMat()
+      }
+    }
+  },
   beforeDestroy  () {
     delete this.scenes[this.preview.domID]
   },
+  methods: {
+    makeMat () {
+      let shader = this.shader = AGE.getCode({ wins: this.wins, connections: this.connections })
+      this.$emit('shader', shader)
+      var material = new THREE.ShaderMaterial({
+        vertexShader: shader.vertexShader,
+        fragmentShader: shader.fragmentShader,
+        transparent: true
+
+        // color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
+        // roughness: 0.5,
+        // metalness: 0,
+        // flatShading: true
+      })
+      if (this.mesh) {
+        this.mesh.material = material
+      }
+      return material
+    }
+  },
   async mounted () {
-    console.log(this.preview, this.wins, this.win, this.scenes)
+    // console.log(this.preview, this.wins, this.win, this.scenes)
 
     let dom = await AGE.getDOM({ domID: this.preview.domID })
     let rect = dom.getBoundingClientRect()
@@ -48,14 +79,15 @@ export default {
     controls.enablePan = false
     controls.enableZoom = false
 
-    let geometry = new THREE.DodecahedronBufferGeometry(6.5)
-    var material = new THREE.ShaderMaterial({
-      // color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
-      // roughness: 0.5,
-      // metalness: 0,
-      // flatShading: true
-    })
-    scene.add(new THREE.Mesh(geometry, material))
+    // console.log(this.connections)
+
+    let geometry = new THREE.SphereBufferGeometry(8.5, 32, 32)
+    let material = this.makeMat()
+    window.addEventListener('compile-shader', () => {
+      this.makeMat()
+    }, false)
+    let mesh = this.mesh = new THREE.Points(geometry, material)
+    scene.add(mesh)
     scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444))
     var light = new THREE.DirectionalLight(0xffffff, 0.5)
     light.position.set(1, 1, 1)
