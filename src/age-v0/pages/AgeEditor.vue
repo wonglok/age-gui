@@ -80,8 +80,8 @@ export default {
       AGE.makeUINumber({ wins: this.wins })
       AGE.makeUINumber({ wins: this.wins })
       AGE.makeUIMultiply({ wins: this.wins })
-      AGE.makeUIVector2({ wins: this.wins })
-      AGE.makeSpreadV2({ wins: this.wins })
+      AGE.makeUIVector4({ wins: this.wins })
+      AGE.makeSpreadV4({ wins: this.wins })
 
       // AGE.makeSpreadV3({ wins: this.wins })
       // AGE.makeSpreadV2({ wins: this.wins })

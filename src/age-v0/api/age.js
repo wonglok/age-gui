@@ -416,7 +416,9 @@ export const NS = {
     OUTPUT: 'output'
   },
   DEFAULT_VALUES: {
-    VEC4_0000: `vec4(0.0, 0.0, 0.0, 0.0)`,
+    VEC2: `vec2(0.0, 0.0)`,
+    VEC3: `vec3(0.0, 0.0, 0.0)`,
+    VEC4: `vec4(0.0, 0.0, 0.0, 0.0)`,
     float0: '0.0',
     float1: '1.0',
     gl_Position: 'vec4(position, 1.0)',
@@ -791,7 +793,7 @@ export const makeSpreadV4 = ({ wins }) => {
   win.preview = false
 
   win.inputs.push(
-    getIO({ argType: 'vec4', arg: `vec4Val`, spread: 'vec4Val', defaults: NS.DEFAULT_VALUES.VEC4_0000, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+    getIO({ argType: 'vec4', arg: `vec4Val`, spread: 'vec4Val', defaults: NS.DEFAULT_VALUES.VEC4, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
   )
 
   win.outputs.push(
@@ -863,7 +865,7 @@ export const makeSpreadV3 = ({ wins }) => {
   win.preview = false
 
   win.inputs.push(
-    getIO({ argType: 'vec3', arg: `vec3Val`, spread: 'vec3Val', defaults: NS.DEFAULT_VALUES.VEC3_000, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC3, label: 'vec3' })
+    getIO({ argType: 'vec3', arg: `vec3Val`, spread: 'vec3Val', defaults: NS.DEFAULT_VALUES.VEC3, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC3, label: 'vec3' })
   )
 
   win.outputs.push(
@@ -925,7 +927,7 @@ export const makeSpreadV2 = ({ wins }) => {
   win.preview = false
 
   win.inputs.push(
-    getIO({ argType: 'vec2', arg: `vec2Val`, spread: 'vec2Val', defaults: NS.DEFAULT_VALUES.VEC2_000, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC2, label: 'vec2' })
+    getIO({ argType: 'vec2', arg: `vec2Val`, spread: 'vec2Val', defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC2, label: 'vec2' })
   )
 
   win.outputs.push(
