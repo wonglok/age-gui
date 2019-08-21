@@ -6,9 +6,12 @@
     <div :key="preview.domID" v-for="preview in previewDOMs">
       <BoxSceneShaderPreview @shader="shader = $event" v-if="connections && getWin({ wins, preview }).type === 'preview-box'" :scenes="scenes" :preview="preview" :win="getWin({ wins, preview })" :wins="wins" :connections="connections"></BoxSceneShaderPreview>
     </div>
-    <div class="age-layer" v-if="shader" style="display: flex; justify-content: flex-end;">
-      <pre class="nosel">{{ shader.vertexShader }}
-{{ shader.fragmentShader }}</pre>
+    <div class="age-layer" v-if="shader" style="display: flex; justify-content: flex-end; align-items: flex-end;">
+      <div  style="display: flex; justify-content: flex-end;">
+        <pre class="nosel">{{ shader.vertexShader }}
+  ------------
+  {{ shader.fragmentShader }}</pre>
+      </div>
     </div>
     <!-- <Bubbles v-if="engine && engine.renderer && engine.scene && engine.camera" :camera="engine.camera" :amount="20" :renderer="engine.renderer" :scene="engine.scene"></Bubbles> -->
   </div>

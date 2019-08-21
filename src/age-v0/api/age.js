@@ -548,11 +548,11 @@ export const makeVertexRoot = ({ wins }) => {
   // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
 }
 
-export const makeUIMultiply = ({ wins }) => {
+export const makeUIMultiplyFloat = ({ wins }) => {
   let win = getWin()
   win.title = 'Float Multiply'
   win.type = 'output'
-  win.shaderType = NS.SHADER_TYPES.VERTEX
+  win.shaderType = NS.SHADER_TYPES.BOTH
   // win.previewType = NS.PREVIEW_TYPES.VERTEX
   win.preview = false
   // win.boxLogicType = 'module'
@@ -578,6 +578,41 @@ export const makeUIMultiply = ({ wins }) => {
   win.fnName = 'multiply'
   win.fnInner = `
   return float1 * float2;
+`
+
+  return win
+}
+
+export const makeUIAdd = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Float Add'
+  win.type = 'output'
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    getIO({ argType: 'float', arg: `float1`, defaults: NS.DEFAULT_VALUES.float1, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' }),
+    getIO({ argType: 'float', arg: `float2`, defaults: NS.DEFAULT_VALUES.float1, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' })
+  )
+
+  win.outputs.push(
+    getIO({ argType: 'float', arg: `float3`, defaults: NS.DEFAULT_VALUES.float1, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = 400
+
+  win.fnReturnType = 'float'
+  win.fnID = getID()
+  win.fnName = 'add'
+  win.fnInner = `
+  return float1 + float2;
 `
 
   return win
@@ -1004,6 +1039,43 @@ export const makeFragmentRoot = ({ wins }) => {
 `
 }
 
+export const makeMergeV4 = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Merge 4 Output'
+  win.type = 'output'
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    getIO({ argType: 'float', arg: `merge1`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'x' }),
+    getIO({ argType: 'float', arg: `merge2`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'y' }),
+    getIO({ argType: 'float', arg: `merge3`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'z' }),
+    getIO({ argType: 'float', arg: `merge4`, defaults: NS.DEFAULT_VALUES.float1, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'w' })
+  )
+
+  win.outputs.push(
+    getIO({ argType: 'float', arg: `vec4`, defaults: NS.DEFAULT_VALUES.VEC4, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  win.pos.x = 0
+  win.pos.y = 0
+
+  win.fnReturnType = 'vec4'
+  win.fnID = getID()
+  win.fnName = 'merge_vec4'
+  win.fnInner = `
+  return vec4(merge1, merge2, merge3, merge4);
+`
+}
+
 export const makePreviwBox = ({ wins }) => {
   let win = getWin()
   win.title = 'Shader Preview Box'
@@ -1264,6 +1336,7 @@ export const getShaderCode = ({ wins, connections, shaderType }) => {
 
   let levels = getDepTree({ wins, connections, sType: shaderType })
   let depExecs = ``
+  let map = new Map()
   levels.slice().reverse().forEach((lvl) => {
     let win = lvl.origin
     win.spread = win.spread || {}
@@ -1273,7 +1346,10 @@ export const getShaderCode = ({ wins, connections, shaderType }) => {
       if (win.fnReturnType && win.fnReturnType !== 'void') {
         depExecs += `  ${win.fnReturnType} winval${win._id} = ${win.fnName}${win.fnID}(${args});\n`
       } else if (isSpread) {
-        depExecs += `  ${makeSpreadStr({ win, wins, connections })}\n`
+        if (!map.has(win._id + shaderType)) {
+          map.set(win._id + shaderType, win)
+          depExecs += `  ${makeSpreadStr({ win, wins, connections })}\n`
+        }
       } else {
         depExecs += `  ${win.fnName}${win.fnID}(${args});\n`
       }
