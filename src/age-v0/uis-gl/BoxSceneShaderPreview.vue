@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     makeMat () {
-      let shader = this.shader = AGE.getCode({ wins: this.wins, connections: this.connections })
+      let shader = this.shader = AGE.GEN.getCode({ wins: this.wins, connections: this.connections })
       this.$emit('shader', shader)
       var material = new THREE.ShaderMaterial({
         vertexShader: shader.vertexShader,
@@ -63,7 +63,7 @@ export default {
   async mounted () {
     // console.log(this.preview, this.wins, this.win, this.scenes)
 
-    let dom = await AGE.getDOM({ domID: this.preview.domID })
+    let dom = await AGE.UI.getDOM({ domID: this.preview.domID })
     let rect = dom.getBoundingClientRect()
     let scene = this.group.scene = new THREE.Scene()
     let fov = 75

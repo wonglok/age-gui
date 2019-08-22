@@ -75,17 +75,17 @@ export default {
       // AGE.makeVertexRoot({ wins: this.wins })
     },
     createDefaultWin () {
-      AGE.makeVertexRoot({ wins: this.wins })
-      AGE.makeFragmentRoot({ wins: this.wins })
-      AGE.makePreviwBox({ wins: this.wins })
-      AGE.makeUINumber({ wins: this.wins })
-      AGE.makeUINumber({ wins: this.wins })
-      AGE.makeUIMultiplyFloat({ wins: this.wins })
-      AGE.makeUIVector4({ wins: this.wins })
-      AGE.makeSpreadV4({ wins: this.wins })
+      AGE.BOX.makeVertexRoot({ wins: this.wins })
+      AGE.BOX.makeFragmentRoot({ wins: this.wins })
+      AGE.BOX.makePreviwBox({ wins: this.wins })
+      AGE.BOX.makeUINumber({ wins: this.wins })
+      AGE.BOX.makeUINumber({ wins: this.wins })
+      AGE.BOX.makeUIMultiplyFloat({ wins: this.wins })
+      AGE.BOX.makeUIVector4({ wins: this.wins })
+      AGE.BOX.makeSpreadV4({ wins: this.wins })
 
-      // AGE.makeMergeV4({ wins: this.wins })
-      AGE.makeMergeV4({ wins: this.wins })
+      // AGE.BOX.makeMergeV4({ wins: this.wins })
+      AGE.BOX.makeMergeV4({ wins: this.wins })
 
       // AGE.makeSpreadV3({ wins: this.wins })
       // AGE.makeSpreadV2({ wins: this.wins })

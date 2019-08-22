@@ -34,7 +34,7 @@ export default {
     enableResize ({ subCompo }) {
       this.useResize = true
       this.$nextTick(() => {
-        let makeDrag = AGE.makeDrag
+        let makeDrag = AGE.UI.makeDrag
 
         let resize = () => {
           window.dispatchEvent(new Event('plot'))
@@ -140,7 +140,7 @@ export default {
       }
     },
     setupSubCompo ({ subCompo }) {
-      let makeDrag = AGE.makeDrag
+      let makeDrag = AGE.UI.makeDrag
       makeDrag({
         dom: subCompo.$refs['win-title'],
         onMM: ({ api }) => {

@@ -56,8 +56,8 @@ export default {
     let inputDOMInfo = this.connectorDOMs.find(e => e._id === input._id)
     let outputDOMInfo = this.connectorDOMs.find(e => e._id === output._id)
 
-    let inputDOM = await AGE.getDOM({ domID: inputDOMInfo.domID })
-    let outputDOM = await AGE.getDOM({ domID: outputDOMInfo.domID })
+    let inputDOM = await AGE.UI.getDOM({ domID: inputDOMInfo.domID })
+    let outputDOM = await AGE.UI.getDOM({ domID: outputDOMInfo.domID })
 
     window.addEventListener('plot', () => {
       let ri = inputDOM.getBoundingClientRect()

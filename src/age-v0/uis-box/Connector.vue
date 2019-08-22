@@ -57,7 +57,7 @@ const DnDFactory = () => {
           // Focus the element
           // el.omg()
           let sent = false
-          AGE.makeDrag({
+          AGE.UI.makeDrag({
             dom: el,
             onDown: ({ api }) => {
               sent = false

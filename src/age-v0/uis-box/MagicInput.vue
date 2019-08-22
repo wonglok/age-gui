@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     setupInput ({ idx = '' }) {
-      AGE.makeDrag({
+      AGE.UI.makeDrag({
         dom: this.$refs['input' + idx],
         onMM: ({ api, ev }) => {
           let kn = `value${idx}`

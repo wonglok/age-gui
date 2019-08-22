@@ -32,7 +32,7 @@ export default {
   async mounted () {
     console.log(this.preview, this.wins, this.win, this.scenes)
 
-    let dom = await AGE.getDOM({ domID: this.preview.domID })
+    let dom = await AGE.UI.getDOM({ domID: this.preview.domID })
     let rect = dom.getBoundingClientRect()
     let scene = this.group.scene = new THREE.Scene()
     let fov = 75
