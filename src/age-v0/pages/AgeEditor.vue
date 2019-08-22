@@ -66,6 +66,9 @@ export default {
           this.offset.x += api.dX
           this.offset.y += api.dY
           this.$forceUpdate()
+          this.$nextTick(() => {
+            this.$root.$forceUpdate()
+          })
         }
       })
     },
