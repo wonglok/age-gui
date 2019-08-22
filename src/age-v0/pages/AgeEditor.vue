@@ -1,5 +1,5 @@
 <template>
-  <div class="age-editor full">
+  <div class="age-editor full overflowhidden">
     <ConnectionLines :offset="offset" ref="lines" @dom="setupDrag" class="age-layer" :connections="connections" :connectorDOMs="connectorDOMs"></ConnectionLines>
     <PreviewArea class="age-layer" :wins="wins" :previewDOMs="previewDOMs" :connections="connections"></PreviewArea>
     <div ref="stuff" class="age-layer full"></div>
