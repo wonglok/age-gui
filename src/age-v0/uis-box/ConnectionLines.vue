@@ -1,7 +1,7 @@
 <template>
   <svg class="full connectionlines" :width="screen.ww" :height="screen.hh" style="margin-bottom: -6px;" :viewBox="viewBox">
     <!-- <rect x="500" y="500" width="500" height="500" fill="red"></rect> -->
-    <ConnectionLineOne :connection="connection" :connections="connections" :connectorDOMs="connectorDOMs" :key="connection.input._id + connection.output._id" v-for="connection in connections"></ConnectionLineOne>
+    <ConnectionLineOne :offset="offset" :connection="connection" :connections="connections" :connectorDOMs="connectorDOMs" :key="connection.input._id + connection.output._id" v-for="connection in connections"></ConnectionLineOne>
   </svg>
 </template>
 
@@ -36,15 +36,20 @@ export default {
   },
   computed: {
     offsetX () {
-      return this.offset.x || 0
+      return this.offset.x
     },
     offsetY () {
-      return this.offset.y || 0
+      return this.offset.y
     }
   },
   mounted () {
     this.viewBox = this.calcViewBox()
     window.addEventListener('resize', () => {
+      this.screen.ww = window.innerWidth
+      this.screen.hh = window.innerHeight
+      this.viewBox = this.calcViewBox()
+    })
+    window.addEventListener('plot', () => {
       this.screen.ww = window.innerWidth
       this.screen.hh = window.innerHeight
       this.viewBox = this.calcViewBox()

@@ -32,6 +32,7 @@ import * as AGE from '../api/age'
 
 export default {
   props: {
+    offset: {},
     connection: {},
     connections: {},
     connectorDOMs: {}
@@ -62,10 +63,10 @@ export default {
     window.addEventListener('plot', () => {
       let ri = inputDOM.getBoundingClientRect()
       let ro = outputDOM.getBoundingClientRect()
-      let ix = ri.left + ri.width / 2
-      let iy = ri.top + ri.height / 2
-      let ox = ro.left + ro.width / 2
-      let oy = ro.top + ro.height / 2
+      let ix = -this.offset.x + ri.left + ri.width / 2
+      let iy = -this.offset.y + ri.top + ri.height / 2
+      let ox = -this.offset.x + ro.left + ro.width / 2
+      let oy = -this.offset.y + ro.top + ro.height / 2
 
       let dx = (ox - ix) / 3 * 2
 

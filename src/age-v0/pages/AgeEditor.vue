@@ -38,22 +38,21 @@ export default {
   mounted () {
     this.createDefaultWin()
 
-    let dom = document.body
-    dom.addEventListener('wheel', (evt) => {
-      evt.preventDefault()
-      this.offset.x += -evt.deltaX
-      this.offset.y += -evt.deltaY
-      this.$forceUpdate()
-      this.$nextTick(() => {
-        this.$root.$forceUpdate()
-        window.dispatchEvent(new Event('plot'))
-      })
-    }, { passive: false })
-
     this.setupDrag({ dom: this.$refs.stuff })
   },
   methods: {
     setupDrag ({ dom }) {
+      document.body.addEventListener('wheel', (evt) => {
+        evt.preventDefault()
+        this.offset.x += -evt.deltaX
+        this.offset.y += -evt.deltaY
+        this.$forceUpdate()
+        this.$nextTick(() => {
+          this.$root.$forceUpdate()
+          window.dispatchEvent(new Event('plot'))
+        })
+      }, { passive: false })
+
       AGE.UI.makeDrag({
         dom,
         onMM: ({ api, ev }) => {
