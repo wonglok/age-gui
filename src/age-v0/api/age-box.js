@@ -691,7 +691,7 @@ export const makeVaryingV4 = ({ wins }) => {
     win.fnID = getID()
     win.fnName = 'vec4_varying_getter'
     win.fnInner = `
-    return  ${win.variName}${variID};
+    return ${win.variName}${variID};
   `
 
     return win

@@ -112,7 +112,7 @@ ${fnReturnType} ${fnName}${fnID} (${fnArgs}) {
 `
 }
 
-export const makeSpreadStr = ({ win, wins, connections }) => {
+export const makeSpreadStr = ({ win, wins, connections, args }) => {
   let str = ``
 
   let hasSpread = win.spread.length > 0
@@ -130,10 +130,8 @@ export const makeSpreadStr = ({ win, wins, connections }) => {
       let remoteBoxID = foundConnection.output.boxID
       let remoteBox = wins.find(w => w._id === remoteBoxID)
       let remoteOutputIdx = foundConnection.output.uisIndex
-      if (remoteBox.fnReturnType && remoteBox.fnReturnType !== 'void') {
-        // let w = remoteBox
-        // return `winval${w._id};\n`
-      } else if (remoteBox && remoteBox.hasUIs) {
+
+      if (remoteBox && remoteBox.hasUIs) {
         let hasUIs = remoteBox.hasUIs
         if (hasUIs) {
           let uis = remoteBox.uis[remoteOutputIdx]
@@ -143,6 +141,8 @@ export const makeSpreadStr = ({ win, wins, connections }) => {
         } else {
           str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${firstInput.defaults};\n`
         }
+      } else if (remoteBox && remoteBox.isVarying) {
+        str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${remoteBox.variName}${remoteBox.variID};\n`
       }
     } else {
       str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${firstInput.defaults};\n`
@@ -242,6 +242,7 @@ export const getShaderCode = ({ wins, connections, shaderType }) => {
   let levels = getDepTree({ wins, connections, sType: shaderType })
   let depExecs = ``
   let spreadMap = new Map()
+  let varyingMap = new Map()
   levels.slice().reverse().forEach((lvl) => {
     let win = lvl.origin
     win.spread = win.spread || {}
@@ -249,11 +250,19 @@ export const getShaderCode = ({ wins, connections, shaderType }) => {
     if (win.fnReturnType || isSpread) {
       let args = getArgs({ win: win, wins, connections, depsConn: lvl.depsConn })
       if (win.fnReturnType && win.fnReturnType !== 'void') {
-        depExecs += `  ${win.fnReturnType} winval${win._id} = ${win.fnName}${win.fnID}(${args});\n`
+        if (win.isVarying) {
+          if (win.shaderType === shaderType && !varyingMap.has(win._id + shaderType)) {
+            varyingMap.set(win._id + shaderType, true)
+            depExecs += `  ${win.fnReturnType} winval${win._id} = ${win.fnName}${win.fnID}(${args});\n`
+          }
+        } else {
+          depExecs += `  ${win.fnReturnType} winval${win._id} = ${win.fnName}${win.fnID}(${args});\n`
+        }
       } else if (isSpread) {
         if (!spreadMap.has(win._id + shaderType)) {
           spreadMap.set(win._id + shaderType, win)
-          depExecs += `  ${makeSpreadStr({ win, wins, connections })}\n`
+          // depExecs += `  ${win.fnReturnType} winval${win._id} = ${win.fnName}${win.fnID}(${args});\n`
+          depExecs += `  ${makeSpreadStr({ win, wins, connections, args })}\n`
         }
       } else {
         depExecs += `  ${win.fnName}${win.fnID}(${args});\n`

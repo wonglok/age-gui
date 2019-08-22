@@ -71,18 +71,18 @@ export default {
       // console.log(JSON.stringify(conn, null, ' '))
     },
     createDefaultWin () {
-      AGE.BOX.makeVertexRoot({ wins: this.wins })
-      AGE.BOX.makeFragmentRoot({ wins: this.wins })
-      AGE.BOX.makePreviwBox({ wins: this.wins })
-      AGE.BOX.makeUINumber({ wins: this.wins })
-      AGE.BOX.makeUINumber({ wins: this.wins })
-      AGE.BOX.makeUIMultiplyFloat({ wins: this.wins })
-      AGE.BOX.makeUIVector4({ wins: this.wins })
+      AGE.BOX.makeVertexRoot({ wins: this.wins }) // 0
+      AGE.BOX.makeFragmentRoot({ wins: this.wins }) // 1
+      AGE.BOX.makePreviwBox({ wins: this.wins }) // 2
+      AGE.BOX.makeUINumber({ wins: this.wins }) // 3
+      AGE.BOX.makeUINumber({ wins: this.wins }) // 4
+      AGE.BOX.makeUIMultiplyFloat({ wins: this.wins }) // 5
+      AGE.BOX.makeUIVector4({ wins: this.wins }) // 6
 
-      // AGE.BOX.makeMergeV4({ wins: this.wins })
-      // AGE.BOX.makeMergeV4({ wins: this.wins })
+      AGE.BOX.makeSpreadV4({ wins: this.wins }) // 7
+      AGE.BOX.makeMergeV4({ wins: this.wins }) // 8
 
-      AGE.BOX.makeVaryingV4({ wins: this.wins })
+      AGE.BOX.makeVaryingV4({ wins: this.wins }) // 9 vertex , 10 fragment
 
       // AGE.makeSpreadV3({ wins: this.wins })
       // AGE.makeSpreadV2({ wins: this.wins })
@@ -100,6 +100,11 @@ export default {
       this.connections.push({
         output: this.wins[4].outputs[0],
         input: this.wins[5].inputs[1]
+      })
+
+      this.connections.push({
+        output: this.wins[10].outputs[0],
+        input: this.wins[7].inputs[0]
       })
 
       // this.connections.push({
@@ -123,18 +128,18 @@ export default {
       this.wins[6].pos = {"x":3,"y":739,"w":275,"h":62,"s":1}
       this.wins[7].pos = {"x":405,"y":665,"w":275,"h":140,"s":1}
 
-      // let mixed = require('./demo.json')
-      // this.wins = mixed.wins
-      // this.connections = mixed.connections
-      // this.$forceUpdate()
+      let mixed = require('./demo.json')
+      this.wins = mixed.wins
+      this.connections = mixed.connections
+      this.$forceUpdate()
 
-      // window.copyme = () => {
-      //   let str = JSON.stringify({
-      //     wins: this.wins,
-      //     connections: this.connections
-      //   })
-      //   console.log(`${str}`)
-      // }
+      window.copyme = () => {
+        let str = JSON.stringify({
+          wins: this.wins,
+          connections: this.connections
+        })
+        console.log(`${str}`)
+      }
 
       // AGE.BOX.makeMergeV4({ wins: this.wins })
     }
