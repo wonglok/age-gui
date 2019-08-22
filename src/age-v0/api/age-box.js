@@ -46,7 +46,7 @@ export const getWin = () => {
 export const makeVertexRoot = ({ wins }) => {
   let win = getWin()
   win.title = 'Vertex Shader Output'
-  win.type = 'output'
+  win.type = 'yellow'
   win.shaderType = NS.SHADER_TYPES.VERTEX
   // win.previewType = NS.PREVIEW_TYPES.VERTEX
   win.preview = false
