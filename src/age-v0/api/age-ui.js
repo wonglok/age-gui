@@ -1,4 +1,3 @@
-
 export const getDOM = ({ domID }) => {
   return new Promise((resolve) => {
     let tout = 0
@@ -114,29 +113,28 @@ export const makeDrag = ({ dom, onMM = () => {}, onDown = () => {}, onUp = () =>
       mod.down = false
     }
   }
-  window.addEventListener('mouseup', mod.onUp, false)
-  window.addEventListener('touchend', mod.onUp, false)
-  // window.addEventListener('touchcancel', mod.onUp, false)
+  window.addEventListener('mouseup', mod.onUp, { passive: false })
+  window.addEventListener('touchend', mod.onUp, { passive: false })
+  // window.addEventListener('touchcancel', mod.onUp, { passive: false })
 
-  mod.dom.addEventListener('mouseup', mod.onUp, false)
-  mod.dom.addEventListener('touchend', mod.onUp, false)
-  // mod.dom.addEventListener('touchcancel', mod.onUp, false)
+  mod.dom.addEventListener('mouseup', mod.onUp, { passive: false })
+  mod.dom.addEventListener('touchend', mod.onUp, { passive: false })
+  // mod.dom.addEventListener('touchcancel', mod.onUp, { passive: false })
 
-  //
-  mod.dom.addEventListener('mousedown', mod.onMD, false)
-  mod.dom.addEventListener('mousemove', mod.onMM, false)
-  mod.dom.addEventListener('mouseup', mod.onMU, false)
+  mod.dom.addEventListener('mousedown', mod.onMD, { passive: false })
+  mod.dom.addEventListener('mousemove', mod.onMM, { passive: false })
+  mod.dom.addEventListener('mouseup', mod.onMU, { passive: false })
 
-  window.addEventListener('mousemove', mod.onMM, false)
-  window.addEventListener('mouseup', mod.onMU, false)
+  window.addEventListener('mousemove', mod.onMM, { passive: false })
+  window.addEventListener('mouseup', mod.onMU, { passive: false })
 
-  mod.dom.addEventListener('touchstart', mod.onTS, false)
-  mod.dom.addEventListener('touchmove', mod.onTM, false)
-  mod.dom.addEventListener('touchend', mod.onTE, false)
-  mod.dom.addEventListener('touchcancel', mod.onTE, false)
-  window.addEventListener('touchmove', mod.onTM, false)
-  window.addEventListener('touchend', mod.onTE, false)
-  window.addEventListener('touchcancel', mod.onTE, false)
+  mod.dom.addEventListener('touchstart', mod.onTS, { passive: false })
+  mod.dom.addEventListener('touchmove', mod.onTM, { passive: false })
+  mod.dom.addEventListener('touchend', mod.onTE, { passive: false })
+  mod.dom.addEventListener('touchcancel', mod.onTE, { passive: false })
+  window.addEventListener('touchmove', mod.onTM, { passive: false })
+  window.addEventListener('touchend', mod.onTE, { passive: false })
+  window.addEventListener('touchcancel', mod.onTE, { passive: false })
 }
 
 // export const DnDFactory = () => {

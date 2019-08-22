@@ -1,15 +1,13 @@
 <template>
-  <div class="age-editor full scroller age-layers">
-    <ConnectionLines class="age-layer" :connections="connections" :connectorDOMs="connectorDOMs"></ConnectionLines>
+  <div class="age-editor full">
+    <ConnectionLines :style="getStyle()" class="age-layer" :connections="connections" :connectorDOMs="connectorDOMs"></ConnectionLines>
     <PreviewArea class="age-layer" :wins="wins" :previewDOMs="previewDOMs" :connections="connections"></PreviewArea>
-
+    <div :style="getStyle()" class="full" ref="dragger">
+      <Box @drop="onDropConnection" @clicker="onClickConnector" class="age-layer" :connections="connections" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
+    </div>
     <div class="posabs top-right">
       <button @click="overlay = 'add-module'">Add Module +</button>
     </div>
-
-    <!-- <span v-show="false">{{ connections }}</span> -->
-
-    <Box @drop="onDropConnection" @clicker="onClickConnector" class="age-layer" :connections="connections" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
 
     <AddBoxMenu class="age-layer" v-if="overlay === 'add-module'"></AddBoxMenu>
   </div>
@@ -27,6 +25,10 @@ export default {
   },
   data () {
     return {
+      offset: {
+        x: 0,
+        y: 0
+      },
       overlay: '',
       previewDOMs: [],
       connectorDOMs: [],
@@ -37,12 +39,40 @@ export default {
   },
   mounted () {
     this.createDefaultWin()
+
+    let dom = document.body
+    dom.addEventListener('wheel', (evt) => {
+      evt.preventDefault()
+      this.offset.x += -evt.deltaX
+      this.offset.y += -evt.deltaY
+    }, { passive: false })
+
+    // dom.addEventListener('drag', (evt) => {
+    //   evt.preventDefault()
+    //   this.offset.x += -evt.deltaX
+    //   this.offset.y += -evt.deltaY
+    // }, { passive: false })
+
+    AGE.UI.makeDrag({
+      dom: this.$refs['dragger'],
+      onMM: ({ api, ev }) => {
+        this.offset.x += api.dX
+        this.offset.y += api.dY
+        this.$forceUpdate()
+      }
+    })
+
     // // can remove after removing the debug area
     // window.addEventListener('compile-shader', () => {
     //   this.$forceUpdate()
     // })
   },
   methods: {
+    getStyle () {
+      return {
+        transform: `translate3d(${this.offset.x}px, ${this.offset.y}px, 0px)`
+      }
+    },
     onDropConnection (v) {
       let arr = [v.hand, v.land]
       let stuff = {
