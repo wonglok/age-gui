@@ -6,7 +6,7 @@
     <div :key="preview.domID" v-for="preview in previewDOMs">
       <BoxSceneShaderPreview @shader="shader = $event" v-if="connections && getWin({ wins, preview }).type === 'preview-box'" :scenes="scenes" :preview="preview" :win="getWin({ wins, preview })" :wins="wins" :connections="connections"></BoxSceneShaderPreview>
     </div>
-    <div class="age-layer" ref="dom" style="display: flex; justify-content: flex-end; align-items: flex-end;">
+    <div class="nomouse age-layer" ref="dom" style="display: flex; justify-content: flex-end; align-items: flex-end;">
       <div  style="display: flex; justify-content: flex-end;">
         <pre  v-if="shader" class="">{{ shader.vertexShader }}
   ------------
@@ -38,7 +38,6 @@ export default {
     }
   },
   mounted () {
-    this.$emit('dom', { dom: this.$refs['dom'] })
   },
   methods: {
     getWin ({ wins, preview }) {

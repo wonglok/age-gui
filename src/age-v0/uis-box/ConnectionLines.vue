@@ -11,19 +11,35 @@ export default {
     ConnectionLineOne: require('./ConnectionLineOne.vue').default
   },
   props: {
+    offset: {
+      default () {
+        return {
+          x: 0,
+          y: 0
+        }
+      }
+    },
     connections: {},
     connectorDOMs: {}
   },
   data () {
     return {
-      offsetX: 0,
-      offsetY: 0,
+      // offsetX: 0,
+      // offsetY: 0,
       viewBox: `0 0 1 1`,
       screen: {
         ww: window.innerWidth,
         hh: window.innerHeight
       },
       scale: 1
+    }
+  },
+  computed: {
+    offsetX () {
+      return this.offset.x || 0
+    },
+    offsetY () {
+      return this.offset.y || 0
     }
   },
   mounted () {

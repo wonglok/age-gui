@@ -93,7 +93,7 @@ body, html {
 .nosel{
   user-select: none;
 }
-.noclick{
+.noclick, .nomouse{
   pointer-events: none;
 }
 

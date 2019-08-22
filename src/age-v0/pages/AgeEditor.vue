@@ -1,14 +1,12 @@
 <template>
   <div class="age-editor full">
-    <ConnectionLines :style="getStyle()" class="age-layer" :connections="connections" :connectorDOMs="connectorDOMs"></ConnectionLines>
-    <PreviewArea @dom="setupDrag" class="age-layer" :wins="wins" :previewDOMs="previewDOMs" :connections="connections"></PreviewArea>
-    <div :style="getStyle()">
-      <Box @drop="onDropConnection" @clicker="onClickConnector" class="age-layer" :connections="connections" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
-    </div>
+    <ConnectionLines :offset="offset" ref="lines" @dom="setupDrag" class="age-layer" :connections="connections" :connectorDOMs="connectorDOMs"></ConnectionLines>
+    <PreviewArea class="age-layer" :wins="wins" :previewDOMs="previewDOMs" :connections="connections"></PreviewArea>
+    <div ref="stuff" class="age-layer full"></div>
+    <Box :offset="offset" @drop="onDropConnection" @clicker="onClickConnector" class="age-layer" :connections="connections" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
     <div class="posabs top-right">
       <button @click="overlay = 'add-module'">Add Module +</button>
     </div>
-
     <AddBoxMenu class="age-layer" v-if="overlay === 'add-module'"></AddBoxMenu>
   </div>
 </template>
@@ -45,18 +43,14 @@ export default {
       evt.preventDefault()
       this.offset.x += -evt.deltaX
       this.offset.y += -evt.deltaY
+      this.$forceUpdate()
+      this.$nextTick(() => {
+        this.$root.$forceUpdate()
+        window.dispatchEvent(new Event('plot'))
+      })
     }, { passive: false })
 
-    // dom.addEventListener('drag', (evt) => {
-    //   evt.preventDefault()
-    //   this.offset.x += -evt.deltaX
-    //   this.offset.y += -evt.deltaY
-    // }, { passive: false })
-
-    // // can remove after removing the debug area
-    // window.addEventListener('compile-shader', () => {
-    //   this.$forceUpdate()
-    // })
+    this.setupDrag({ dom: this.$refs.stuff })
   },
   methods: {
     setupDrag ({ dom }) {
@@ -68,6 +62,7 @@ export default {
           this.$forceUpdate()
           this.$nextTick(() => {
             this.$root.$forceUpdate()
+            window.dispatchEvent(new Event('plot'))
           })
         }
       })

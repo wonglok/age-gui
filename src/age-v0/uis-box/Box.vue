@@ -16,6 +16,7 @@ export default {
     BoxDefault: require('./BoxDefault.vue').default
   },
   props: {
+    offset: {},
     type: {},
     win: {},
     wins: {},
@@ -136,7 +137,7 @@ export default {
         height: `${this.win.pos.h}px`,
         minHeight: `calc(56px)`,
         minWidth: `calc(100px)`,
-        transform: `translate3d(${this.win.pos.x}px, ${this.win.pos.y}px, 1px)`
+        transform: `translate3d(${this.offset.x + this.win.pos.x}px, ${this.offset.y + this.win.pos.y}px, 1px)`
       }
     },
     setupSubCompo ({ subCompo }) {
