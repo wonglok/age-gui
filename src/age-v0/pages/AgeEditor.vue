@@ -1,8 +1,8 @@
 <template>
   <div class="age-editor full">
     <ConnectionLines :style="getStyle()" class="age-layer" :connections="connections" :connectorDOMs="connectorDOMs"></ConnectionLines>
-    <PreviewArea class="age-layer" :wins="wins" :previewDOMs="previewDOMs" :connections="connections"></PreviewArea>
-    <div :style="getStyle()" class="full" ref="dragger">
+    <PreviewArea @dom="setupDrag" class="age-layer" :wins="wins" :previewDOMs="previewDOMs" :connections="connections"></PreviewArea>
+    <div :style="getStyle()">
       <Box @drop="onDropConnection" @clicker="onClickConnector" class="age-layer" :connections="connections" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
     </div>
     <div class="posabs top-right">
@@ -53,21 +53,22 @@ export default {
     //   this.offset.y += -evt.deltaY
     // }, { passive: false })
 
-    AGE.UI.makeDrag({
-      dom: this.$refs['dragger'],
-      onMM: ({ api, ev }) => {
-        this.offset.x += api.dX
-        this.offset.y += api.dY
-        this.$forceUpdate()
-      }
-    })
-
     // // can remove after removing the debug area
     // window.addEventListener('compile-shader', () => {
     //   this.$forceUpdate()
     // })
   },
   methods: {
+    setupDrag ({ dom }) {
+      AGE.UI.makeDrag({
+        dom,
+        onMM: ({ api, ev }) => {
+          this.offset.x += api.dX
+          this.offset.y += api.dY
+          this.$forceUpdate()
+        }
+      })
+    },
     getStyle () {
       return {
         transform: `translate3d(${this.offset.x}px, ${this.offset.y}px, 0px)`
