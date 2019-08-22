@@ -101,7 +101,8 @@ body, html {
   appearance: none;
   box-shadow: none;
   border: none;
-  border-radius: none;
+  outline: none;
+  border-radius: 0px;
   font-size: 17px;
 }
 
