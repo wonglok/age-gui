@@ -116,7 +116,7 @@ export default {
     },
     // { _id: omg, val: omg, io: 'input', type: 'sampler2D', label: 'vec4' }
     focusApp () {
-      AGE.focusApp({ wins: this.wins, win: this.win })
+      AGE.UI.getDOM({ wins: this.wins, win: this.win })
     },
     getTitleStyle () {
       let types = AGE.boxColorTypes

@@ -44,6 +44,7 @@ export default {
     makeMat () {
       let shader = this.shader = AGE.GEN.getCode({ wins: this.wins, connections: this.connections })
       this.$emit('shader', shader)
+
       var material = new THREE.ShaderMaterial({
         vertexShader: shader.vertexShader,
         fragmentShader: shader.fragmentShader,
