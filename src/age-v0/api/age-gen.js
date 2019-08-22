@@ -176,9 +176,10 @@ export const makeStatements = ({ win, wins, connections }) => {
   let hasUIs = win.hasUIs
   if (hasUIs) {
     let uis = win.uis
+
     uis.forEach((ui) => {
       if (ui.type === 'ui-float') {
-        str += `${ui.vari} ${ui.name}${ui._id} = ${ui.value}; \n`
+        str += `${ui.vari} ${ui.name}${ui._id} = ${Number(ui.value).toFixed(5)}; \n`
       } else if (ui.type === 'ui-vec4') {
         str += `${ui.vari} ${ui.name}${ui._id} = vec4(${ui.value0}, ${ui.value1}, ${ui.value2}, ${ui.value3}); \n`
       } else if (ui.type === 'ui-vec3') {
