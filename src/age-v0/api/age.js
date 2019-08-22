@@ -11,6 +11,9 @@ export const UI = require('./age-ui.js')
 
 export const NS = {
   SHADER_TYPES: {
+    BOTH: 'both',
+    VARYING_VERTEX: 'varying_vertex',
+    VARYING_FRAGMENT: 'varying_fragment',
     VERTEX: 'vertexShader',
     FRAGMENT: 'fragmentShader'
   },
@@ -39,16 +42,19 @@ export const NS = {
 }
 
 export const boxColorTypes = {
-  'preview-box': `linear-gradient(251deg, #ccc 9%, #b1b1b1 100%)`,
+  // 'preview-box': `linear-gradient(251deg, #ccc 9%, #b1b1b1 100%)`,
+
+  'purple': `linear-gradient(251deg, rgba(214, 192, 255, 0.72) 9%, rgb(133, 27, 255) 100%)`,
+  'fragment': `linear-gradient(251deg, rgba(214, 192, 255, 0.72) 9%, rgb(133, 27, 255) 100%)`,
   vertexinput: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   output: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   statement: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   uniform: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   attribute: `linear-gradient(251deg, rgba(255,192,192,0.72) 9%, #FF1B1B 100%)`,
-  previewWin: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
-  varying: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
+  default: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
+  'preview-box': `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
   function: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`,
-  default: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`
+  varying: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`
 }
 
 export const connectorColorTypes = {

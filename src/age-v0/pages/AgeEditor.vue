@@ -37,7 +37,6 @@ export default {
   },
   mounted () {
     this.createDefaultWin()
-
     // // can remove after removing the debug area
     // window.addEventListener('compile-shader', () => {
     //   this.$forceUpdate()
@@ -71,9 +70,6 @@ export default {
       }
       // console.log(JSON.stringify(conn, null, ' '))
     },
-    popOpenWin () {
-      // AGE.makeVertexRoot({ wins: this.wins })
-    },
     createDefaultWin () {
       AGE.BOX.makeVertexRoot({ wins: this.wins })
       AGE.BOX.makeFragmentRoot({ wins: this.wins })
@@ -82,10 +78,11 @@ export default {
       AGE.BOX.makeUINumber({ wins: this.wins })
       AGE.BOX.makeUIMultiplyFloat({ wins: this.wins })
       AGE.BOX.makeUIVector4({ wins: this.wins })
-      AGE.BOX.makeSpreadV4({ wins: this.wins })
 
       // AGE.BOX.makeMergeV4({ wins: this.wins })
-      AGE.BOX.makeMergeV4({ wins: this.wins })
+      // AGE.BOX.makeMergeV4({ wins: this.wins })
+
+      AGE.BOX.makeVaryingV4({ wins: this.wins })
 
       // AGE.makeSpreadV3({ wins: this.wins })
       // AGE.makeSpreadV2({ wins: this.wins })
@@ -105,15 +102,15 @@ export default {
         input: this.wins[5].inputs[1]
       })
 
-      this.connections.push({
-        output: this.wins[7].outputs[0],
-        input: this.wins[0].inputs[1]
-      })
+      // this.connections.push({
+      //   output: this.wins[7].outputs[0],
+      //   input: this.wins[0].inputs[1]
+      // })
 
-      this.connections.push({
-        output: this.wins[6].outputs[0],
-        input: this.wins[7].inputs[0]
-      })
+      // this.connections.push({
+      //   output: this.wins[6].outputs[0],
+      //   input: this.wins[7].inputs[0]
+      // })
 
       /* eslint-disable */
       this.wins[0].pos = {"x":782,"y":487,"w":275,"h":88,"s":1}
@@ -125,6 +122,21 @@ export default {
 
       this.wins[6].pos = {"x":3,"y":739,"w":275,"h":62,"s":1}
       this.wins[7].pos = {"x":405,"y":665,"w":275,"h":140,"s":1}
+
+      // let mixed = require('./demo.json')
+      // this.wins = mixed.wins
+      // this.connections = mixed.connections
+      // this.$forceUpdate()
+
+      // window.copyme = () => {
+      //   let str = JSON.stringify({
+      //     wins: this.wins,
+      //     connections: this.connections
+      //   })
+      //   console.log(`${str}`)
+      // }
+
+      // AGE.BOX.makeMergeV4({ wins: this.wins })
     }
   }
 }

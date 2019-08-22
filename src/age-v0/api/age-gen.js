@@ -131,8 +131,8 @@ export const makeSpreadStr = ({ win, wins, connections }) => {
       let remoteBox = wins.find(w => w._id === remoteBoxID)
       let remoteOutputIdx = foundConnection.output.uisIndex
       if (remoteBox.fnReturnType && remoteBox.fnReturnType !== 'void') {
-        let w = remoteBox
-        return `winval${w._id}`
+        // let w = remoteBox
+        // return `winval${w._id};\n`
       } else if (remoteBox && remoteBox.hasUIs) {
         let hasUIs = remoteBox.hasUIs
         if (hasUIs) {
@@ -224,9 +224,14 @@ export const getShaderCode = ({ wins, connections, shaderType }) => {
   let uis = ``
 
   let vwins = wins.filter(w => w.shaderType === shaderType || w.shaderType === NS.SHADER_TYPES.BOTH)
-
+  let varying = ``
   vwins.forEach((win) => {
     uis += makeStatements({ win, wins, connections })
+  })
+  vwins.forEach((win) => {
+    if (win.isVarying && win.shaderType === shaderType) {
+      varying += `varying ${win.variType} ${win.variName}${win.variID};\n`
+    }
   })
 
   let functions = ``
@@ -236,7 +241,7 @@ export const getShaderCode = ({ wins, connections, shaderType }) => {
 
   let levels = getDepTree({ wins, connections, sType: shaderType })
   let depExecs = ``
-  let map = new Map()
+  let spreadMap = new Map()
   levels.slice().reverse().forEach((lvl) => {
     let win = lvl.origin
     win.spread = win.spread || {}
@@ -246,8 +251,8 @@ export const getShaderCode = ({ wins, connections, shaderType }) => {
       if (win.fnReturnType && win.fnReturnType !== 'void') {
         depExecs += `  ${win.fnReturnType} winval${win._id} = ${win.fnName}${win.fnID}(${args});\n`
       } else if (isSpread) {
-        if (!map.has(win._id + shaderType)) {
-          map.set(win._id + shaderType, win)
+        if (!spreadMap.has(win._id + shaderType)) {
+          spreadMap.set(win._id + shaderType, win)
           depExecs += `  ${makeSpreadStr({ win, wins, connections })}\n`
         }
       } else {
@@ -264,50 +269,12 @@ ${depExecs}
 `
 
   return `
+${varying}
 ${uis}
 ${functions}
 ${main}
   `
 }
-
-// export const getFragmentCode = ({ wins, connections }) => {
-//   let delcares = ``
-
-//   let fwins = wins.filter(w => w.shaderType === NS.SHADER_TYPES.FRAGMENT || w.shaderType === NS.SHADER_TYPES.BOTH)
-
-//   fwins.forEach((win) => {
-//     delcares += win.hasUIs
-//   })
-
-//   let functions = ``
-//   fwins.forEach((win) => {
-//     functions += `${makeFunc({ win, wins, connections })}`
-//   })
-
-//   let getRootCalls = fwins.filter(w => w.isRoot)
-
-//   // console.log(getRootCalls)
-//   let rootCalls = ``
-//   getRootCalls.forEach((rc) => {
-//     if (!rc.fnReturnType) {
-//       return
-//     }
-//     let args = getArgs({ win: rc, wins, connections })
-//     rootCalls += `${rc.fnName}${rc.fnID}(${args});`
-//   })
-
-//   let main = `
-// void main (void) {
-//   ${rootCalls}
-// }
-// `
-
-//   return `
-//     ${delcares}
-//     ${functions}
-//     ${main}
-//   `
-// }
 
 export const getCode = ({ wins, connections = [] }) => {
   // console.log(connections)

@@ -51,7 +51,7 @@ const DnDFactory = () => {
               }, [])
               noDuplicate = !connected.some(e => e === landData._id) && !connected.some(e => e === handData._id)
             }
-            return noDuplicate && landData && handData && landData.boxID !== handData.boxID && landData.io !== handData.io && landData.type === handData.type
+            return noDuplicate && landData && handData && landData.boxID !== handData.boxID && landData.io !== handData.io && landData.type === handData.type && (landData.shader === handData.shader || landData.shader === AGE.NS.SHADER_TYPES.BOTH || handData.shader === AGE.NS.SHADER_TYPES.BOTH)
           }
 
           // Focus the element

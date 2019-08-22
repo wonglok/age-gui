@@ -36,7 +36,6 @@ export default {
     this.stop()
   },
   created () {
-
   },
   mounted () {
     this.init()

@@ -8,7 +8,7 @@
     </div>
     <div class="age-layer" v-if="shader" style="display: flex; justify-content: flex-end; align-items: flex-end;">
       <div  style="display: flex; justify-content: flex-end;">
-        <pre class="nosel">{{ shader.vertexShader }}
+        <pre class="">{{ shader.vertexShader }}
   ------------
   {{ shader.fragmentShader }}</pre>
       </div>
