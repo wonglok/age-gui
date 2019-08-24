@@ -8,10 +8,11 @@
       </h1>
       <p>
         Resize
-        <input type="checkbox" v-model="win.resize" />
+        <input type="checkbox" v-model="win.resize"  />
       </p>
-      <p>
 
+      <p v-if="win">
+        <textarea v-model="win.fnInner" cols="30" rows="10" @input="compile"></textarea>
       </p>
       <button @click="remove()">Remove this</button>
       <div>
@@ -49,7 +50,11 @@ export default {
     window.addEventListener('keydown', close)
   },
   methods: {
+    compile () {
+      window.dispatchEvent(new Event('compile-shader'))
+    },
     close () {
+      this.compile()
       this.$parent.overlay = false
       this.$emit('save', true)
     },

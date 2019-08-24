@@ -50,6 +50,13 @@
           <button @click="adder('makeUIMultiplyFloat')">Float</button>
         </div>
 
+        <div class="age-addbox-menu-item">
+          <p>
+            <strong>Duplicate</strong>
+          </p>
+          <button @click="adder('makeDuplicateV4')">Vector 4</button>
+        </div>
+
         <!-- <div class="age-addbox-menu-item">
           <p>
             <strong>Spread</strong>
@@ -57,7 +64,9 @@
           <button @click="adder('makeSpreadV4')">Vector 4</button>
           <button @click="adder('makeSpreadV3')">Vector 3</button>
           <button @click="adder('makeSpreadV2')">Vector 2</button>
-        </div>
+        </div> -->
+
+        <!--
 
         <div class="age-addbox-menu-item">
           <p>
@@ -72,9 +81,8 @@
           <p>
             <strong>Function</strong>
           </p>
-          <button @click="adder('makeModifierV4')">Vector 4</button>
-          <button @click="() => {}">Vector 3</button>
-          <button @click="() => {}">Vector 2</button>
+          <button @click="adder('makeVertexFunction')">Vertex Function</button>
+          <button @click="adder('makeFragmentFunction')">Fragment Function</button>
         </div>
 
         <div class="age-addbox-menu-item">

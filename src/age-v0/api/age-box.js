@@ -546,6 +546,7 @@ export const makeUniformTimer = ({ wins }) => {
   )
 
   win.outputs.push(
+    getIO({ shader: win.shaderType, uisIndex: 0, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' }),
     getIO({ shader: win.shaderType, uisIndex: 0, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' })
     // getIO({ shader: win.shaderType, defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
   )
@@ -805,11 +806,11 @@ export const makeFragmentRoot = ({ wins }) => {
   return win
 }
 
-export const makeModifierV4 = ({ wins }) => {
+export const makeVertexFunction = ({ wins }) => {
   let win = getWin()
-  win.title = 'Modifier 4 Output'
-  win.type = 'output'
-  win.shaderType = NS.SHADER_TYPES.BOTH
+  win.title = 'Vertex Function'
+  win.type = 'custom-function'
+  win.shaderType = NS.SHADER_TYPES.VERTEX
   // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
   win.preview = false
   // win.boxLogicType = 'module'
@@ -842,10 +843,86 @@ export const makeModifierV4 = ({ wins }) => {
   return win
 }
 
+export const makeFragmentFunction = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Fragment Function'
+  win.type = 'custom-function'
+  win.shaderType = NS.SHADER_TYPES.VERTEX
+  // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    getIO({ shader: win.shaderType, argType: 'vec4', arg: `vec4_a`, defaults: NS.DEFAULT_VALUES.VEC4, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' }),
+    getIO({ shader: win.shaderType, argType: 'vec4', arg: `vec4_b`, defaults: NS.DEFAULT_VALUES.VEC4, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+  )
+
+  win.outputs.push(
+    getIO({ shader: win.shaderType, argType: 'float', arg: `vec4`, defaults: NS.DEFAULT_VALUES.VEC4, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  win.pos.x = 0
+  win.pos.y = 0
+
+  win.fnReturnType = 'vec4'
+  win.fnID = getID()
+  win.fnName = 'fn_vec4'
+  win.fnInner = `
+  return vec4_a + vec4_b;
+`
+
+  return win
+}
+
+export const makeDuplicateV4 = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Duplicate Vector 4 Output'
+  win.type = 'red'
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    getIO({ shader: win.shaderType, argType: 'vec4', arg: `vec4input`, defaults: NS.DEFAULT_VALUES.vec40, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+  )
+
+  win.outputs.push(
+    getIO({ shader: win.shaderType, argType: 'vec4', arg: `vec4`, defaults: NS.DEFAULT_VALUES.VEC4, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' }),
+    getIO({ shader: win.shaderType, argType: 'vec4', arg: `vec4`, defaults: NS.DEFAULT_VALUES.VEC4, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  win.pos.x = 0
+  win.pos.y = 0
+
+  win.isDuplicate = true
+
+  win.fnReturnType = 'vec4'
+  win.fnID = getID()
+  win.fnName = 'duplicate_v4'
+  win.fnInner = `
+    return vec4input;
+  `
+
+  return win
+}
+
 export const makeMergeV4 = ({ wins }) => {
   let win = getWin()
   win.title = 'Merge 4 Output'
-  win.type = 'output'
+  win.type = 'merge'
   win.shaderType = NS.SHADER_TYPES.BOTH
   // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
   win.preview = false

@@ -75,28 +75,33 @@ export default {
       this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
     },
     setupSampler2D ({ config, win, uniforms, uni }) {
-      if (!textureMAP.has(uni.url)) {
+      if (!textureMAP.has(uni.url) && !config.map) {
         let texture = new THREE.TextureLoader().load(uni.url, (newTexture) => {
           let ww = newTexture.image.width
           let hh = newTexture.image.height
-          let size = 17
+          let size = 22
           config.transparent = true
-          this.mesh.geometry = new THREE.PlaneBufferGeometry(size, size * hh / ww, 32, 32)
+          this.mesh.geometry = new THREE.PlaneBufferGeometry(size / (hh / ww), size, 32, 32)
+          textureMAP.set(uni.url, uni.url)
+          config.map = texture
+          this.$nextTick(() => {
+            texture.needsUpdate = true
+            this.$nextTick(() => {
+              this.mesh.material.needsUpdate = true
+            })
+          })
         }, () => {
 
         }, () => {
         })
-        textureMAP.set(uni.url, texture)
+
+        config.map = texture
         // uniforms[uni.name + uni._id] = {
         //   value: texture
         // }
         config.transparent = false
-        config.map = textureMAP.get(uni.url)
       } else {
-        // uniforms[uni.name + uni._id] = {
-        //   value: textureMAP.get(uni.url)
-        // }
-        config.map = textureMAP.get(uni.url)
+
       }
     },
     makeMat () {
@@ -109,9 +114,7 @@ export default {
 
       let uniforms = {
       }
-      let config = {
-        uniforms
-      }
+      let config = this.config
 
       let conn = this.connections.find(e => e.output.boxID === this.win._id)
 

@@ -23,17 +23,11 @@ export const getArgs = ({ win, wins, connections, depsConn = [] }) => {
           let val = `${uis.name}${uis._id}`
           return `${val || defaults}`
         } else if (remoteBox.fnReturnType && remoteBox.fnReturnType !== 'void') {
-          let w = remoteBox
-          return `winval${w._id}`
+          let win = remoteBox
+          return `fnValue${win.fnID}OUT${foundConnection.output._id}`
         } else if (depsConn.length > 0 && remoteBox.uis) {
           let w = foundConnection.output
           let uis = remoteBox.uis.find(u => w._id === u.outputID)
-          // foundConnection.output
-
-          return `${uis.name}${uis._id}`
-        } else if (depsConn.length > 0 && remoteBox.spread && remoteBox.spread.length > 0) {
-          let w = foundConnection.output
-          let uis = remoteBox.spread.find(u => w._id === u.outputID)
           // foundConnection.output
 
           return `${uis.name}${uis._id}`
@@ -57,9 +51,9 @@ export const getArgs = ({ win, wins, connections, depsConn = [] }) => {
     }
   }
 
-  let spreader = ({ spread }) => {
-    return `${spread.vari} ${spread.name}${spread._id}`
-  }
+  // let spreader = ({ spread }) => {
+  //   return `${spread.vari} ${spread.name}${spread._id}`
+  // }
 
   win.inputs.forEach((inp, idx) => {
     if (idx === 0) {
@@ -69,14 +63,14 @@ export const getArgs = ({ win, wins, connections, depsConn = [] }) => {
     }
   })
 
-  win.spreads = win.spreads || []
-  win.spreads.forEach((spread, idx) => {
-    if (idx === 0) {
-      args += `${spreader({ spread, idx })}`
-    } else {
-      args += `, ${spreader({ spread, idx })} `
-    }
-  })
+  // win.spreads = win.spreads || []
+  // win.spreads.forEach((spread, idx) => {
+  //   if (idx === 0) {
+  //     args += `${spreader({ spread, idx })}`
+  //   } else {
+  //     args += `, ${spreader({ spread, idx })} `
+  //   }
+  // })
 
   return args
 }
@@ -91,14 +85,14 @@ export const getFnArgs = ({ win, wins, connections }) => {
     }
   })
 
-  win.spread = win.spread || []
-  win.spread.forEach((sp, i) => {
-    if (i === 0) {
-      args += `out ${sp.vari} ${sp.name}`
-    } else {
-      args += `, out ${sp.vari} ${sp.name}`
-    }
-  })
+  // win.spread = win.spread || []
+  // win.spread.forEach((sp, i) => {
+  //   if (i === 0) {
+  //     args += `out ${sp.vari} ${sp.name}`
+  //   } else {
+  //     args += `, out ${sp.vari} ${sp.name}`
+  //   }
+  // })
   return args
 }
 
@@ -119,64 +113,64 @@ ${fnReturnType} ${fnName}${fnID} (${fnArgs}) {
 `
 }
 
-export const makeSpreadStr = ({ win, wins, connections, args }) => {
-  let str = ``
+// export const makeSpreadStr = ({ win, wins, connections, args }) => {
+//   let str = ``
 
-  let hasSpread = win.spread.length > 0
-  if (hasSpread) {
-    let spread = win.spread
-    let firstInput = win.inputs[0]
+//   let hasSpread = win.spread.length > 0
+//   if (hasSpread) {
+//     let spread = win.spread
+//     let firstInput = win.inputs[0]
 
-    let foundConnection = connections.find(c => c.input._id === firstInput._id)
+//     let foundConnection = connections.find(c => c.input._id === firstInput._id)
 
-    // let localBoxID = foundConnection.input.boxID
-    // let currentDep = depsConn.find(con => con.output.boxID === remoteBoxID)
-    // let localBox = wins.find(w => w._id === localBoxID)
+//     // let localBoxID = foundConnection.input.boxID
+//     // let currentDep = depsConn.find(con => con.output.boxID === remoteBoxID)
+//     // let localBox = wins.find(w => w._id === localBoxID)
 
-    if (foundConnection) {
-      let remoteBoxID = foundConnection.output.boxID
-      let remoteBox = wins.find(w => w._id === remoteBoxID)
-      let remoteOutputIdx = foundConnection.output.uisIndex
+//     if (foundConnection) {
+//       let remoteBoxID = foundConnection.output.boxID
+//       let remoteBox = wins.find(w => w._id === remoteBoxID)
+//       let remoteOutputIdx = foundConnection.output.uisIndex
 
-      if (remoteBox && remoteBox.hasUIs) {
-        let hasUIs = remoteBox.hasUIs
-        if (hasUIs) {
-          let uis = remoteBox.uis[remoteOutputIdx]
-          if (uis) {
-            str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${uis.name}${uis._id};\n`
-          }
-        } else {
-          str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${firstInput.defaults};\n`
-        }
-      } else if (remoteBox && remoteBox.isVarying) {
-        str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${remoteBox.variName}${remoteBox.variID};\n`
-      }
-    } else {
-      str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${firstInput.defaults};\n`
-    }
+//       if (remoteBox && remoteBox.hasUIs) {
+//         let hasUIs = remoteBox.hasUIs
+//         if (hasUIs) {
+//           let uis = remoteBox.uis[remoteOutputIdx]
+//           if (uis) {
+//             str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${uis.name}${uis._id};\n`
+//           }
+//         } else {
+//           str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${firstInput.defaults};\n`
+//         }
+//       } else if (remoteBox && remoteBox.isVarying) {
+//         str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${remoteBox.variName}${remoteBox.variID};\n`
+//       }
+//     } else {
+//       str += `${firstInput.argType} ${firstInput.spread}${firstInput._id} = ${firstInput.defaults};\n`
+//     }
 
-    spread.forEach((ui, idx) => {
-      if (idx === 0) {
-        str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.x; \n`
-      } else if (idx === 1) {
-        str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.y; \n`
-      } else if (idx === 2) {
-        str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.z; \n`
-      } else if (idx === 3) {
-        str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.w; \n`
-      }
+//     spread.forEach((ui, idx) => {
+//       if (idx === 0) {
+//         str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.x; \n`
+//       } else if (idx === 1) {
+//         str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.y; \n`
+//       } else if (idx === 2) {
+//         str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.z; \n`
+//       } else if (idx === 3) {
+//         str += `  ${ui.vari} ${ui.name}${ui._id} = ${firstInput.arg}${firstInput._id}.w; \n`
+//       }
 
-      // if (ui.type === 'sp-vec4') {
-      // } else if (ui.type === 'sp-vec3') {
-      //   str += `${ui.vari} ${ui.name}${ui._id} = vec3(${ui.value0}, ${ui.value1}, ${ui.value2}); \n`
-      // } else if (ui.type === 'sp-vec2') {
-      //   str += `${ui.vari} ${ui.name}${ui._id} = vec2(${ui.value0}, ${ui.value1}); \n`
-      // }
-    })
-    return `${str}`
-  }
-  return `${str}`
-}
+//       // if (ui.type === 'sp-vec4') {
+//       // } else if (ui.type === 'sp-vec3') {
+//       //   str += `${ui.vari} ${ui.name}${ui._id} = vec3(${ui.value0}, ${ui.value1}, ${ui.value2}); \n`
+//       // } else if (ui.type === 'sp-vec2') {
+//       //   str += `${ui.vari} ${ui.name}${ui._id} = vec2(${ui.value0}, ${ui.value1}); \n`
+//       // }
+//     })
+//     return `${str}`
+//   }
+//   return `${str}`
+// }
 
 export const makeUIs = ({ win, wins, connections }) => {
   let str = ``
@@ -277,31 +271,25 @@ export const getShaderCode = ({ wins, connections, shaderType }) => {
 
   let levels = getDepTree({ wins, connections, sType: shaderType })
   let depExecs = ``
-  let spreadMap = new Map()
-  let varyingMap = new Map()
+  let noDuplicate = new Map()
   levels.slice().reverse().forEach((lvl) => {
     let win = lvl.origin
     win.spread = win.spread || {}
-    let isSpread = win.spread.length > 0
-    if (win.fnReturnType || isSpread) {
-      let args = getArgs({ win: win, wins, connections, depsConn: lvl.depsConn })
-      if (win.fnReturnType && win.fnReturnType !== 'void') {
-        if (win.isVarying) {
-          if (win.shaderType === shaderType && !varyingMap.has(win._id + shaderType)) {
-            varyingMap.set(win._id + shaderType, true)
-            depExecs += `  ${win.fnReturnType} winval${win._id} = ${win.fnName}${win.fnID}(${args});\n`
-          }
-        } else {
-          depExecs += `  ${win.fnReturnType} winval${win._id} = ${win.fnName}${win.fnID}(${args});\n`
-        }
-      } else if (isSpread) {
-        if (!spreadMap.has(win._id + shaderType)) {
-          spreadMap.set(win._id + shaderType, win)
-          // depExecs += `  ${win.fnReturnType} winval${win._id} = ${win.fnName}${win.fnID}(${args});\n`
-          depExecs += `  ${makeSpreadStr({ win, wins, connections, args })}\n`
-        }
-      } else {
+    let args = getArgs({ win: win, wins, connections, depsConn: lvl.depsConn })
+    if (win.fnReturnType) {
+      if (win.fnReturnType === 'void') {
         depExecs += `  ${win.fnName}${win.fnID}(${args});\n`
+      } else if (win.fnReturnType !== 'void') {
+        if (!noDuplicate.has(`fnValue${win.fnID}CACHE`)) {
+          noDuplicate.set(`fnValue${win.fnID}CACHE`, true)
+          depExecs += `  ${win.fnReturnType} fnValue${win.fnID}CACHE = ${win.fnName}${win.fnID}(${args});\n`
+          win.outputs.forEach((output) => {
+            if (!noDuplicate.has(`fnValue${win.fnID}OUT${output._id}`)) {
+              noDuplicate.set(`fnValue${win.fnID}OUT${output._id}`, true)
+              depExecs += `  ${win.fnReturnType} fnValue${win.fnID}OUT${output._id} = fnValue${win.fnID}CACHE;\n`
+            }
+          })
+        }
       }
     }
     // console.log(lvl.origin)
@@ -323,13 +311,8 @@ ${main}
 }
 
 export const getCode = ({ wins, connections = [] }) => {
-  // console.log(connections)
   return {
     vertexShader: getShaderCode({ wins, connections, shaderType: NS.SHADER_TYPES.VERTEX }),
     fragmentShader: getShaderCode({ wins, connections, shaderType: NS.SHADER_TYPES.FRAGMENT })
-    // fragmentShader: getFragmentCode({ wins, connections })
-    //     `void main (void) {
-    //   gl_FragColor = vec4(0.0, 0.5, 0.0, 1.0);
-    // }`//
   }
 }
