@@ -12,7 +12,7 @@
       <!-- <button @click="load">Load</button> -->
       <button @click="clear">Clear All</button>
     </div>
-    <AddBoxMenu @save="onSave()" @connections="connections = $event" @wins="wins = $event" :connections="connections" :wins="wins" class="age-layer" v-if="overlay === 'add-module'"></AddBoxMenu>
+    <AddBoxMenu :offset="offset" @save="onSave()" @connections="connections = $event" @wins="wins = $event" :connections="connections" :wins="wins" class="age-layer" v-if="overlay === 'add-module'"></AddBoxMenu>
     <EditBoxStuff @save="onSave()" :winID="currentWinID" :connections="connections" :wins="wins" class="age-layer" v-if="overlay === 'fix-module'"></EditBoxStuff>
   </div>
 </template>

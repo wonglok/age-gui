@@ -2,10 +2,17 @@
   <div class="full age-addbox-wrap scroller">
     <div class="age-addbox-close-plane full" @click="close()">
     </div>
-    <div class="age-addbox-content ">
+    <div class="age-addbox-content">
       <h1>
         Edit Module
       </h1>
+      <p>
+        Resize
+        <input type="checkbox" v-model="win.resize" />
+      </p>
+      <p>
+
+      </p>
       <button @click="remove()">Remove this</button>
       <div>
         <p>JSON</p>
@@ -31,6 +38,15 @@ export default {
     return {
       win: this.wins.find(e => e._id === this.winID)
     }
+  },
+  mounted () {
+    let close = (evt) => {
+      window.removeEventListener('close', close)
+      if (evt.keyCode === 127) {
+        this.close()
+      }
+    }
+    window.addEventListener('keydown', close)
   },
   methods: {
     close () {

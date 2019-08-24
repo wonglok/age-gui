@@ -281,6 +281,7 @@
 
 .age-addbox-row{
   display: flex;
+  flex-wrap: wrap;
 }
 
 .age-addbox-menu-item{

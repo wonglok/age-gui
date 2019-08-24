@@ -31,6 +31,13 @@ export default {
       omg: 0
     }
   },
+  watch: {
+    'win.resize' () {
+      if (this.win.resize) {
+        this.enableResize({ subCompo: this })
+      }
+    }
+  },
   methods: {
     enableResize ({ subCompo }) {
       this.useResize = true
@@ -53,9 +60,9 @@ export default {
             if (this.win.pos.w < 76) {
               this.win.pos.w = 76
             }
-            if (this.win.pos.h < 100) {
-              this.win.pos.h = 100
-            }
+            // if (this.win.pos.h < 86) {
+            //   this.win.pos.h = 86
+            // }
             resize()
           }
         })
@@ -71,9 +78,9 @@ export default {
             if (this.win.pos.w < 76) {
               this.win.pos.w = 76
             }
-            if (this.win.pos.h < 100) {
-              this.win.pos.h = 100
-            }
+            // if (this.win.pos.h < 86) {
+            //   this.win.pos.h = 86
+            // }
             resize()
           }
         })
@@ -89,9 +96,9 @@ export default {
             if (this.win.pos.w < 76) {
               this.win.pos.w = 76
             }
-            if (this.win.pos.h < 100) {
-              this.win.pos.h = 100
-            }
+            // if (this.win.pos.h < 86) {
+            //   this.win.pos.h = 86
+            // }
             resize()
           }
         })
@@ -107,9 +114,9 @@ export default {
             if (this.win.pos.w < 76) {
               this.win.pos.w = 76
             }
-            if (this.win.pos.h < 100) {
-              this.win.pos.h = 100
-            }
+            // if (this.win.pos.h < 86) {
+            //   this.win.pos.h = 86
+            // }
             resize()
           }
         })
@@ -135,7 +142,7 @@ export default {
         left: '0px',
         width: `${this.win.pos.w}px`,
         height: `${this.win.pos.h}px`,
-        minHeight: `calc(56px)`,
+        minHeight: `calc(26px)`,
         minWidth: `calc(100px)`,
         transform: `translate3d(${this.offset.x + this.win.pos.x}px, ${this.offset.y + this.win.pos.y}px, 1px)`
       }

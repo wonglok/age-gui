@@ -7,7 +7,7 @@
 import * as AGE from '../api/age'
 import _ from 'lodash'
 
-let texutreCache = new Map()
+let textureMAP = new Map()
 
 let THREE = {
   ...require('three'),
@@ -74,17 +74,25 @@ export default {
       cancelAnimationFrame(this.rAFID[uni.name + uni._id] || 0)
       this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
     },
-    setupSampler2D ({ win, uniforms, uni }) {
-      if (!texutreCache.has(uni.url)) {
-        let texture = new THREE.TextureLoader().load(uni.url)
-        texutreCache.set(uni.url, texture)
-        uniforms[uni.name + uni._id] = {
-          value: texture
-        }
+    setupSampler2D ({ config, win, uniforms, uni }) {
+      if (!textureMAP.has(uni.url)) {
+        let texture = new THREE.TextureLoader().load(uni.url, (newTexture) => {
+          let ww = newTexture.image.width
+          let hh = newTexture.image.height
+          let size = 17
+
+          this.mesh.geometry = new THREE.PlaneBufferGeometry(size, size * hh / ww, 32, 32)
+        })
+        textureMAP.set(uni.url, texture)
+        // uniforms[uni.name + uni._id] = {
+        //   value: texture
+        // }
+        config.map = textureMAP.get(uni.url)
       } else {
-        uniforms[uni.name + uni._id] = {
-          value: texutreCache.get(uni.url)
-        }
+        // uniforms[uni.name + uni._id] = {
+        //   value: textureMAP.get(uni.url)
+        // }
+        config.map = textureMAP.get(uni.url)
       }
     },
     makeMat () {
@@ -108,15 +116,15 @@ export default {
             if (uni.uniType === 'timer') {
               this.setupTimer({ uniforms, uni })
             } else if (uni.uniType === 'sampler2D') {
-              this.setupSampler2D({ win, uniforms, uni })
+              this.setupSampler2D({ config, win, uniforms, uni })
             }
           })
         }
       })
 
-      var material = new THREE.ShaderMaterial({
-        vertexShader: shader.vertexShader,
-        fragmentShader: shader.fragmentShader,
+      var material = new THREE.MeshBasicMaterial({
+        // vertexShader: shader.vertexShader,
+        // fragmentShader: shader.fragmentShader,
         transparent: true,
         ...config
         // color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
@@ -152,12 +160,12 @@ export default {
 
     // console.log(this.connections)
 
-    let geometry = new THREE.SphereBufferGeometry(8.5, 32, 32)
+    let geometry = new THREE.PlaneBufferGeometry(8.5 * 2, 8.5 * 2, 32)
     let material = this.makeMat()
     window.addEventListener('compile-shader', () => {
       this.makeMat()
     }, false)
-    let mesh = this.mesh = new THREE.Points(geometry, material)
+    let mesh = this.mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
     scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444))
     var light = new THREE.DirectionalLight(0xffffff, 0.5)
@@ -173,7 +181,7 @@ export default {
 
     this.group.render = ({ renderer }) => {
       controls.update()
-      scene.children[0].rotation.y += 0.01
+      // scene.children[0].rotation.y += 0.01
       let rect = dom.getBoundingClientRect()
 
       if (rect.bottom < 0 || rect.top > renderer.domElement.clientHeight ||

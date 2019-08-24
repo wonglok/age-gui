@@ -20,12 +20,15 @@
           <div :key="ui.id" v-for="ui in $parent.win.uis || []" class="full center">
             <MagicInput :ui="ui"></MagicInput>
           </div>
+          <div :key="ui.id" v-for="ui in $parent.win.uniforms || []" class="full center">
+            <TextureLoader v-if="$parent.win.isTexture" :ui="ui"></TextureLoader>
+          </div>
         </div>
         <div class="flex-list age-connector-list">
           <Connector @drop="$emit('drop', $event)" @clicker="$emit('clicker', $event)" :connectorDOMs="connectorDOMs" :connections="connections" class="age-output" :key="output._id" v-for="output in $parent.win.outputs" :userdata="output"></Connector>
         </div>
       </div>
-      <div class="center full" v-if="win.preview">
+      <div class="full" v-if="win.preview">
         <PreviewRect :win="win" :previewDOMs="previewDOMs"></PreviewRect>
       </div>
     </div>
@@ -43,6 +46,7 @@ export default {
     connectorDOMs: {}
   },
   components: {
+    TextureLoader: require('./TextureLoader.vue').default,
     MagicInput: require('./MagicInput.vue').default,
     PreviewRect: require('./PreviewRect.vue').default,
     Connector: require('./Connector.vue').default

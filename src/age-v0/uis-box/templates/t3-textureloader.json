@@ -1,0 +1,619 @@
+{
+  "wins": [
+    {
+      "_id": "_50804866_",
+      "title": "Vertex Shader Output",
+      "type": "yellow",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 457,
+        "y": 219,
+        "w": 275,
+        "h": 88,
+        "s": 1
+      },
+      "inputs": [
+        {
+          "shader": "vertexShader",
+          "argType": "vec4",
+          "arg": "newPos",
+          "defaults": "vec4(position, 1.0)",
+          "boxID": "_50804866_",
+          "io": "input",
+          "type": "vec4",
+          "label": "gl_Position",
+          "_id": "_49235941_"
+        },
+        {
+          "shader": "vertexShader",
+          "argType": "float",
+          "arg": "newPtSize",
+          "defaults": "1.0",
+          "boxID": "_50804866_",
+          "io": "input",
+          "type": "float",
+          "label": "gl_PointSize",
+          "_id": "_27968737_"
+        }
+      ],
+      "outputs": [],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": true,
+      "shaderType": "vertexShader",
+      "fnReturnType": "void",
+      "fnID": "_6488492_",
+      "fnName": "vertex_root",
+      "fnInner": "\n gl_Position = projectionMatrix * modelViewMatrix * newPos;\n gl_PointSize = newPtSize;\n",
+      "spreads": []
+    },
+    {
+      "_id": "_88221392_",
+      "title": "Fragment Shader Output",
+      "type": "fragment",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 1130,
+        "y": 382,
+        "w": 275,
+        "h": 62,
+        "s": 1
+      },
+      "inputs": [
+        {
+          "shader": "fragmentShader",
+          "argType": "vec4",
+          "arg": "outputColor",
+          "defaults": "vec4(0.5, 0.5, 0.5, 0.5)",
+          "boxID": "_88221392_",
+          "io": "input",
+          "type": "vec4",
+          "label": "gl_FragColor",
+          "_id": "_76290455_"
+        }
+      ],
+      "outputs": [],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": true,
+      "shaderType": "fragmentShader",
+      "fnReturnType": "void",
+      "fnID": "_1409115_",
+      "fnName": "fragment_root",
+      "fnInner": "\n gl_FragColor = outputColor;\n",
+      "spreads": []
+    },
+    {
+      "_id": "_5405138_",
+      "title": "Shader Preview Box",
+      "type": "preview-box",
+      "transition": "",
+      "order": 0,
+      "preview": true,
+      "pos": {
+        "x": 1101,
+        "y": 133,
+        "w": 285,
+        "h": 226,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": true,
+      "shaderType": "preview-box",
+      "resize": true
+    },
+    {
+      "_id": "_76566312_",
+      "title": "Number Input",
+      "type": "vertexinput",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 46,
+        "y": 293,
+        "w": 275,
+        "h": 62,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "shader": "both",
+          "uisIndex": 0,
+          "defaults": "0.0",
+          "boxID": "_76566312_",
+          "io": "output",
+          "type": "float",
+          "label": "float",
+          "_id": "_70157248_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "both",
+      "fnReturnType": "",
+      "fnID": "_94581012_",
+      "fnName": "",
+      "fnInner": "",
+      "hasUIs": true,
+      "uis": [
+        {
+          "_id": "_86340387_",
+          "type": "ui-float",
+          "vari": "float",
+          "name": "floatValue",
+          "value": "3.25",
+          "outputID": "_70157248_",
+          "outputIDX": 0
+        }
+      ]
+    },
+    {
+      "_id": "_66722638_",
+      "title": "Varying UV Vector2 (Vertex Shader)",
+      "type": "purple",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 55,
+        "y": 678,
+        "w": 275,
+        "h": 26,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": true,
+      "shaderType": "vertexShader",
+      "isVarying": true,
+      "variType": "vec2",
+      "variName": "varying_v2_value",
+      "variID": "_76964566_",
+      "fnReturnType": "void",
+      "fnID": "_68203434_",
+      "fnName": "vec2_varying_setter",
+      "fnInner": "\n  varying_v2_value_76964566_ = uv;\n  ",
+      "spreads": []
+    },
+    {
+      "_id": "_97862899_",
+      "title": "Varying Vector 2 (Fragment Shader)",
+      "type": "purple",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 54,
+        "y": 577,
+        "w": 275,
+        "h": 62,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "shader": "fragmentShader",
+          "argType": "vec2",
+          "arg": "vec2Input",
+          "defaults": "vec2(0.0, 0.0)",
+          "boxID": "_97862899_",
+          "io": "output",
+          "type": "vec2",
+          "label": "vec2",
+          "_id": "_83220786_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "fragmentShader",
+      "isVarying": true,
+      "variType": "vec2",
+      "variName": "varying_v2_value",
+      "variID": "_76964566_",
+      "fnReturnType": "vec2",
+      "fnID": "_49929601_",
+      "fnName": "vec2_varying_getter",
+      "fnInner": "\n    return varying_v2_value_76964566_;\n  ",
+      "spreads": []
+    },
+    {
+      "_id": "_19564299_",
+      "title": "2D Texture Reader",
+      "type": "output",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 379,
+        "y": 502,
+        "w": 275,
+        "h": 88,
+        "s": 1
+      },
+      "inputs": [
+        {
+          "shader": "both",
+          "argType": "sampler2D",
+          "arg": "sampler2D_value",
+          "defaults": "0.0",
+          "boxID": "_19564299_",
+          "io": "input",
+          "type": "sampler2D",
+          "label": "sampler2D",
+          "_id": "_17168401_"
+        },
+        {
+          "shader": "both",
+          "argType": "vec2",
+          "arg": "vec2_value",
+          "defaults": "vec2(1.0, 1.0)",
+          "boxID": "_19564299_",
+          "io": "input",
+          "type": "vec2",
+          "label": "vec2",
+          "_id": "_11145997_"
+        }
+      ],
+      "outputs": [
+        {
+          "shader": "both",
+          "argType": "vec4",
+          "arg": "vec4",
+          "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+          "boxID": "_19564299_",
+          "io": "output",
+          "type": "vec4",
+          "label": "vec4",
+          "_id": "_20297015_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "both",
+      "fnReturnType": "vec4",
+      "fnID": "_61209270_",
+      "fnName": "textureReader",
+      "fnInner": "\n  return texture2D(sampler2D_value, vec2_value);\n",
+      "spreads": []
+    },
+    {
+      "_id": "_27158864_",
+      "title": "Uniform Texture",
+      "type": "green",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 50,
+        "y": 449,
+        "w": 275,
+        "h": 62,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "shader": "both",
+          "uisIndex": 0,
+          "defaults": "0.0",
+          "boxID": "_27158864_",
+          "io": "output",
+          "type": "sampler2D",
+          "label": "sampler2D",
+          "_id": "_89327355_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "both",
+      "fnReturnType": "",
+      "fnID": "_11668023_",
+      "fnName": "",
+      "fnInner": "",
+      "hasUniforms": true,
+      "isTexture": true,
+      "uniforms": [
+        {
+          "_id": "_16482387_",
+          "type": "ui-sampler2D",
+          "uniType": "sampler2D",
+          "vari": "sampler2D",
+          "name": "iTexture",
+          "url": "blob:http://192.168.8.7:27473/5a28e325-0c5d-42bd-80be-8bdb31c0d278",
+          "outputID": "_89327355_",
+          "outputIDX": 0
+        }
+      ]
+    },
+    {
+      "_id": "_76533140_",
+      "title": "Modifier 4 Output",
+      "type": "output",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 793,
+        "y": 322,
+        "w": 275,
+        "h": 88,
+        "s": 1
+      },
+      "inputs": [
+        {
+          "shader": "both",
+          "argType": "vec4",
+          "arg": "vec4_a",
+          "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+          "boxID": "_76533140_",
+          "io": "input",
+          "type": "vec4",
+          "label": "vec4",
+          "_id": "_22451530_"
+        },
+        {
+          "shader": "both",
+          "argType": "vec4",
+          "arg": "vec4_b",
+          "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+          "boxID": "_76533140_",
+          "io": "input",
+          "type": "vec4",
+          "label": "vec4",
+          "_id": "_44592971_"
+        }
+      ],
+      "outputs": [
+        {
+          "shader": "both",
+          "argType": "float",
+          "arg": "vec4",
+          "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+          "boxID": "_76533140_",
+          "io": "output",
+          "type": "vec4",
+          "label": "vec4",
+          "_id": "_23357862_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "both",
+      "fnReturnType": "vec4",
+      "fnID": "_89910837_",
+      "fnName": "fn_vec4",
+      "fnInner": "\n  return vec4_a + vec4_b;\n",
+      "spreads": []
+    },
+    {
+      "_id": "_36916540_",
+      "title": "Vector4 Input",
+      "type": "vertexinput",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 352,
+        "y": 79,
+        "w": 275,
+        "h": 62,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "shader": "both",
+          "uisIndex": 0,
+          "defaults": "0.0",
+          "boxID": "_36916540_",
+          "io": "output",
+          "type": "vec4",
+          "label": "vec4",
+          "_id": "_90104159_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "both",
+      "fnReturnType": "",
+      "fnID": "_14769144_",
+      "fnName": "",
+      "fnInner": "",
+      "hasUIs": true,
+      "uis": [
+        {
+          "_id": "_775120_",
+          "type": "ui-vec4",
+          "vari": "vec4",
+          "name": "vector4Value",
+          "value0": "0.39",
+          "value1": "0.19",
+          "value2": "0.5",
+          "value3": "1.0",
+          "outputID": "_90104159_",
+          "outputIDX": 0
+        }
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "input": {
+        "shader": "vertexShader",
+        "argType": "float",
+        "arg": "newPtSize",
+        "defaults": "1.0",
+        "boxID": "_50804866_",
+        "io": "input",
+        "type": "float",
+        "label": "gl_PointSize",
+        "_id": "_27968737_"
+      },
+      "output": {
+        "shader": "both",
+        "uisIndex": 0,
+        "defaults": "0.0",
+        "boxID": "_76566312_",
+        "io": "output",
+        "type": "float",
+        "label": "float",
+        "_id": "_70157248_"
+      }
+    },
+    {
+      "input": {
+        "shader": "both",
+        "argType": "vec2",
+        "arg": "vec2_value",
+        "defaults": "vec2(1.0, 1.0)",
+        "boxID": "_19564299_",
+        "io": "input",
+        "type": "vec2",
+        "label": "vec2",
+        "_id": "_11145997_"
+      },
+      "output": {
+        "shader": "fragmentShader",
+        "argType": "vec2",
+        "arg": "vec2Input",
+        "defaults": "vec2(0.0, 0.0)",
+        "boxID": "_97862899_",
+        "io": "output",
+        "type": "vec2",
+        "label": "vec2",
+        "_id": "_83220786_"
+      }
+    },
+    {
+      "input": {
+        "shader": "both",
+        "argType": "sampler2D",
+        "arg": "sampler2D_value",
+        "defaults": "0.0",
+        "boxID": "_19564299_",
+        "io": "input",
+        "type": "sampler2D",
+        "label": "sampler2D",
+        "_id": "_17168401_"
+      },
+      "output": {
+        "shader": "both",
+        "uisIndex": 0,
+        "defaults": "0.0",
+        "boxID": "_27158864_",
+        "io": "output",
+        "type": "sampler2D",
+        "label": "sampler2D",
+        "_id": "_89327355_"
+      }
+    },
+    {
+      "input": {
+        "shader": "both",
+        "argType": "vec4",
+        "arg": "vec4_a",
+        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+        "boxID": "_76533140_",
+        "io": "input",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_22451530_"
+      },
+      "output": {
+        "shader": "both",
+        "uisIndex": 0,
+        "defaults": "0.0",
+        "boxID": "_36916540_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_90104159_"
+      }
+    },
+    {
+      "input": {
+        "shader": "both",
+        "argType": "vec4",
+        "arg": "vec4_b",
+        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+        "boxID": "_76533140_",
+        "io": "input",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_44592971_"
+      },
+      "output": {
+        "shader": "both",
+        "argType": "vec4",
+        "arg": "vec4",
+        "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+        "boxID": "_19564299_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_20297015_"
+      }
+    },
+    {
+      "input": {
+        "shader": "fragmentShader",
+        "argType": "vec4",
+        "arg": "outputColor",
+        "defaults": "vec4(0.5, 0.5, 0.5, 0.5)",
+        "boxID": "_88221392_",
+        "io": "input",
+        "type": "vec4",
+        "label": "gl_FragColor",
+        "_id": "_76290455_"
+      },
+      "output": {
+        "shader": "both",
+        "argType": "float",
+        "arg": "vec4",
+        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+        "boxID": "_76533140_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_23357862_"
+      }
+    }
+  ]
+}

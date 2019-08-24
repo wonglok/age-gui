@@ -23,6 +23,7 @@ export const NS = {
     OUTPUT: 'output'
   },
   DEFAULT_VALUES: {
+    NULL: 'null',
     VEC2: `vec2(0.0, 0.0)`,
     VEC3: `vec3(0.0, 0.0, 0.0)`,
     VEC4: `vec4(0.0, 0.0, 0.0, 0.0)`,
@@ -30,14 +31,17 @@ export const NS = {
     VEC2_MIX: `vec2(1.0, 1.0)`,
     VEC3_MIX: `vec3(1.0, 1.0, 1.0)`,
     VEC4_MIX: `vec4(1.0, 1.0, 1.0, 1.0)`,
+
     float0: '0.0',
     float1: '1.0',
+
     gl_Position: 'vec4(position, 1.0)',
     gl_PointSize: '1.0',
     gl_FragColor: 'vec4(0.5, 0.5, 0.5, 0.5)'
   },
   DATA_TYPES: {
-    SAMPLER_2D: 'sampler2D',
+    SAMPLER2D: 'sampler2D',
+    TEXTURE2D: 'texture2D',
     VEC4: 'vec4',
     VEC3: 'vec3',
     VEC2: 'vec2',
@@ -55,7 +59,9 @@ export const boxColorTypes = {
   output: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   statement: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   uniform: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
+  'texture-reader': `linear-gradient(251deg, rgba(255,192,192,0.72) 9%, #FF1B1B 100%)`,
   attribute: `linear-gradient(251deg, rgba(255,192,192,0.72) 9%, #FF1B1B 100%)`,
+  red: `linear-gradient(251deg, rgba(255,192,192,0.72) 9%, #FF1B1B 100%)`,
   yellow: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
   default: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
   'preview-box': `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,

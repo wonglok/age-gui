@@ -24,8 +24,12 @@ export default {
 
     window.addEventListener('resize', () => {
       let dom = this.$parent.$refs['win-content']
-      if (dom) {
-        this.height = dom.getBoundingClientRect().height + 'px'
+      let connectorsDOM = this.$parent.$refs['connectorsarea']
+      if (dom && connectorsDOM) {
+        let h2 = connectorsDOM.getBoundingClientRect().height
+        this.height = (dom.getBoundingClientRect().height - h2) + 'px'
+        // if (this.win.type === 'preview-box') {
+        // }
       }
     }, false)
 

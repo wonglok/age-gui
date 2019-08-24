@@ -5,6 +5,7 @@
 
     <div :key="preview.domID" v-for="preview in previewDOMs">
       <BoxSceneShaderPreview @shader="shader = $event" v-if="connections && getWin({ wins, preview }) && getWin({ wins, preview }).type === 'preview-box'" :scenes="scenes" :preview="preview" :win="getWin({ wins, preview })" :wins="wins" :connections="connections"></BoxSceneShaderPreview>
+      <BoxSceneTexturePreview @shader="shader = $event" v-if="connections && getWin({ wins, preview }) && getWin({ wins, preview }).type === 'texture-reader'" :scenes="scenes" :preview="preview" :win="getWin({ wins, preview })" :wins="wins" :connections="connections"></BoxSceneTexturePreview>
     </div>
     <div class="nomouse age-layer" ref="dom" style="display: flex; justify-content: flex-end; align-items: flex-end;">
       <div  style="display: flex; justify-content: flex-end;">
@@ -27,6 +28,7 @@ export default {
   },
   components: {
     // Bubbles: require('../uis-gl/Bubbles.vue').default,
+    BoxSceneTexturePreview: require('../uis-gl/BoxSceneTexturePreview.vue').default,
     BoxSceneShaderPreview: require('../uis-gl/BoxSceneShaderPreview.vue').default,
     BoxesEngine: require('../uis-gl/BoxesEngine.vue').default
   },

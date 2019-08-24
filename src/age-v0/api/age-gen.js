@@ -28,14 +28,21 @@ export const getArgs = ({ win, wins, connections, depsConn = [] }) => {
         } else if (depsConn.length > 0 && remoteBox.uis) {
           let w = foundConnection.output
           let uis = remoteBox.uis.find(u => w._id === u.outputID)
-
           // foundConnection.output
 
           return `${uis.name}${uis._id}`
-        } else if (depsConn.length > 0 && remoteBox.spread) {
+        } else if (depsConn.length > 0 && remoteBox.spread && remoteBox.spread.length > 0) {
           let w = foundConnection.output
           let uis = remoteBox.spread.find(u => w._id === u.outputID)
+          // foundConnection.output
 
+          return `${uis.name}${uis._id}`
+        } else if (depsConn.length > 0 && remoteBox.uniforms && remoteBox.uniforms.length > 0) {
+          let w = foundConnection.output
+          let uis = remoteBox.uniforms.find(u => w._id === u.outputID)
+          if (!uis) {
+            uis = remoteBox.uniforms[0]
+          }
           // foundConnection.output
 
           return `${uis.name}${uis._id}`
@@ -201,14 +208,16 @@ export const makeUniforms = ({ win, wins, connections }) => {
     let uniforms = win.uniforms
 
     uniforms.forEach((ui) => {
-      if (ui.type === 'ui-float') {
-        str += `${ui.vari} ${ui.name}${ui._id} = ${Number(ui.value).toFixed(5)}; \n`
+      if (ui.type === 'ui-sampler2D') {
+        str += `uniform ${ui.vari} ${ui.name}${ui._id}; \n`
+      } else if (ui.type === 'ui-float') {
+        str += `uniform ${ui.vari} ${ui.name}${ui._id}; \n`
       } else if (ui.type === 'ui-vec4') {
-        str += `${ui.vari} ${ui.name}${ui._id} = vec4(${Number(ui.value0).toFixed(5)}, ${Number(ui.value1).toFixed(5)}, ${Number(ui.value2).toFixed(5)}, ${Number(ui.value3).toFixed(5)}); \n`
+        str += `uniform ${ui.vari} ${ui.name}${ui._id}; \n`
       } else if (ui.type === 'ui-vec3') {
-        str += `${ui.vari} ${ui.name}${ui._id} = vec3(${Number(ui.value0).toFixed(5)}, ${Number(ui.value1).toFixed(5)}, ${Number(ui.value2).toFixed(5)}); \n`
+        str += `uniform ${ui.vari} ${ui.name}${ui._id}; \n`
       } else if (ui.type === 'ui-vec2') {
-        str += `${ui.vari} ${ui.name}${ui._id} = vec2(${Number(ui.value0).toFixed(5)}, ${Number(ui.value1).toFixed(5)}); \n`
+        str += `uniform ${ui.vari} ${ui.name}${ui._id}; \n`
       }
     })
 
