@@ -278,3 +278,15 @@
   text-align: center;
   margin: 0px 3px;
 }
+
+.age-addbox-row{
+  display: flex;
+}
+
+.age-addbox-menu-item{
+  margin: 6px;
+}
+
+.age-drag-area{
+  cursor: grab;
+}

@@ -1,6 +1,6 @@
 <template>
   <div class="win-wrap" :style="getBoxLayoutStyle()" @click="focusApp">
-    <BoxDefault @drop="$emit('drop', $event)" @clicker="$emit('clicker', $event)" :connections="connections" :win="win" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs"></BoxDefault>
+    <BoxDefault @gear="$emit('gear', $event)" @drop="$emit('drop', $event)" @clicker="$emit('clicker', $event)" :connections="connections" :win="win" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs"></BoxDefault>
     <div v-if="useResize" class="win-resize win-box-top-left" ref="top-left"></div>
     <div v-if="useResize" class="win-resize win-box-top-right" ref="top-right"></div>
     <div v-if="useResize" class="win-resize win-box-bottom-left" ref="bottom-left"></div>

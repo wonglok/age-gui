@@ -152,7 +152,7 @@ export default {
     // console.log(this.connectorDOMs)
   },
   beforeDestroy () {
-    let idx = this.connectorDOMs.find(e => e.domID === this.rID)
+    let idx = this.connectorDOMs.findIndex(e => e.domID === this.rID)
     this.connectorDOMs.splice(idx, 1)
   },
   methods: {

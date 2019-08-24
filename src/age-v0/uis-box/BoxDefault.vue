@@ -6,7 +6,7 @@
           {{ $parent.win.title || 'New Box' }}
         </div>
         <div class="center">
-          <img class="age-gear click" src="../icons/gear.svg" alt="">
+          <img class="age-gear click" @click="$emit('gear', { win, connections })" src="../icons/gear.svg" alt="">
         </div>
       </div>
     </div>

@@ -1,0 +1,433 @@
+{
+  "wins": [
+    {
+      "_id": "_50804866_",
+      "title": "Vertex Shader Output",
+      "type": "yellow",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 363,
+        "y": 91,
+        "w": 275,
+        "h": 88,
+        "s": 1
+      },
+      "inputs": [
+        {
+          "shader": "vertexShader",
+          "argType": "vec4",
+          "arg": "newPos",
+          "defaults": "vec4(position, 1.0)",
+          "boxID": "_50804866_",
+          "io": "input",
+          "type": "vec4",
+          "label": "gl_Position",
+          "_id": "_49235941_"
+        },
+        {
+          "shader": "vertexShader",
+          "argType": "float",
+          "arg": "newPtSize",
+          "defaults": "1.0",
+          "boxID": "_50804866_",
+          "io": "input",
+          "type": "float",
+          "label": "gl_PointSize",
+          "_id": "_27968737_"
+        }
+      ],
+      "outputs": [],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": true,
+      "shaderType": "vertexShader",
+      "fnReturnType": "void",
+      "fnID": "_6488492_",
+      "fnName": "vertex_root",
+      "fnInner": "\n gl_Position = projectionMatrix * modelViewMatrix * newPos;\n gl_PointSize = newPtSize;\n",
+      "spreads": []
+    },
+    {
+      "_id": "_88221392_",
+      "title": "Fragment Shader Output",
+      "type": "fragment",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 678,
+        "y": 240,
+        "w": 275,
+        "h": 62,
+        "s": 1
+      },
+      "inputs": [
+        {
+          "shader": "fragmentShader",
+          "argType": "vec4",
+          "arg": "outputColor",
+          "defaults": "vec4(0.5, 0.5, 0.5, 0.5)",
+          "boxID": "_88221392_",
+          "io": "input",
+          "type": "vec4",
+          "label": "gl_FragColor",
+          "_id": "_76290455_"
+        }
+      ],
+      "outputs": [],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": true,
+      "shaderType": "fragmentShader",
+      "fnReturnType": "void",
+      "fnID": "_1409115_",
+      "fnName": "fragment_root",
+      "fnInner": "\n gl_FragColor = outputColor;\n",
+      "spreads": []
+    },
+    {
+      "_id": "_5405138_",
+      "title": "Shader Preview Box",
+      "type": "preview-box",
+      "transition": "",
+      "order": 0,
+      "preview": true,
+      "pos": {
+        "x": 90,
+        "y": 452,
+        "w": 275,
+        "h": 226,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": true,
+      "shaderType": "preview-box",
+      "resize": true
+    },
+    {
+      "_id": "_76566312_",
+      "title": "Number Input",
+      "type": "vertexinput",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 17,
+        "y": 163,
+        "w": 275,
+        "h": 62,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "shader": "both",
+          "uisIndex": 0,
+          "defaults": "0.0",
+          "boxID": "_76566312_",
+          "io": "output",
+          "type": "float",
+          "label": "float",
+          "_id": "_70157248_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "both",
+      "fnReturnType": "",
+      "fnID": "_94581012_",
+      "fnName": "",
+      "fnInner": "",
+      "hasUIs": true,
+      "uis": [
+        {
+          "_id": "_86340387_",
+          "type": "ui-float",
+          "vari": "float",
+          "name": "floatValue",
+          "value": "2.95",
+          "outputID": "_70157248_",
+          "outputIDX": 0
+        }
+      ]
+    },
+    {
+      "_id": "_98014079_",
+      "title": "Vector4 Input",
+      "type": "vertexinput",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 15,
+        "y": 248,
+        "w": 275,
+        "h": 62,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "shader": "both",
+          "uisIndex": 0,
+          "defaults": "0.0",
+          "boxID": "_98014079_",
+          "io": "output",
+          "type": "vec4",
+          "label": "vec4",
+          "_id": "_78274821_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "both",
+      "fnReturnType": "",
+      "fnID": "_51096758_",
+      "fnName": "",
+      "fnInner": "",
+      "hasUIs": true,
+      "uis": [
+        {
+          "_id": "_63766312_",
+          "type": "ui-vec4",
+          "vari": "vec4",
+          "name": "vector4Value",
+          "value0": "1.52",
+          "value1": "0.5",
+          "value2": "0.73",
+          "value3": "1.0",
+          "outputID": "_78274821_",
+          "outputIDX": 0
+        }
+      ]
+    },
+    {
+      "_id": "_94052673_",
+      "title": "Vector4 Input",
+      "type": "vertexinput",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 13,
+        "y": 332,
+        "w": 275,
+        "h": 62,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "shader": "both",
+          "uisIndex": 0,
+          "defaults": "0.0",
+          "boxID": "_94052673_",
+          "io": "output",
+          "type": "vec4",
+          "label": "vec4",
+          "_id": "_17467229_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "both",
+      "fnReturnType": "",
+      "fnID": "_41003701_",
+      "fnName": "",
+      "fnInner": "",
+      "hasUIs": true,
+      "uis": [
+        {
+          "_id": "_73024940_",
+          "type": "ui-vec4",
+          "vari": "vec4",
+          "name": "vector4Value",
+          "value0": "0.5",
+          "value1": "1.00",
+          "value2": "0.22",
+          "value3": "1.0",
+          "outputID": "_17467229_",
+          "outputIDX": 0
+        }
+      ]
+    },
+    {
+      "_id": "_71717227_",
+      "title": "Multiply Vector 4",
+      "type": "output",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 348,
+        "y": 274,
+        "w": 275,
+        "h": 88,
+        "s": 1
+      },
+      "inputs": [
+        {
+          "shader": "both",
+          "argType": "vec4",
+          "arg": "vec4_1",
+          "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+          "boxID": "_71717227_",
+          "io": "input",
+          "type": "vec4",
+          "label": "vec4",
+          "_id": "_26734826_"
+        },
+        {
+          "shader": "both",
+          "argType": "vec4",
+          "arg": "vec4_2",
+          "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+          "boxID": "_71717227_",
+          "io": "input",
+          "type": "vec4",
+          "label": "vec4",
+          "_id": "_40408971_"
+        }
+      ],
+      "outputs": [
+        {
+          "shader": "both",
+          "argType": "vec4",
+          "arg": "vec4",
+          "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+          "boxID": "_71717227_",
+          "io": "output",
+          "type": "vec4",
+          "label": "vec4",
+          "_id": "_50491077_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "both",
+      "fnReturnType": "vec4",
+      "fnID": "_62011331_",
+      "fnName": "multiply",
+      "fnInner": "\n  return vec4_1 * vec4_2;\n",
+      "spreads": []
+    }
+  ],
+  "connections": [
+    {
+      "input": {
+        "shader": "vertexShader",
+        "argType": "float",
+        "arg": "newPtSize",
+        "defaults": "1.0",
+        "boxID": "_50804866_",
+        "io": "input",
+        "type": "float",
+        "label": "gl_PointSize",
+        "_id": "_27968737_"
+      },
+      "output": {
+        "shader": "both",
+        "uisIndex": 0,
+        "defaults": "0.0",
+        "boxID": "_76566312_",
+        "io": "output",
+        "type": "float",
+        "label": "float",
+        "_id": "_70157248_"
+      }
+    },
+    {
+      "input": {
+        "shader": "fragmentShader",
+        "argType": "vec4",
+        "arg": "outputColor",
+        "defaults": "vec4(0.5, 0.5, 0.5, 0.5)",
+        "boxID": "_88221392_",
+        "io": "input",
+        "type": "vec4",
+        "label": "gl_FragColor",
+        "_id": "_76290455_"
+      },
+      "output": {
+        "shader": "both",
+        "argType": "vec4",
+        "arg": "vec4",
+        "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+        "boxID": "_71717227_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_50491077_"
+      }
+    },
+    {
+      "input": {
+        "shader": "both",
+        "argType": "vec4",
+        "arg": "vec4_2",
+        "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+        "boxID": "_71717227_",
+        "io": "input",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_40408971_"
+      },
+      "output": {
+        "shader": "both",
+        "uisIndex": 0,
+        "defaults": "0.0",
+        "boxID": "_94052673_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_17467229_"
+      }
+    },
+    {
+      "input": {
+        "shader": "both",
+        "argType": "vec4",
+        "arg": "vec4_1",
+        "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+        "boxID": "_71717227_",
+        "io": "input",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_26734826_"
+      },
+      "output": {
+        "shader": "both",
+        "uisIndex": 0,
+        "defaults": "0.0",
+        "boxID": "_98014079_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_78274821_"
+      }
+    }
+  ]
+}

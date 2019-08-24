@@ -26,6 +26,10 @@ export const NS = {
     VEC2: `vec2(0.0, 0.0)`,
     VEC3: `vec3(0.0, 0.0, 0.0)`,
     VEC4: `vec4(0.0, 0.0, 0.0, 0.0)`,
+
+    VEC2_MIX: `vec2(1.0, 1.0)`,
+    VEC3_MIX: `vec3(1.0, 1.0, 1.0)`,
+    VEC4_MIX: `vec4(1.0, 1.0, 1.0, 1.0)`,
     float0: '0.0',
     float1: '1.0',
     gl_Position: 'vec4(position, 1.0)',
@@ -46,6 +50,7 @@ export const boxColorTypes = {
 
   'purple': `linear-gradient(251deg, rgba(214, 192, 255, 0.72) 9%, rgb(133, 27, 255) 100%)`,
   'fragment': `linear-gradient(251deg, rgba(214, 192, 255, 0.72) 9%, rgb(133, 27, 255) 100%)`,
+  blue: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   vertexinput: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   output: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
   statement: `linear-gradient(251deg, rgba(192,223,255,0.72) 9%, #1B86FF 100%)`,
@@ -55,7 +60,7 @@ export const boxColorTypes = {
   default: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
   'preview-box': `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
   function: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`,
-  varying: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`
+  green: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`
 }
 
 export const connectorColorTypes = {

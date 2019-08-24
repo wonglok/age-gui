@@ -171,7 +171,7 @@ export const makeSpreadStr = ({ win, wins, connections, args }) => {
   return `${str}`
 }
 
-export const makeStatements = ({ win, wins, connections }) => {
+export const makeUIs = ({ win, wins, connections }) => {
   let str = ``
   let hasUIs = win.hasUIs
   if (hasUIs) {
@@ -181,13 +181,37 @@ export const makeStatements = ({ win, wins, connections }) => {
       if (ui.type === 'ui-float') {
         str += `${ui.vari} ${ui.name}${ui._id} = ${Number(ui.value).toFixed(5)}; \n`
       } else if (ui.type === 'ui-vec4') {
-        str += `${ui.vari} ${ui.name}${ui._id} = vec4(${ui.value0}, ${ui.value1}, ${ui.value2}, ${ui.value3}); \n`
+        str += `${ui.vari} ${ui.name}${ui._id} = vec4(${Number(ui.value0).toFixed(5)}, ${Number(ui.value1).toFixed(5)}, ${Number(ui.value2).toFixed(5)}, ${Number(ui.value3).toFixed(5)}); \n`
       } else if (ui.type === 'ui-vec3') {
-        str += `${ui.vari} ${ui.name}${ui._id} = vec3(${ui.value0}, ${ui.value1}, ${ui.value2}); \n`
+        str += `${ui.vari} ${ui.name}${ui._id} = vec3(${Number(ui.value0).toFixed(5)}, ${Number(ui.value1).toFixed(5)}, ${Number(ui.value2).toFixed(5)}); \n`
       } else if (ui.type === 'ui-vec2') {
-        str += `${ui.vari} ${ui.name}${ui._id} = vec2(${ui.value0}, ${ui.value1}); \n`
+        str += `${ui.vari} ${ui.name}${ui._id} = vec2(${Number(ui.value0).toFixed(5)}, ${Number(ui.value1).toFixed(5)}); \n`
       }
     })
+    return `${str}`
+  }
+
+  return `${str}`
+}
+
+export const makeUniforms = ({ win, wins, connections }) => {
+  let str = ``
+  let hasUniforms = win.hasUniforms
+  if (hasUniforms) {
+    let uniforms = win.uniforms
+
+    uniforms.forEach((ui) => {
+      if (ui.type === 'ui-float') {
+        str += `${ui.vari} ${ui.name}${ui._id} = ${Number(ui.value).toFixed(5)}; \n`
+      } else if (ui.type === 'ui-vec4') {
+        str += `${ui.vari} ${ui.name}${ui._id} = vec4(${Number(ui.value0).toFixed(5)}, ${Number(ui.value1).toFixed(5)}, ${Number(ui.value2).toFixed(5)}, ${Number(ui.value3).toFixed(5)}); \n`
+      } else if (ui.type === 'ui-vec3') {
+        str += `${ui.vari} ${ui.name}${ui._id} = vec3(${Number(ui.value0).toFixed(5)}, ${Number(ui.value1).toFixed(5)}, ${Number(ui.value2).toFixed(5)}); \n`
+      } else if (ui.type === 'ui-vec2') {
+        str += `${ui.vari} ${ui.name}${ui._id} = vec2(${Number(ui.value0).toFixed(5)}, ${Number(ui.value1).toFixed(5)}); \n`
+      }
+    })
+
     return `${str}`
   }
 
@@ -223,18 +247,20 @@ export const getDepTree = ({ wins, connections, sType }) => {
 
 export const getShaderCode = ({ wins, connections, shaderType }) => {
   let uis = ``
-
+  let uniforms = ``
   let vwins = wins.filter(w => w.shaderType === shaderType || w.shaderType === NS.SHADER_TYPES.BOTH)
   let varying = ``
   vwins.forEach((win) => {
-    uis += makeStatements({ win, wins, connections })
+    uis += makeUIs({ win, wins, connections })
   })
   vwins.forEach((win) => {
     if (win.isVarying && win.shaderType === shaderType) {
       varying += `varying ${win.variType} ${win.variName}${win.variID};\n`
     }
   })
-
+  vwins.forEach((win) => {
+    uniforms += makeUniforms({ win, wins, connections })
+  })
   let functions = ``
   vwins.forEach((win) => {
     functions += `${makeFunc({ win, wins, connections })}`
@@ -279,6 +305,7 @@ ${depExecs}
 `
 
   return `
+${uniforms}
 ${varying}
 ${uis}
 ${functions}

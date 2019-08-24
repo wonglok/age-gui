@@ -66,7 +66,7 @@ export const makeVertexRoot = ({ wins }) => {
 
   win.pos.w = 275
   win.pos.h = 150
-  win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
 
   win.fnReturnType = 'void'
   win.fnID = getID()
@@ -104,13 +104,48 @@ export const makeUIMultiplyFloat = ({ wins }) => {
 
   win.pos.w = 275
   win.pos.h = 150
-  win.pos.y = 400
+  win.pos.y = 0
 
   win.fnReturnType = 'float'
   win.fnID = getID()
   win.fnName = 'multiply'
   win.fnInner = `
   return float1 * float2;
+`
+
+  return win
+}
+
+export const makeUIMultiplyVec4 = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Multiply Vector 4'
+  win.type = 'output'
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    getIO({ shader: win.shaderType, argType: 'vec4', arg: `vec4_1`, defaults: NS.DEFAULT_VALUES.VEC4_MIX, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' }),
+    getIO({ shader: win.shaderType, argType: 'vec4', arg: `vec4_2`, defaults: NS.DEFAULT_VALUES.VEC4_MIX, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+  )
+
+  win.outputs.push(
+    getIO({ shader: win.shaderType, argType: 'vec4', arg: `vec4`, defaults: NS.DEFAULT_VALUES.VEC4_MIX, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = 0
+
+  win.fnReturnType = 'vec4'
+  win.fnID = getID()
+  win.fnName = 'multiply'
+  win.fnInner = `
+  return vec4_1 * vec4_2;
 `
 
   return win
@@ -139,7 +174,7 @@ export const makeUIAdd = ({ wins }) => {
 
   win.pos.w = 275
   win.pos.h = 150
-  win.pos.y = 400
+  win.pos.y = 0
 
   win.fnReturnType = 'float'
   win.fnID = getID()
@@ -175,7 +210,7 @@ export const makeUIVector4 = ({ wins }) => {
 
   win.pos.w = 275
   win.pos.h = 150
-  win.pos.y = (win.pos.h + 10 + 120)
+  win.pos.y = 0
 
   win.fnReturnType = ''
   win.fnID = getID()
@@ -227,7 +262,7 @@ export const makeUIVector3 = ({ wins }) => {
 
   win.pos.w = 275
   win.pos.h = 150
-  win.pos.y = (win.pos.h + 10 + 120)
+  win.pos.y = 0
 
   win.fnReturnType = ''
   win.fnID = getID()
@@ -278,7 +313,7 @@ export const makeUIVector2 = ({ wins }) => {
 
   win.pos.w = 275
   win.pos.h = 150
-  win.pos.y = (win.pos.h + 10 + 120)
+  win.pos.y = 0
 
   win.fnReturnType = ''
   win.fnID = getID()
@@ -328,7 +363,7 @@ export const makeUINumber = ({ wins }) => {
 
   win.pos.w = 275
   win.pos.h = 150
-  win.pos.y = (win.pos.h + 10 + 120)
+  win.pos.y = 0
 
   win.fnReturnType = ''
   win.fnID = getID()
@@ -342,6 +377,55 @@ export const makeUINumber = ({ wins }) => {
       type: 'ui-float',
       vari: 'float',
       name: 'floatValue',
+      value: '0.5',
+      outputID: win.outputs[0]._id,
+      outputIDX: 0
+    }
+  ]
+
+  // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+
+  return win
+}
+
+export const makeUniformFloat = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Uniform Float'
+  win.type = 'green'
+
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    // getIO({ shader: win.shaderType, argType: 'vec3', arg: `newPos`, defaults: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' }),
+  )
+
+  win.outputs.push(
+    getIO({ shader: win.shaderType, uisIndex: 0, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.FLOAT, label: 'float' })
+    // getIO({ shader: win.shaderType, defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = 0
+
+  win.fnReturnType = ''
+  win.fnID = getID()
+  win.fnName = ''
+  win.fnInner = ``
+
+  win.hasUniforms = true
+  win.uniforms = [
+    {
+      _id: getID(),
+      type: 'ui-float',
+      vari: 'float',
+      name: 'iTime',
       value: '0.5',
       outputID: win.outputs[0]._id,
       outputIDX: 0
@@ -564,7 +648,7 @@ export const makeFragmentRoot = ({ wins }) => {
 
   win.pos.w = 275
   win.pos.h = 150
-  // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
   win.pos.x = (wins.length - 1) * (win.pos.w + 10)
 
   win.fnReturnType = 'void'
@@ -601,7 +685,7 @@ export const makeMergeV4 = ({ wins }) => {
 
   win.pos.w = 275
   win.pos.h = 150
-  // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
   win.pos.x = 0
   win.pos.y = 0
 
@@ -638,7 +722,7 @@ export const makeVaryingV4 = ({ wins }) => {
 
     win.pos.w = 275
     win.pos.h = 150
-    // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+    // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
     win.pos.x = 0
     win.pos.y = 0
 
@@ -678,7 +762,7 @@ export const makeVaryingV4 = ({ wins }) => {
 
     win.pos.w = 275
     win.pos.h = 150
-    // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+    // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
     win.pos.x = 0
     win.pos.y = 0
 
@@ -690,6 +774,174 @@ export const makeVaryingV4 = ({ wins }) => {
     win.fnReturnType = 'vec4'
     win.fnID = getID()
     win.fnName = 'vec4_varying_getter'
+    win.fnInner = `
+    return ${win.variName}${variID};
+  `
+
+    return win
+  }
+  fragmentWindow()
+}
+
+export const makeVaryingV3 = ({ wins }) => {
+  let variID = getID()
+  let vertexWindow = () => {
+    let win = getWin()
+    win.title = 'Varying Vector 3 (Vertex Shader)'
+    win.type = 'purple'
+    win.shaderType = NS.SHADER_TYPES.VERTEX
+    // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+    win.preview = false
+    // win.boxLogicType = 'module'
+
+    win.inputs.push(
+      getIO({ shader: win.shaderType, argType: 'vec3', arg: `vec3Input`, defaults: NS.DEFAULT_VALUES.VEC3, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC3, label: 'vec3' })
+    )
+
+    win.outputs.push(
+    )
+
+    win.isRoot = true
+    wins.push(win)
+
+    win.pos.w = 275
+    win.pos.h = 150
+    // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+    win.pos.x = 0
+    win.pos.y = 0
+
+    win.isVarying = true
+    win.variType = `vec3`
+    win.variName = `varying_v3_value`
+    win.variID = variID
+
+    win.fnReturnType = 'void'
+    win.fnID = getID()
+    win.fnName = 'vec3_varying_setter'
+    win.fnInner = `
+  ${win.variName}${variID} = vec3Input;
+  `
+
+    return win
+  }
+  vertexWindow()
+  let fragmentWindow = () => {
+    let win = getWin()
+    win.title = 'Varying Vector 3 (Fragment Shader)'
+    win.type = 'purple'
+    win.shaderType = NS.SHADER_TYPES.FRAGMENT
+    // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+    win.preview = false
+    // win.boxLogicType = 'module'
+
+    win.inputs.push(
+    )
+
+    win.outputs.push(
+      getIO({ shader: win.shaderType, argType: 'vec3', arg: `vec3Input`, defaults: NS.DEFAULT_VALUES.VEC3, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC3, label: 'vec3' })
+    )
+
+    win.isRoot = false
+    wins.push(win)
+
+    win.pos.w = 275
+    win.pos.h = 150
+    // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+    win.pos.x = 0
+    win.pos.y = 0
+
+    win.isVarying = true
+    win.variType = `vec3`
+    win.variName = `varying_v3_value`
+    win.variID = variID
+
+    win.fnReturnType = 'vec3'
+    win.fnID = getID()
+    win.fnName = 'vec3_varying_getter'
+    win.fnInner = `
+    return ${win.variName}${variID};
+  `
+
+    return win
+  }
+  fragmentWindow()
+}
+
+export const makeVaryingV2 = ({ wins }) => {
+  let variID = getID()
+  let vertexWindow = () => {
+    let win = getWin()
+    win.title = 'Varying Vector 2 (Vertex Shader)'
+    win.type = 'purple'
+    win.shaderType = NS.SHADER_TYPES.VERTEX
+    // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+    win.preview = false
+    // win.boxLogicType = 'module'
+
+    win.inputs.push(
+      getIO({ shader: win.shaderType, argType: 'vec2', arg: `vec2Input`, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC2, label: 'vec2' })
+    )
+
+    win.outputs.push(
+    )
+
+    win.isRoot = true
+    wins.push(win)
+
+    win.pos.w = 275
+    win.pos.h = 150
+    // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+    win.pos.x = 0
+    win.pos.y = 0
+
+    win.isVarying = true
+    win.variType = `vec2`
+    win.variName = `varying_v2_value`
+    win.variID = variID
+
+    win.fnReturnType = 'void'
+    win.fnID = getID()
+    win.fnName = 'vec2_varying_setter'
+    win.fnInner = `
+  ${win.variName}${variID} = vec2Input;
+  `
+
+    return win
+  }
+  vertexWindow()
+  let fragmentWindow = () => {
+    let win = getWin()
+    win.title = 'Varying Vector 2 (Fragment Shader)'
+    win.type = 'purple'
+    win.shaderType = NS.SHADER_TYPES.FRAGMENT
+    // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+    win.preview = false
+    // win.boxLogicType = 'module'
+
+    win.inputs.push(
+    )
+
+    win.outputs.push(
+      getIO({ shader: win.shaderType, argType: 'vec2', arg: `vec2Input`, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'vec2' })
+    )
+
+    win.isRoot = false
+    wins.push(win)
+
+    win.pos.w = 275
+    win.pos.h = 150
+    // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+    win.pos.x = 0
+    win.pos.y = 0
+
+    win.isVarying = true
+    win.variType = `vec2`
+    win.variName = `varying_v2_value`
+    win.variID = variID
+
+    win.fnReturnType = 'vec2'
+    win.fnID = getID()
+    win.fnName = 'vec2_varying_getter'
     win.fnInner = `
     return ${win.variName}${variID};
   `
@@ -721,7 +973,7 @@ export const makePreviwBox = ({ wins }) => {
 
   win.pos.w = 275
   win.pos.h = 150
-  // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
   win.pos.x = (wins.length - 1) * (win.pos.w + 10)
 
   return win
