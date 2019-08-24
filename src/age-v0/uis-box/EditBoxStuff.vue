@@ -47,6 +47,7 @@
         </div>
         <button @click="addInput({ win })">Add Inputs</button>
         <!-- <textarea v-model="win.fnInner" cols="30" rows="10" @input="compile"></textarea> -->
+        <Brace style="height: 200px;" :mode="'glsl'" :getter="() => win.fnExt" :setter="(v) => { win.fnExt = v }"></Brace>
         <Brace style="height: 200px;" :mode="'glsl'" :getter="() => win.fnInner" :setter="(v) => { win.fnInner = v }"></Brace>
       </div>
       <button @click="remove()">Remove This</button>

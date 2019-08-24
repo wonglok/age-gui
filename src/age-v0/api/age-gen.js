@@ -266,6 +266,9 @@ export const getShaderCode = ({ wins, connections, shaderType }) => {
   })
   let functions = ``
   vwins.forEach((win) => {
+    if (win.fnExt) {
+      functions += `${win.fnExt}\n`
+    }
     functions += `${makeFunc({ win, wins, connections })}`
   })
 

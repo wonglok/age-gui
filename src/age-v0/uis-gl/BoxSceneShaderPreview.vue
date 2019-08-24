@@ -87,6 +87,24 @@ export default {
         }
       }
     },
+    async setupResolution ({ win, uniforms, uni }) {
+      let update = async () => {
+        let dom = await AGE.UI.getDOM({ domID: this.preview.domID })
+        let rect = dom.getBoundingClientRect()
+        uniforms[uni.name + uni._id] = {
+          value: new THREE.Vector2(rect.width, rect.height)
+        }
+        this.mesh.material.needsUpdate = true
+        // console.log(JSON.stringify(uniforms[uni.name + uni._id].value))
+      }
+      window.addEventListener('resize', () => {
+        update()
+      })
+      window.addEventListener('ui-layout', () => {
+        update()
+      })
+      update()
+    },
     makeMat () {
       let shader = this.shader = AGE.GEN.getCode({ wins: this.wins, connections: this.connections })
       this.$emit('shader', shader)
@@ -109,6 +127,8 @@ export default {
               this.setupTimer({ uniforms, uni })
             } else if (uni.uniType === 'sampler2D') {
               this.setupSampler2D({ win, uniforms, uni })
+            } else if (uni.uniType === 'resolution') {
+              this.setupResolution({ win, uniforms, uni })
             }
           })
         }
@@ -152,12 +172,12 @@ export default {
 
     // console.log(this.connections)
 
-    let geometry = new THREE.SphereBufferGeometry(8.5, 32, 32)
+    let geometry = new THREE.SphereBufferGeometry(8.5, 320, 320)
     let material = this.makeMat()
     window.addEventListener('compile-shader', () => {
       this.makeMat()
     }, false)
-    let mesh = this.mesh = new THREE.Points(geometry, material)
+    let mesh = this.mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
     scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444))
     var light = new THREE.DirectionalLight(0xffffff, 0.5)

@@ -57,6 +57,9 @@ export default {
   },
   mounted () {
     window.addEventListener('ui-layout', () => {
+      if (!this.$refs['connectorsarea']) {
+        return
+      }
       if (this.win.preview) {
         this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 200 + 26
       } else {

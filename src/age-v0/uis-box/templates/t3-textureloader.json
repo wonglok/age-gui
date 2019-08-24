@@ -59,8 +59,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 1468,
-        "y": 412,
+        "x": 1522,
+        "y": 453,
         "w": 275,
         "h": 62,
         "s": 1
@@ -99,10 +99,10 @@
       "order": 0,
       "preview": true,
       "pos": {
-        "x": 785,
-        "y": 659,
-        "w": 285,
-        "h": 226,
+        "x": 1220,
+        "y": 691,
+        "w": 448,
+        "h": 413,
         "s": 1
       },
       "inputs": [],
@@ -159,7 +159,7 @@
           "type": "ui-float",
           "vari": "float",
           "name": "floatValue",
-          "value": "3.65",
+          "value": "5.07",
           "outputID": "_70157248_",
           "outputIDX": 0
         }
@@ -173,8 +173,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 771,
-        "y": 409,
+        "x": 776,
+        "y": 417,
         "w": 275,
         "h": 62,
         "s": 1
@@ -209,8 +209,8 @@
           "type": "ui-vec4",
           "vari": "vec4",
           "name": "vector4Value",
-          "value0": "0.64",
-          "value1": "1.68",
+          "value0": "1.37",
+          "value1": "1.80",
           "value2": "2.85",
           "value3": "1.0",
           "outputID": "_90104159_",
@@ -401,7 +401,7 @@
           "uniType": "sampler2D",
           "vari": "sampler2D",
           "name": "iTexture",
-          "url": "https://res.cloudinary.com/loklok-keystone/image/upload/v1566675876/sample.jpg",
+          "url": "https://res.cloudinary.com/loklok-keystone/image/upload/v1557372907/udlzzxicr2jrshu3ht4p.png",
           "outputID": "_72132565_",
           "outputIDX": 0
         }
@@ -458,8 +458,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 83,
-        "y": 655,
+        "x": 78,
+        "y": 637,
         "w": 275,
         "h": 62,
         "s": 1
@@ -600,9 +600,9 @@
           "type": "ui-vec4",
           "vari": "vec4",
           "name": "vector4Value",
-          "value0": "1.31",
-          "value1": "1.58",
-          "value2": "1.43",
+          "value0": "1",
+          "value1": "1",
+          "value2": "1",
           "value3": "1.0",
           "outputID": "_47933031_",
           "outputIDX": 0
@@ -617,8 +617,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 965,
-        "y": 57,
+        "x": 952,
+        "y": 58,
         "w": 275,
         "h": 114,
         "s": 1
@@ -680,7 +680,8 @@
       "fnReturnType": "vec4",
       "fnID": "_26352448_",
       "fnName": "fn_vec4",
-      "fnInner": "\n  return vec4_a *vec4(position, 1.0) + vec4_b * vec4(position, 1.0);\n"
+      "fnInner": "\n  return vec4(position + 0.1 * position * noise(position + iTime), 1.0);\n",
+      "fnExt": "float mod289(float x){return x - floor(x * (1.0 / 289.0)) * 289.0;}\nvec4 mod289(vec4 x){return x - floor(x * (1.0 / 289.0)) * 289.0;}\nvec4 perm(vec4 x){return mod289(((x * 34.0) + 1.0) * x);}\n\nfloat noise(vec3 p){\n    vec3 a = floor(p);\n    vec3 d = p - a;\n    d = d * d * (3.0 - 2.0 * d);\n\n    vec4 b = a.xxyy + vec4(0.0, 1.0, 0.0, 1.0);\n    vec4 k1 = perm(b.xyxy);\n    vec4 k2 = perm(k1.xyxy + b.zzww);\n\n    vec4 c = k2 + a.zzzz;\n    vec4 k3 = perm(c);\n    vec4 k4 = perm(c + 1.0);\n\n    vec4 o1 = fract(k3 * (1.0 / 41.0));\n    vec4 o2 = fract(k4 * (1.0 / 41.0));\n\n    vec4 o3 = o2 * d.z + o1 * (1.0 - d.z);\n    vec2 o4 = o3.yw * d.x + o3.xz * (1.0 - d.x);\n\n    return o4.y * d.y + o4.x * (1.0 - d.y);\n}"
     },
     {
       "_id": "_45930028_",
@@ -690,33 +691,33 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 1133,
-        "y": 456,
+        "x": 1155,
+        "y": 465,
         "w": 275,
-        "h": 114,
+        "h": 166,
         "s": 1
       },
       "inputs": [
         {
           "shader": "fragmentShader",
           "argType": "vec4",
-          "arg": "vec4_a",
+          "arg": "diffuse",
           "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
           "boxID": "_45930028_",
           "io": "input",
           "type": "vec4",
-          "label": "vec4",
+          "label": "diffuse",
           "_id": "_61082083_"
         },
         {
           "shader": "fragmentShader",
           "argType": "vec4",
-          "arg": "vec4_b",
+          "arg": "textureColor",
           "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
           "boxID": "_45930028_",
           "io": "input",
           "type": "vec4",
-          "label": "vec4",
+          "label": "textureColor",
           "_id": "_3110420_"
         },
         {
@@ -729,6 +730,28 @@
           "type": "float",
           "label": "iTime",
           "_id": "_58563166_"
+        },
+        {
+          "shader": "fragmentShader",
+          "argType": "vec2",
+          "arg": "iResolution",
+          "defaults": "vec2(0.0, 0.0)",
+          "boxID": "_45930028_",
+          "io": "input",
+          "type": "vec2",
+          "label": "iResolution",
+          "_id": "_28098049_"
+        },
+        {
+          "shader": "fragmentShader",
+          "argType": "vec3",
+          "arg": "iNormal",
+          "defaults": "vec3(0.0, 0.0, 0.0)",
+          "boxID": "_45930028_",
+          "io": "input",
+          "type": "vec3",
+          "label": "iNormal",
+          "_id": "_71162791_"
         }
       ],
       "outputs": [
@@ -753,7 +776,8 @@
       "fnReturnType": "vec4",
       "fnID": "_71333649_",
       "fnName": "fn_vec4",
-      "fnInner": "\n  \n  return vec4_a * vec4_b * vec4(vec3(sin(iTime * 10.0) + 1.5), 1.0);\n\n//"
+      "fnInner": "\n\nif (length(gl_PointCoord.xy - 0.5) < 0.5) {\n  vec4 water = waterwaves(gl_FragCoord.xy, iResolution.xy, iTime * 10.0);\n  return water;\n} else {\n  vec4 water = waterwaves(iNormal.xy * iResolution.xy, iResolution.xy, iTime * 10.0);\n  return water + textureColor * 0.1;\n}\n\n  \n//",
+      "fnExt": "// Found this on GLSL sandbox. I really liked it, changed a few things and made it tileable.\n// :)\n// by David Hoskins.\n\n\n// Water turbulence effect by joltz0r 2013-07-04, improved 2013-07-07\n\n\n// Redefine below to see the tiling...\n//#define SHOW_TILING\n\n#define TAU 6.28318530718  \n#define MAX_ITER 35\n\nvec4 waterwaves( in vec2 fragCoord, in vec2 iResolution, in float iTime)\n{\n  float time = iTime * .5+23.0;\n    // uv should be the 0-1 uv of texture...\n  vec2 uv = fragCoord.xy / iResolution.xy;\n\n#ifdef SHOW_TILING\n  vec2 p = mod(uv*TAU*2.0, TAU)-250.0;\n#else\n    vec2 p = mod(uv*TAU, TAU)-250.0;\n#endif\n  vec2 i = vec2(p);\n  float c = 1.0;\n  float inten = .005;\n\n  for (int n = 0; n < MAX_ITER; n++)\n  {\n    float t = time * (1.0 - (3.5 / float(n+1)));\n    i = p + vec2(cos(t - i.x) + sin(t + i.y), sin(t - i.y) + cos(t + i.x));\n    c += 1.0/length(vec2(p.x / (sin(i.x+t)/inten),p.y / (cos(i.y+t)/inten)));\n  }\n  c /= float(MAX_ITER);\n  c = 1.17-pow(c, 1.4);\n  vec3 colour = vec3(pow(abs(c), 8.0));\n    colour = clamp(colour + vec3(0.0, 0.35, 0.5), 0.0, 1.0);\n\n\n  #ifdef SHOW_TILING\n  // Flash tile borders...\n  vec2 pixel = 2.0 / iResolution.xy;\n  uv *= 2.0;\n\n  float f = floor(mod(iTime*.5, 2.0)); \t// Flash value.\n  vec2 first = step(pixel, uv) * f;\t\t   \t// Rule out first screen pixels and flash.\n  uv  = step(fract(uv), pixel);\t\t\t\t// Add one line of pixels per tile.\n  colour = mix(colour, vec3(1.0, 1.0, 0.0), (uv.x + uv.y) * first.x * first.y); // Yellow line\n\n  #endif\n  return vec4(colour, 1.0);\n}"
     },
     {
       "_id": "_59816855_",
@@ -815,6 +839,152 @@
           "outputIDX": 0
         }
       ]
+    },
+    {
+      "_id": "_99389116_",
+      "title": "Uniform Vector2 Resolution",
+      "type": "green",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 786,
+        "y": 666,
+        "w": 275,
+        "h": 88,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "shader": "fragmentShader",
+          "uisIndex": 0,
+          "defaults": "vec2(0.0, 0.0)",
+          "boxID": "_99389116_",
+          "io": "output",
+          "type": "vec2",
+          "label": "vec2",
+          "_id": "_71544566_"
+        },
+        {
+          "shader": "fragmentShader",
+          "uisIndex": 0,
+          "defaults": "vec2(0.0, 0.0)",
+          "boxID": "_99389116_",
+          "io": "output",
+          "type": "vec2",
+          "label": "vec2",
+          "_id": "_10540418_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "fragmentShader",
+      "fnReturnType": "",
+      "fnID": "_89102975_",
+      "fnName": "",
+      "fnInner": "",
+      "hasUniforms": true,
+      "uniforms": [
+        {
+          "_id": "_68824581_",
+          "type": "ui-vec2",
+          "uniType": "resolution",
+          "vari": "vec2",
+          "name": "iResolution",
+          "outputID": "_71544566_",
+          "outputIDX": 0
+        }
+      ]
+    },
+    {
+      "_id": "_18418752_",
+      "title": "Varying Normal-V3 (Vertex Shader)",
+      "type": "purple",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 1155,
+        "y": 366,
+        "w": 275,
+        "h": 62,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "shader": "vertexShader",
+          "argType": "vec3",
+          "arg": "vec3Input",
+          "defaults": "vec3(0.0, 0.0, 0.0)",
+          "boxID": "_18418752_",
+          "io": "output",
+          "type": "vec3",
+          "label": "vec3",
+          "_id": "_63693216_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": true,
+      "shaderType": "vertexShader",
+      "isVarying": true,
+      "variType": "vec3",
+      "variName": "varying_v3_value",
+      "variID": "_69216458_",
+      "fnReturnType": "vec3",
+      "fnID": "_69087937_",
+      "fnName": "vec3_varying_setter_getter",
+      "fnInner": "\n  varying_v3_value_69216458_ = normal;\n\n  return normal;\n\n  "
+    },
+    {
+      "_id": "_46284966_",
+      "title": "Varying Normal V3 (Fragment Shader)",
+      "type": "purple",
+      "transition": "",
+      "order": 0,
+      "preview": false,
+      "pos": {
+        "x": 787,
+        "y": 786,
+        "w": 275,
+        "h": 62,
+        "s": 1
+      },
+      "inputs": [],
+      "outputs": [
+        {
+          "shader": "fragmentShader",
+          "argType": "vec3",
+          "arg": "vec3Input",
+          "defaults": "vec3(0.0, 0.0, 0.0)",
+          "boxID": "_46284966_",
+          "io": "output",
+          "type": "vec3",
+          "label": "vec3",
+          "_id": "_62578444_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "fragmentShader",
+      "isVarying": true,
+      "variType": "vec3",
+      "variName": "varying_v3_value",
+      "variID": "_69216458_",
+      "fnReturnType": "vec3",
+      "fnID": "_91516509_",
+      "fnName": "vec3_varying_getter",
+      "fnInner": "\n    return varying_v3_value_69216458_;\n  "
     }
   ],
   "connections": [
@@ -915,30 +1085,6 @@
       "input": {
         "shader": "vertexShader",
         "argType": "vec4",
-        "arg": "newPos",
-        "defaults": "vec4(position, 1.0)",
-        "boxID": "_50804866_",
-        "io": "input",
-        "type": "vec4",
-        "label": "gl_Position",
-        "_id": "_49235941_"
-      },
-      "output": {
-        "shader": "vertexShader",
-        "argType": "float",
-        "arg": "vec4",
-        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
-        "boxID": "_87839477_",
-        "io": "output",
-        "type": "vec4",
-        "label": "vec4",
-        "_id": "_74577576_"
-      }
-    },
-    {
-      "input": {
-        "shader": "vertexShader",
-        "argType": "vec4",
         "arg": "vec4_a",
         "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
         "boxID": "_87839477_",
@@ -1008,54 +1154,6 @@
     {
       "input": {
         "shader": "vertexShader",
-        "argType": "vec4",
-        "arg": "vec4_b",
-        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
-        "boxID": "_87839477_",
-        "io": "input",
-        "type": "vec4",
-        "label": "vec4",
-        "_id": "_41844164_"
-      },
-      "output": {
-        "shader": "both",
-        "argType": "vec4",
-        "arg": "vec4",
-        "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
-        "boxID": "_21494922_",
-        "io": "output",
-        "type": "vec4",
-        "label": "vec4",
-        "_id": "_52196800_"
-      }
-    },
-    {
-      "input": {
-        "shader": "fragmentShader",
-        "argType": "vec4",
-        "arg": "vec4_b",
-        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
-        "boxID": "_45930028_",
-        "io": "input",
-        "type": "vec4",
-        "label": "vec4",
-        "_id": "_3110420_"
-      },
-      "output": {
-        "shader": "both",
-        "argType": "vec4",
-        "arg": "vec4",
-        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
-        "boxID": "_96220676_",
-        "io": "output",
-        "type": "vec4",
-        "label": "vec4",
-        "_id": "_26006792_"
-      }
-    },
-    {
-      "input": {
-        "shader": "vertexShader",
         "argType": "float",
         "arg": "iTime",
         "defaults": "1.0",
@@ -1080,23 +1178,24 @@
       "input": {
         "shader": "fragmentShader",
         "argType": "vec4",
-        "arg": "vec4_a",
-        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
-        "boxID": "_45930028_",
+        "arg": "outputColor",
+        "defaults": "vec4(0.5, 0.5, 0.5, 0.5)",
+        "boxID": "_88221392_",
         "io": "input",
         "type": "vec4",
-        "label": "vec4",
-        "_id": "_61082083_"
+        "label": "gl_FragColor",
+        "_id": "_76290455_"
       },
       "output": {
-        "shader": "both",
-        "uisIndex": 0,
-        "defaults": "0.0",
-        "boxID": "_36916540_",
+        "shader": "fragmentShader",
+        "argType": "float",
+        "arg": "vec4",
+        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+        "boxID": "_45930028_",
         "io": "output",
         "type": "vec4",
         "label": "vec4",
-        "_id": "_90104159_"
+        "_id": "_50196673_"
       }
     },
     {
@@ -1126,24 +1225,142 @@
       "input": {
         "shader": "fragmentShader",
         "argType": "vec4",
-        "arg": "outputColor",
-        "defaults": "vec4(0.5, 0.5, 0.5, 0.5)",
-        "boxID": "_88221392_",
-        "io": "input",
-        "type": "vec4",
-        "label": "gl_FragColor",
-        "_id": "_76290455_"
-      },
-      "output": {
-        "shader": "fragmentShader",
-        "argType": "float",
-        "arg": "vec4",
+        "arg": "vec4_b",
         "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
         "boxID": "_45930028_",
+        "io": "input",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_3110420_"
+      },
+      "output": {
+        "shader": "both",
+        "argType": "vec4",
+        "arg": "vec4",
+        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+        "boxID": "_96220676_",
         "io": "output",
         "type": "vec4",
         "label": "vec4",
-        "_id": "_50196673_"
+        "_id": "_26006792_"
+      }
+    },
+    {
+      "input": {
+        "shader": "fragmentShader",
+        "argType": "vec4",
+        "arg": "vec4_a",
+        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+        "boxID": "_45930028_",
+        "io": "input",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_61082083_"
+      },
+      "output": {
+        "shader": "both",
+        "uisIndex": 0,
+        "defaults": "0.0",
+        "boxID": "_36916540_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_90104159_"
+      }
+    },
+    {
+      "input": {
+        "shader": "fragmentShader",
+        "argType": "vec2",
+        "arg": "iResolution",
+        "defaults": "vec2(0.0, 0.0)",
+        "boxID": "_45930028_",
+        "io": "input",
+        "type": "vec2",
+        "label": "iResolution",
+        "_id": "_28098049_"
+      },
+      "output": {
+        "shader": "fragmentShader",
+        "uisIndex": 0,
+        "defaults": "vec2(0.0, 0.0)",
+        "boxID": "_99389116_",
+        "io": "output",
+        "type": "vec2",
+        "label": "vec2",
+        "_id": "_71544566_"
+      }
+    },
+    {
+      "input": {
+        "shader": "fragmentShader",
+        "argType": "vec3",
+        "arg": "iNormal",
+        "defaults": "vec3(0.0, 0.0, 0.0)",
+        "boxID": "_45930028_",
+        "io": "input",
+        "type": "vec3",
+        "label": "iNormal",
+        "_id": "_71162791_"
+      },
+      "output": {
+        "shader": "fragmentShader",
+        "argType": "vec3",
+        "arg": "vec3Input",
+        "defaults": "vec3(0.0, 0.0, 0.0)",
+        "boxID": "_46284966_",
+        "io": "output",
+        "type": "vec3",
+        "label": "vec3",
+        "_id": "_62578444_"
+      }
+    },
+    {
+      "input": {
+        "shader": "vertexShader",
+        "argType": "vec4",
+        "arg": "vec4_b",
+        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+        "boxID": "_87839477_",
+        "io": "input",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_41844164_"
+      },
+      "output": {
+        "shader": "both",
+        "argType": "vec4",
+        "arg": "vec4",
+        "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+        "boxID": "_21494922_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_52196800_"
+      }
+    },
+    {
+      "input": {
+        "shader": "vertexShader",
+        "argType": "vec4",
+        "arg": "newPos",
+        "defaults": "vec4(position, 1.0)",
+        "boxID": "_50804866_",
+        "io": "input",
+        "type": "vec4",
+        "label": "gl_Position",
+        "_id": "_49235941_"
+      },
+      "output": {
+        "shader": "vertexShader",
+        "argType": "float",
+        "arg": "vec4",
+        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+        "boxID": "_87839477_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_74577576_"
       }
     }
   ]

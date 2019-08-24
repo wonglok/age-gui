@@ -24,9 +24,16 @@
           <button @click="adder('makeVertexRoot')">Vertex Root</button>
           <button @click="adder('makeFragmentRoot')">Fragment Root</button>
           <button @click="adder('makePreviwBox')">Preview Box</button>
-          <button @click="adder('makeVaryingV2UV')">UV Varying</button>
           <button @click="adder('makeTextureReader')">Texture Reader</button>
           <button @click="adder('makeAttributPosition')">Position Attribute</button>
+          <button @click="adder('makeUniformResolution')">Resolution Uniform</button>
+        </div>
+        <div class="age-addbox-menu-item">
+          <p>
+            <strong>System</strong>
+          </p>
+          <button @click="adder('makeVaryingV2UV')">UV Varying</button>
+          <button @click="adder('makeVaryingV3Noraml')">Normal Varying</button>
         </div>
 
         <div class="age-addbox-menu-item">

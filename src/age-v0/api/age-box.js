@@ -587,7 +587,7 @@ export const makeUniformResolution = ({ wins }) => {
   win.title = 'Uniform Vector2 Resolution'
   win.type = 'green'
 
-  win.shaderType = NS.SHADER_TYPES.BOTH
+  win.shaderType = NS.SHADER_TYPES.FRAGMENT
   // win.previewType = NS.PREVIEW_TYPES.VERTEX
   win.preview = false
   // win.boxLogicType = 'module'
@@ -597,8 +597,8 @@ export const makeUniformResolution = ({ wins }) => {
   )
 
   win.outputs.push(
-    getIO({ shader: win.shaderType, uisIndex: 0, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'iResolution Vect2' }),
-    getIO({ shader: win.shaderType, uisIndex: 0, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'iResolution Vect2' })
+    getIO({ shader: win.shaderType, uisIndex: 0, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'vec2' }),
+    getIO({ shader: win.shaderType, uisIndex: 0, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'vec2' })
     // getIO({ shader: win.shaderType, defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
   )
 
@@ -618,11 +618,11 @@ export const makeUniformResolution = ({ wins }) => {
   win.uniforms = [
     {
       _id: getID(),
-      type: 'ui-float',
-      uniType: 'timer',
-      vari: 'float',
-      name: 'iTime',
-      value: '0.5',
+      type: 'ui-vec2',
+      uniType: 'resolution',
+      vari: 'vec2',
+      name: 'iResolution',
+      // value: 'vec2(512.0, 512.0)',
       outputID: win.outputs[0]._id,
       outputIDX: 0
     }
@@ -883,7 +883,7 @@ export const makeVertexFunction = ({ wins }) => {
   // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
   win.pos.x = 0
   win.pos.y = 0
-
+  win.fnExt = ''
   win.fnReturnType = 'vec4'
   win.fnID = getID()
   win.fnName = 'fn_vec4'
@@ -927,6 +927,7 @@ export const makeFragmentFunction = ({ wins }) => {
   win.pos.x = 0
   win.pos.y = 0
 
+  win.fnExt = ''
   win.fnReturnType = 'vec4'
   win.fnID = getID()
   win.fnName = 'fn_vec4'
@@ -1391,6 +1392,96 @@ export const makeVaryingV2UV = ({ wins }) => {
     win.fnReturnType = 'vec2'
     win.fnID = getID()
     win.fnName = 'vec2_varying_getter'
+    win.fnInner = `
+    return ${win.variName}${variID};
+  `
+    return win
+  }
+
+  return {
+    hasBoth: true,
+    vertex: vertexWindow(),
+    fragment: fragmentWindow()
+  }
+}
+
+export const makeVaryingV3Noraml = ({ wins }) => {
+  let variID = getID()
+  let vertexWindow = () => {
+    let win = getWin()
+    win.title = 'Varying Normal-V3 (Vertex Shader)'
+    win.type = 'purple'
+    win.shaderType = NS.SHADER_TYPES.VERTEX
+    // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+    win.preview = false
+    // win.boxLogicType = 'module'
+
+    win.inputs.push(
+    )
+
+    win.outputs.push(
+      getIO({ shader: win.shaderType, argType: 'vec3', arg: `vec3Input`, defaults: NS.DEFAULT_VALUES.VEC3, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC3, label: 'vec3' })
+    )
+
+    win.isRoot = true
+    wins.push(win)
+
+    win.pos.w = 275
+    win.pos.h = 150
+    // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+    win.pos.x = 0
+    win.pos.y = 0
+
+    win.isVarying = true
+    win.variType = `vec3`
+    win.variName = `varying_v3_value`
+    win.variID = variID
+
+    win.fnReturnType = 'vec3'
+    win.fnID = getID()
+    win.fnName = 'vec3_varying_setter_getter'
+    win.fnInner = `
+  ${win.variName}${variID} = normal;
+
+  return normal;
+
+  `
+    return win
+  }
+
+  let fragmentWindow = () => {
+    let win = getWin()
+    win.title = 'Varying Normal V3 (Fragment Shader)'
+    win.type = 'purple'
+    win.shaderType = NS.SHADER_TYPES.FRAGMENT
+    // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+    win.preview = false
+    // win.boxLogicType = 'module'
+
+    win.inputs.push(
+    )
+
+    win.outputs.push(
+      getIO({ shader: win.shaderType, argType: 'vec3', arg: `vec3Input`, defaults: NS.DEFAULT_VALUES.VEC3, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC3, label: 'vec3' })
+    )
+
+    win.isRoot = false
+    wins.push(win)
+
+    win.pos.w = 275
+    win.pos.h = 150
+    // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+    win.pos.x = 0
+    win.pos.y = 0
+
+    win.isVarying = true
+    win.variType = `vec3`
+    win.variName = `varying_v3_value`
+    win.variID = variID
+
+    win.fnReturnType = 'vec3'
+    win.fnID = getID()
+    win.fnName = 'vec3_varying_getter'
     win.fnInner = `
     return ${win.variName}${variID};
   `
