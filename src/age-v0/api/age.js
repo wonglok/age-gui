@@ -24,6 +24,12 @@ export const NS = {
   },
   DEFAULT_VALUES: {
     NULL: 'null',
+
+    float: '0.0',
+    vec2: `vec2(0.0, 0.0)`,
+    vec3: `vec3(0.0, 0.0, 0.0)`,
+    vec4: `vec4(0.0, 0.0, 0.0, 0.0)`,
+
     VEC2: `vec2(0.0, 0.0)`,
     VEC3: `vec3(0.0, 0.0, 0.0)`,
     VEC4: `vec4(0.0, 0.0, 0.0, 0.0)`,
@@ -42,6 +48,7 @@ export const NS = {
   DATA_TYPES: {
     SAMPLER2D: 'sampler2D',
     TEXTURE2D: 'texture2D',
+
     VEC4: 'vec4',
     VEC3: 'vec3',
     VEC2: 'vec2',

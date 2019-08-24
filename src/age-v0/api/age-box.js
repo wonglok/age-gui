@@ -843,11 +843,17 @@ export const makeVertexFunction = ({ wins }) => {
   return win
 }
 
+export const addInputToFunction = ({ win }) => {
+  win.inputs.push(
+    getIO({ shader: win.shaderType, argType: 'vec4', arg: `vec4_` + win.inputs.length, defaults: NS.DEFAULT_VALUES.VEC4, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+  )
+}
+
 export const makeFragmentFunction = ({ wins }) => {
   let win = getWin()
   win.title = 'Fragment Function'
   win.type = 'custom-function'
-  win.shaderType = NS.SHADER_TYPES.VERTEX
+  win.shaderType = NS.SHADER_TYPES.FRAGMENT
   // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
   win.preview = false
   // win.boxLogicType = 'module'

@@ -2,7 +2,7 @@
   <div class="full age-addbox-wrap">
     <div class="age-addbox-close-plane full" @click="close()">
     </div>
-    <div class="age-addbox-content">
+    <div class="age-addbox-content scroller">
       <h1>
         Add Modules
       </h1>

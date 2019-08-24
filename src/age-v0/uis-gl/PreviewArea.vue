@@ -8,11 +8,11 @@
       <BoxSceneTexturePreview @shader="shader = $event" v-if="connections && getWin({ wins, preview }) && getWin({ wins, preview }).type === 'texture-reader'" :scenes="scenes" :preview="preview" :win="getWin({ wins, preview })" :wins="wins" :connections="connections"></BoxSceneTexturePreview>
     </div>
     <div class="nomouse age-layer" ref="dom" style="display: flex; justify-content: flex-end; align-items: flex-end;">
-      <div  style="display: flex; justify-content: flex-end;">
+      <!-- <div  style="display: flex; justify-content: flex-end;">
         <pre  v-if="shader" class="">{{ shader.vertexShader }}
   ------------
   {{ shader.fragmentShader }}</pre>
-      </div>
+      </div> -->
     </div>
     <!-- <Bubbles v-if="engine && engine.renderer && engine.scene && engine.camera" :camera="engine.camera" :amount="20" :renderer="engine.renderer" :scene="engine.scene"></Bubbles> -->
   </div>
