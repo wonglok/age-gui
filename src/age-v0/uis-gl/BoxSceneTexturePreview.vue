@@ -64,7 +64,7 @@ export default {
   methods: {
     setupTimer ({ uniforms, uni }) {
       uniforms[uni.name + uni._id] = {
-        value: 0
+        value: window.performance.now() * 0.0001
       }
       let loop = () => {
         this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)

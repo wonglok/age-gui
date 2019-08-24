@@ -64,7 +64,7 @@ export default {
   methods: {
     setupTimer ({ uniforms, uni }) {
       uniforms[uni.name + uni._id] = {
-        value: 0
+        value: window.performance.now() * 0.0001
       }
       let loop = () => {
         this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
@@ -89,6 +89,9 @@ export default {
     },
     async setupResolution ({ win, uniforms, uni }) {
       let update = async () => {
+        uniforms[uni.name + uni._id] = {
+          value: new THREE.Vector2(1024, 1024)
+        }
         let dom = await AGE.UI.getDOM({ domID: this.preview.domID })
         let rect = dom.getBoundingClientRect()
         uniforms[uni.name + uni._id] = {
@@ -177,7 +180,7 @@ export default {
     window.addEventListener('compile-shader', () => {
       this.makeMat()
     }, false)
-    let mesh = this.mesh = new THREE.Mesh(geometry, material)
+    let mesh = this.mesh = new THREE.Points(geometry, material)
     scene.add(mesh)
     scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444))
     var light = new THREE.DirectionalLight(0xffffff, 0.5)
