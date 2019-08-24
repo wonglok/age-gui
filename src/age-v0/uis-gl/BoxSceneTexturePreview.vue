@@ -80,13 +80,17 @@ export default {
           let ww = newTexture.image.width
           let hh = newTexture.image.height
           let size = 17
-
+          config.transparent = true
           this.mesh.geometry = new THREE.PlaneBufferGeometry(size, size * hh / ww, 32, 32)
+        }, () => {
+
+        }, () => {
         })
         textureMAP.set(uni.url, texture)
         // uniforms[uni.name + uni._id] = {
         //   value: texture
         // }
+        config.transparent = false
         config.map = textureMAP.get(uni.url)
       } else {
         // uniforms[uni.name + uni._id] = {
@@ -109,16 +113,15 @@ export default {
         uniforms
       }
 
+      let conn = this.connections.find(e => e.output.boxID === this.win._id)
+
       this.wins.forEach(win => {
-        // console.log(win)
-        if (win.hasUniforms) {
-          win.uniforms.forEach((uni) => {
-            if (uni.uniType === 'timer') {
-              this.setupTimer({ uniforms, uni })
-            } else if (uni.uniType === 'sampler2D') {
+        if (conn) {
+          if (win.hasUniforms) {
+            win.uniforms.forEach((uni) => {
               this.setupSampler2D({ config, win, uniforms, uni })
-            }
-          })
+            })
+          }
         }
       })
 
@@ -160,13 +163,14 @@ export default {
 
     // console.log(this.connections)
 
-    let geometry = new THREE.PlaneBufferGeometry(8.5 * 2, 8.5 * 2, 32)
+    let geometry = new THREE.PlaneBufferGeometry(17, 17, 32, 32)
     let material = this.makeMat()
     window.addEventListener('compile-shader', () => {
       this.makeMat()
     }, false)
     let mesh = this.mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
+
     scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444))
     var light = new THREE.DirectionalLight(0xffffff, 0.5)
     light.position.set(1, 1, 1)

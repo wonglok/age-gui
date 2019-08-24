@@ -8,8 +8,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 457,
-        "y": 219,
+        "x": 442,
+        "y": 225,
         "w": 275,
         "h": 88,
         "s": 1
@@ -99,8 +99,8 @@
       "order": 0,
       "preview": true,
       "pos": {
-        "x": 1101,
-        "y": 133,
+        "x": 1128,
+        "y": 109,
         "w": 285,
         "h": 226,
         "s": 1
@@ -242,69 +242,6 @@
       "spreads": []
     },
     {
-      "_id": "_19564299_",
-      "title": "2D Texture Reader",
-      "type": "output",
-      "transition": "",
-      "order": 0,
-      "preview": false,
-      "pos": {
-        "x": 379,
-        "y": 502,
-        "w": 275,
-        "h": 88,
-        "s": 1
-      },
-      "inputs": [
-        {
-          "shader": "both",
-          "argType": "sampler2D",
-          "arg": "sampler2D_value",
-          "defaults": "0.0",
-          "boxID": "_19564299_",
-          "io": "input",
-          "type": "sampler2D",
-          "label": "sampler2D",
-          "_id": "_17168401_"
-        },
-        {
-          "shader": "both",
-          "argType": "vec2",
-          "arg": "vec2_value",
-          "defaults": "vec2(1.0, 1.0)",
-          "boxID": "_19564299_",
-          "io": "input",
-          "type": "vec2",
-          "label": "vec2",
-          "_id": "_11145997_"
-        }
-      ],
-      "outputs": [
-        {
-          "shader": "both",
-          "argType": "vec4",
-          "arg": "vec4",
-          "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
-          "boxID": "_19564299_",
-          "io": "output",
-          "type": "vec4",
-          "label": "vec4",
-          "_id": "_20297015_"
-        }
-      ],
-      "spread": [],
-      "declare": "",
-      "func": "",
-      "eval": "",
-      "isRoot": false,
-      "shaderType": "both",
-      "fnReturnType": "vec4",
-      "fnID": "_61209270_",
-      "fnName": "textureReader",
-      "fnInner": "\n  return texture2D(sampler2D_value, vec2_value);\n",
-      "spreads": []
-    },
-    {
       "_id": "_27158864_",
       "title": "Uniform Texture",
       "type": "green",
@@ -350,7 +287,7 @@
           "uniType": "sampler2D",
           "vari": "sampler2D",
           "name": "iTexture",
-          "url": "blob:http://192.168.8.7:27473/5a28e325-0c5d-42bd-80be-8bdb31c0d278",
+          "url": "blob:http://localhost:18177/ca1e7268-39f8-43e3-8eb4-e4d440529a39",
           "outputID": "_89327355_",
           "outputIDX": 0
         }
@@ -364,8 +301,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 793,
-        "y": 322,
+        "x": 761,
+        "y": 286,
         "w": 275,
         "h": 88,
         "s": 1
@@ -471,6 +408,70 @@
           "outputIDX": 0
         }
       ]
+    },
+    {
+      "_id": "_54951280_",
+      "title": "2D Texture Reader",
+      "type": "texture-reader",
+      "transition": "",
+      "order": 0,
+      "preview": true,
+      "pos": {
+        "x": 419,
+        "y": 476,
+        "w": 264,
+        "h": 288,
+        "s": 1
+      },
+      "inputs": [
+        {
+          "shader": "both",
+          "argType": "sampler2D",
+          "arg": "sampler2D_value",
+          "defaults": "0.0",
+          "boxID": "_54951280_",
+          "io": "input",
+          "type": "sampler2D",
+          "label": "sampler2D",
+          "_id": "_21667272_"
+        },
+        {
+          "shader": "both",
+          "argType": "vec2",
+          "arg": "vec2_value",
+          "defaults": "vec2(1.0, 1.0)",
+          "boxID": "_54951280_",
+          "io": "input",
+          "type": "vec2",
+          "label": "vec2",
+          "_id": "_81820505_"
+        }
+      ],
+      "outputs": [
+        {
+          "shader": "both",
+          "argType": "vec4",
+          "arg": "vec4",
+          "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+          "boxID": "_54951280_",
+          "io": "output",
+          "type": "vec4",
+          "label": "vec4",
+          "_id": "_77983011_"
+        }
+      ],
+      "spread": [],
+      "declare": "",
+      "func": "",
+      "eval": "",
+      "isRoot": false,
+      "shaderType": "both",
+      "resize": true,
+      "fnReturnType": "vec4",
+      "fnID": "_42326671_",
+      "fnName": "textureReader",
+      "fnInner": "\n  return texture2D(sampler2D_value, vec2_value);\n",
+      "spreads": []
     }
   ],
   "connections": [
@@ -500,53 +501,6 @@
     {
       "input": {
         "shader": "both",
-        "argType": "vec2",
-        "arg": "vec2_value",
-        "defaults": "vec2(1.0, 1.0)",
-        "boxID": "_19564299_",
-        "io": "input",
-        "type": "vec2",
-        "label": "vec2",
-        "_id": "_11145997_"
-      },
-      "output": {
-        "shader": "fragmentShader",
-        "argType": "vec2",
-        "arg": "vec2Input",
-        "defaults": "vec2(0.0, 0.0)",
-        "boxID": "_97862899_",
-        "io": "output",
-        "type": "vec2",
-        "label": "vec2",
-        "_id": "_83220786_"
-      }
-    },
-    {
-      "input": {
-        "shader": "both",
-        "argType": "sampler2D",
-        "arg": "sampler2D_value",
-        "defaults": "0.0",
-        "boxID": "_19564299_",
-        "io": "input",
-        "type": "sampler2D",
-        "label": "sampler2D",
-        "_id": "_17168401_"
-      },
-      "output": {
-        "shader": "both",
-        "uisIndex": 0,
-        "defaults": "0.0",
-        "boxID": "_27158864_",
-        "io": "output",
-        "type": "sampler2D",
-        "label": "sampler2D",
-        "_id": "_89327355_"
-      }
-    },
-    {
-      "input": {
-        "shader": "both",
         "argType": "vec4",
         "arg": "vec4_a",
         "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
@@ -565,30 +519,6 @@
         "type": "vec4",
         "label": "vec4",
         "_id": "_90104159_"
-      }
-    },
-    {
-      "input": {
-        "shader": "both",
-        "argType": "vec4",
-        "arg": "vec4_b",
-        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
-        "boxID": "_76533140_",
-        "io": "input",
-        "type": "vec4",
-        "label": "vec4",
-        "_id": "_44592971_"
-      },
-      "output": {
-        "shader": "both",
-        "argType": "vec4",
-        "arg": "vec4",
-        "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
-        "boxID": "_19564299_",
-        "io": "output",
-        "type": "vec4",
-        "label": "vec4",
-        "_id": "_20297015_"
       }
     },
     {
@@ -613,6 +543,77 @@
         "type": "vec4",
         "label": "vec4",
         "_id": "_23357862_"
+      }
+    },
+    {
+      "input": {
+        "shader": "both",
+        "argType": "vec2",
+        "arg": "vec2_value",
+        "defaults": "vec2(1.0, 1.0)",
+        "boxID": "_54951280_",
+        "io": "input",
+        "type": "vec2",
+        "label": "vec2",
+        "_id": "_81820505_"
+      },
+      "output": {
+        "shader": "fragmentShader",
+        "argType": "vec2",
+        "arg": "vec2Input",
+        "defaults": "vec2(0.0, 0.0)",
+        "boxID": "_97862899_",
+        "io": "output",
+        "type": "vec2",
+        "label": "vec2",
+        "_id": "_83220786_"
+      }
+    },
+    {
+      "input": {
+        "shader": "both",
+        "argType": "sampler2D",
+        "arg": "sampler2D_value",
+        "defaults": "0.0",
+        "boxID": "_54951280_",
+        "io": "input",
+        "type": "sampler2D",
+        "label": "sampler2D",
+        "_id": "_21667272_"
+      },
+      "output": {
+        "shader": "both",
+        "uisIndex": 0,
+        "defaults": "0.0",
+        "boxID": "_27158864_",
+        "io": "output",
+        "type": "sampler2D",
+        "label": "sampler2D",
+        "_id": "_89327355_"
+      }
+    },
+    {
+      "input": {
+        "shader": "both",
+        "argType": "vec4",
+        "arg": "vec4_b",
+        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+        "boxID": "_76533140_",
+        "io": "input",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_44592971_"
+      },
+      "output": {
+        "shader": "both",
+        "argType": "vec4",
+        "arg": "vec4",
+        "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+        "boxID": "_54951280_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_77983011_"
       }
     }
   ]
