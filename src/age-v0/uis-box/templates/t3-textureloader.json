@@ -8,8 +8,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 1148,
-        "y": 154,
+        "x": 1335,
+        "y": 137,
         "w": 275,
         "h": 88,
         "s": 1
@@ -59,8 +59,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 1463,
-        "y": 428,
+        "x": 1468,
+        "y": 412,
         "w": 275,
         "h": 62,
         "s": 1
@@ -99,8 +99,8 @@
       "order": 0,
       "preview": true,
       "pos": {
-        "x": 781,
-        "y": 642,
+        "x": 785,
+        "y": 659,
         "w": 285,
         "h": 226,
         "s": 1
@@ -123,8 +123,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 818,
-        "y": 247,
+        "x": 965,
+        "y": 208,
         "w": 275,
         "h": 62,
         "s": 1
@@ -159,7 +159,7 @@
           "type": "ui-float",
           "vari": "float",
           "name": "floatValue",
-          "value": "2.79",
+          "value": "3.65",
           "outputID": "_70157248_",
           "outputIDX": 0
         }
@@ -173,8 +173,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 782,
-        "y": 415,
+        "x": 771,
+        "y": 409,
         "w": 275,
         "h": 62,
         "s": 1
@@ -209,9 +209,9 @@
           "type": "ui-vec4",
           "vari": "vec4",
           "name": "vector4Value",
-          "value0": "0.5",
-          "value1": "0.5",
-          "value2": "0.5",
+          "value0": "0.64",
+          "value1": "1.68",
+          "value2": "2.85",
           "value3": "1.0",
           "outputID": "_90104159_",
           "outputIDX": 0
@@ -401,7 +401,7 @@
           "uniType": "sampler2D",
           "vari": "sampler2D",
           "name": "iTexture",
-          "url": "https://res.cloudinary.com/loklok-keystone/image/upload/v1557373092/vhla6cujgbafy2zaznsm.png",
+          "url": "https://res.cloudinary.com/loklok-keystone/image/upload/v1566675876/sample.jpg",
           "outputID": "_72132565_",
           "outputIDX": 0
         }
@@ -600,9 +600,9 @@
           "type": "ui-vec4",
           "vari": "vec4",
           "name": "vector4Value",
-          "value0": "1.80",
-          "value1": "1.85",
-          "value2": "1.84",
+          "value0": "1.31",
+          "value1": "1.58",
+          "value2": "1.43",
           "value3": "1.0",
           "outputID": "_47933031_",
           "outputIDX": 0
@@ -617,8 +617,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 815,
-        "y": 50,
+        "x": 965,
+        "y": 57,
         "w": 275,
         "h": 114,
         "s": 1
@@ -680,7 +680,7 @@
       "fnReturnType": "vec4",
       "fnID": "_26352448_",
       "fnName": "fn_vec4",
-      "fnInner": "\n  return vec4_a *vec4(position, 1.0) + sin(iTime) * vec4_b * vec4(position, 1.0);\n"
+      "fnInner": "\n  return vec4_a *vec4(position, 1.0) + vec4_b * vec4(position, 1.0);\n"
     },
     {
       "_id": "_45930028_",
@@ -690,10 +690,10 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 1137,
-        "y": 460,
+        "x": 1133,
+        "y": 456,
         "w": 275,
-        "h": 88,
+        "h": 114,
         "s": 1
       },
       "inputs": [
@@ -718,6 +718,17 @@
           "type": "vec4",
           "label": "vec4",
           "_id": "_3110420_"
+        },
+        {
+          "shader": "fragmentShader",
+          "argType": "float",
+          "arg": "iTime",
+          "defaults": "1.0",
+          "boxID": "_45930028_",
+          "io": "input",
+          "type": "float",
+          "label": "iTime",
+          "_id": "_58563166_"
         }
       ],
       "outputs": [
@@ -742,7 +753,7 @@
       "fnReturnType": "vec4",
       "fnID": "_71333649_",
       "fnName": "fn_vec4",
-      "fnInner": "\n  return vec4_a + vec4_b;\n"
+      "fnInner": "\n  \n  return vec4_a * vec4_b * vec4(vec3(sin(iTime * 10.0) + 1.5), 1.0);\n\n//"
     },
     {
       "_id": "_59816855_",
@@ -1044,26 +1055,25 @@
     },
     {
       "input": {
-        "shader": "fragmentShader",
-        "argType": "vec4",
-        "arg": "outputColor",
-        "defaults": "vec4(0.5, 0.5, 0.5, 0.5)",
-        "boxID": "_88221392_",
+        "shader": "vertexShader",
+        "argType": "float",
+        "arg": "iTime",
+        "defaults": "1.0",
+        "boxID": "_87839477_",
         "io": "input",
-        "type": "vec4",
-        "label": "gl_FragColor",
-        "_id": "_76290455_"
+        "type": "float",
+        "label": "iTime",
+        "_id": "_68810852_"
       },
       "output": {
-        "shader": "fragmentShader",
-        "argType": "float",
-        "arg": "vec4",
-        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
-        "boxID": "_45930028_",
+        "shader": "both",
+        "uisIndex": 0,
+        "defaults": "0.0",
+        "boxID": "_59816855_",
         "io": "output",
-        "type": "vec4",
-        "label": "vec4",
-        "_id": "_50196673_"
+        "type": "float",
+        "label": "float",
+        "_id": "_48082433_"
       }
     },
     {
@@ -1091,15 +1101,15 @@
     },
     {
       "input": {
-        "shader": "vertexShader",
+        "shader": "fragmentShader",
         "argType": "float",
         "arg": "iTime",
         "defaults": "1.0",
-        "boxID": "_87839477_",
+        "boxID": "_45930028_",
         "io": "input",
         "type": "float",
         "label": "iTime",
-        "_id": "_68810852_"
+        "_id": "_58563166_"
       },
       "output": {
         "shader": "both",
@@ -1109,7 +1119,31 @@
         "io": "output",
         "type": "float",
         "label": "float",
-        "_id": "_48082433_"
+        "_id": "_37119266_"
+      }
+    },
+    {
+      "input": {
+        "shader": "fragmentShader",
+        "argType": "vec4",
+        "arg": "outputColor",
+        "defaults": "vec4(0.5, 0.5, 0.5, 0.5)",
+        "boxID": "_88221392_",
+        "io": "input",
+        "type": "vec4",
+        "label": "gl_FragColor",
+        "_id": "_76290455_"
+      },
+      "output": {
+        "shader": "fragmentShader",
+        "argType": "float",
+        "arg": "vec4",
+        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
+        "boxID": "_45930028_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_50196673_"
       }
     }
   ]

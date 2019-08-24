@@ -56,11 +56,14 @@ export default {
     }
   },
   mounted () {
-    if (this.win.preview) {
-      this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 200 + 26
-    } else {
-      this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 26
-    }
+    window.addEventListener('ui-layout', () => {
+      if (this.win.preview) {
+        this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 200 + 26
+      } else {
+        this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 26
+      }
+    })
+    window.dispatchEvent(new Event('ui-layout'))
     this.$parent.setupSubCompo({ subCompo: this })
   }
 }

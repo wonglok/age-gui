@@ -582,6 +582,57 @@ export const makeUniformTimer = ({ wins }) => {
   return win
 }
 
+export const makeUniformResolution = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Uniform Vector2 Resolution'
+  win.type = 'green'
+
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    // getIO({ shader: win.shaderType, argType: 'vec3', arg: `newPos`, defaults: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' }),
+  )
+
+  win.outputs.push(
+    getIO({ shader: win.shaderType, uisIndex: 0, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'iResolution Vect2' }),
+    getIO({ shader: win.shaderType, uisIndex: 0, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'iResolution Vect2' })
+    // getIO({ shader: win.shaderType, defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = 0
+
+  win.fnReturnType = ''
+  win.fnID = getID()
+  win.fnName = ''
+  win.fnInner = ``
+
+  win.hasUniforms = true
+  win.uniforms = [
+    {
+      _id: getID(),
+      type: 'ui-float',
+      uniType: 'timer',
+      vari: 'float',
+      name: 'iTime',
+      value: '0.5',
+      outputID: win.outputs[0]._id,
+      outputIDX: 0
+    }
+  ]
+
+  // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+
+  return win
+}
+
 export const makeUniformTexture = ({ wins }) => {
   let win = getWin()
   win.title = 'Uniform Texture'

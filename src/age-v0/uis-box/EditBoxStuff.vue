@@ -99,6 +99,7 @@ export default {
   },
   methods: {
     plot () {
+      window.dispatchEvent(new Event('ui-layout'))
       window.dispatchEvent(new Event('plot'))
     },
     removeInput ({ input, idx, inputs }) {
