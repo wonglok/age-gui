@@ -61,7 +61,9 @@ export default {
         return
       }
       if (this.win.preview) {
-        this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 200 + 26
+        if (!this.win.pos.h) {
+          this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 200 + 26
+        }
       } else {
         this.win.pos.h = this.$refs['connectorsarea'].getBoundingClientRect().height + 26
       }

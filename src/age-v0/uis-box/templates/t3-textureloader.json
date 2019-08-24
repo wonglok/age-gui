@@ -99,10 +99,10 @@
       "order": 0,
       "preview": true,
       "pos": {
-        "x": 1220,
-        "y": 691,
-        "w": 448,
-        "h": 413,
+        "x": 1212,
+        "y": 675,
+        "w": 369,
+        "h": 356,
         "s": 1
       },
       "inputs": [],
@@ -209,9 +209,9 @@
           "type": "ui-vec4",
           "vari": "vec4",
           "name": "vector4Value",
-          "value0": "1.37",
-          "value1": "1.80",
-          "value2": "2.85",
+          "value0": "1.00",
+          "value1": "1",
+          "value2": "1.25",
           "value3": "1.0",
           "outputID": "_90104159_",
           "outputIDX": 0
@@ -501,8 +501,8 @@
       "order": 0,
       "preview": true,
       "pos": {
-        "x": 432,
-        "y": 216,
+        "x": 438,
+        "y": 214,
         "w": 275,
         "h": 288,
         "s": 1
@@ -617,8 +617,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 952,
-        "y": 58,
+        "x": 973,
+        "y": 54,
         "w": 275,
         "h": 114,
         "s": 1
@@ -627,23 +627,23 @@
         {
           "shader": "vertexShader",
           "argType": "vec4",
-          "arg": "vec4_a",
+          "arg": "v4const",
           "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
           "boxID": "_87839477_",
           "io": "input",
           "type": "vec4",
-          "label": "vec4",
+          "label": "v4const",
           "_id": "_34182198_"
         },
         {
           "shader": "vertexShader",
           "argType": "vec4",
-          "arg": "vec4_b",
+          "arg": "texture",
           "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
           "boxID": "_87839477_",
           "io": "input",
           "type": "vec4",
-          "label": "vec4",
+          "label": "texture",
           "_id": "_41844164_"
         },
         {
@@ -680,7 +680,7 @@
       "fnReturnType": "vec4",
       "fnID": "_26352448_",
       "fnName": "fn_vec4",
-      "fnInner": "\n  return vec4(position + 0.1 * position * noise(position + iTime), 1.0);\n",
+      "fnInner": "\n  return vec4(position + texture.xyz * 0.3 + 0.1 * position * noise(position + iTime), 1.0);\n",
       "fnExt": "float mod289(float x){return x - floor(x * (1.0 / 289.0)) * 289.0;}\nvec4 mod289(vec4 x){return x - floor(x * (1.0 / 289.0)) * 289.0;}\nvec4 perm(vec4 x){return mod289(((x * 34.0) + 1.0) * x);}\n\nfloat noise(vec3 p){\n    vec3 a = floor(p);\n    vec3 d = p - a;\n    d = d * d * (3.0 - 2.0 * d);\n\n    vec4 b = a.xxyy + vec4(0.0, 1.0, 0.0, 1.0);\n    vec4 k1 = perm(b.xyxy);\n    vec4 k2 = perm(k1.xyxy + b.zzww);\n\n    vec4 c = k2 + a.zzzz;\n    vec4 k3 = perm(c);\n    vec4 k4 = perm(c + 1.0);\n\n    vec4 o1 = fract(k3 * (1.0 / 41.0));\n    vec4 o2 = fract(k4 * (1.0 / 41.0));\n\n    vec4 o3 = o2 * d.z + o1 * (1.0 - d.z);\n    vec2 o4 = o3.yw * d.x + o3.xz * (1.0 - d.x);\n\n    return o4.y * d.y + o4.x * (1.0 - d.y);\n}"
     },
     {
@@ -776,7 +776,7 @@
       "fnReturnType": "vec4",
       "fnID": "_71333649_",
       "fnName": "fn_vec4",
-      "fnInner": "\n\nif (length(gl_PointCoord.xy - 0.5) < 0.5) {\n  vec4 water = waterwaves(gl_FragCoord.xy, iResolution.xy, iTime * 10.0);\n  return water;\n} else {\n  vec4 water = waterwaves(iNormal.xy * iResolution.xy, iResolution.xy, iTime * 10.0);\n  return water + textureColor * 0.1;\n}\n\n  \n//",
+      "fnInner": "\n\nif (length(gl_PointCoord.xy - 0.5) < 0.5) {\n  vec4 water = waterwaves(gl_FragCoord.xy, iResolution.xy, iTime * 10.0);\n  return water;\n} else {\n  vec4 water = waterwaves(iNormal.xy * iResolution.xy, iResolution.xy, iTime * 10.0);\n  return water * diffuse + textureColor * 0.1;\n}\n\n  \n//",
       "fnExt": "// Found this on GLSL sandbox. I really liked it, changed a few things and made it tileable.\n// :)\n// by David Hoskins.\n\n\n// Water turbulence effect by joltz0r 2013-07-04, improved 2013-07-07\n\n\n// Redefine below to see the tiling...\n//#define SHOW_TILING\n\n#define TAU 6.28318530718  \n#define MAX_ITER 35\n\nvec4 waterwaves( in vec2 fragCoord, in vec2 iResolution, in float iTime)\n{\n  float time = iTime * .5+23.0;\n    // uv should be the 0-1 uv of texture...\n  vec2 uv = fragCoord.xy / iResolution.xy;\n\n#ifdef SHOW_TILING\n  vec2 p = mod(uv*TAU*2.0, TAU)-250.0;\n#else\n    vec2 p = mod(uv*TAU, TAU)-250.0;\n#endif\n  vec2 i = vec2(p);\n  float c = 1.0;\n  float inten = .005;\n\n  for (int n = 0; n < MAX_ITER; n++)\n  {\n    float t = time * (1.0 - (3.5 / float(n+1)));\n    i = p + vec2(cos(t - i.x) + sin(t + i.y), sin(t - i.y) + cos(t + i.x));\n    c += 1.0/length(vec2(p.x / (sin(i.x+t)/inten),p.y / (cos(i.y+t)/inten)));\n  }\n  c /= float(MAX_ITER);\n  c = 1.17-pow(c, 1.4);\n  vec3 colour = vec3(pow(abs(c), 8.0));\n    colour = clamp(colour + vec3(0.0, 0.35, 0.5), 0.0, 1.0);\n\n\n  #ifdef SHOW_TILING\n  // Flash tile borders...\n  vec2 pixel = 2.0 / iResolution.xy;\n  uv *= 2.0;\n\n  float f = floor(mod(iTime*.5, 2.0)); \t// Flash value.\n  vec2 first = step(pixel, uv) * f;\t\t   \t// Rule out first screen pixels and flash.\n  uv  = step(fract(uv), pixel);\t\t\t\t// Add one line of pixels per tile.\n  colour = mix(colour, vec3(1.0, 1.0, 0.0), (uv.x + uv.y) * first.x * first.y); // Yellow line\n\n  #endif\n  return vec4(colour, 1.0);\n}"
     },
     {

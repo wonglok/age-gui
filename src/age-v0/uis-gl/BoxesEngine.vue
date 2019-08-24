@@ -69,6 +69,7 @@ export default {
     setupSizer () {
       this.getSizeInfo()
       window.addEventListener('resize', this.getSizeInfo, false)
+      window.addEventListener('ui-layout', this.getSizeInfo, false)
     },
     getSizeInfo () {
       if (this.$refs['mounter']) {
