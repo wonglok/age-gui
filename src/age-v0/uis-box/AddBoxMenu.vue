@@ -12,8 +12,9 @@
             <strong>Reset / Examples</strong>
           </p>
           <button @click="addJSONTemplate('./templates/t1-basic-fragment-vertex-shader.json')">Basic Starter</button>
-          <button @click="addJSONTemplate('./templates/t2-two-v4-glFragColor.json')">GL FragColor Mixer</button>
-          <button @click="addJSONTemplate('./templates/t3-textureloader.json')">GL Texture Mixer</button>
+          <button @click="addJSONTemplate('./templates/t2-two-v4-glFragColor.json')">FragColor Mixer</button>
+          <button @click="addJSONTemplate('./templates/t3-textureloader.json')">Texture Mixer</button>
+          <button @click="addJSONTemplate('./templates/t4-waterball.json')">Water Ball</button>
 
         </div>
 
@@ -35,6 +36,7 @@
           <button @click="adder('makeUniformResolution')">Resolution Uniform</button>
           <button @click="adder('makeVaryingV2UV')">UV Varying</button>
         </div>
+
         <div class="age-addbox-menu-item">
           <p>
             <strong>Varying System</strong>
@@ -172,6 +174,8 @@ export default {
         return (await import('./templates/t2-two-v4-glFragColor.json')).default
       } else if (v === './templates/t3-textureloader.json') {
         return (await import('./templates/t3-textureloader.json')).default
+      } else if (v === './templates/t4-waterball.json') {
+        return (await import('./templates/t4-waterball.json')).default
       }
     },
     async addJSONTemplate (str) {
