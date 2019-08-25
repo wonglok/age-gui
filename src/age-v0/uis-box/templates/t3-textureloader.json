@@ -209,9 +209,9 @@
           "type": "ui-vec4",
           "vari": "vec4",
           "name": "vector4Value",
-          "value0": "0.55",
-          "value1": "1.52",
-          "value2": "0.2",
+          "value0": "0.34",
+          "value1": "0.14",
+          "value2": "-0.68",
           "value3": "1.0",
           "outputID": "_47933031_",
           "outputIDX": 0
