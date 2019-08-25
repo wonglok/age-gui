@@ -196,7 +196,7 @@ export default {
 
     this.group.render = ({ renderer }) => {
       controls.update()
-      scene.children[0].rotation.y += 0.01
+      // scene.children[0].rotation.y += 0.01
       let rect = dom.getBoundingClientRect()
 
       if (rect.bottom < 0 || rect.top > renderer.domElement.clientHeight ||

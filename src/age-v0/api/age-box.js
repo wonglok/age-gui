@@ -948,7 +948,7 @@ export const makeDuplicateV4 = ({ wins }) => {
   // win.boxLogicType = 'module'
 
   win.inputs.push(
-    getIO({ shader: win.shaderType, argType: 'vec4', arg: `vec4input`, defaults: NS.DEFAULT_VALUES.vec40, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
+    getIO({ shader: win.shaderType, argType: 'vec4', arg: `vec4input`, defaults: NS.DEFAULT_VALUES.VEC4, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'vec4' })
   )
 
   win.outputs.push(
@@ -972,6 +972,123 @@ export const makeDuplicateV4 = ({ wins }) => {
   win.fnName = 'duplicate_v4'
   win.fnInner = `
     return vec4input;
+  `
+
+  return win
+}
+
+export const makeDuplicateV3 = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Duplicate Vector 3 Output'
+  win.type = 'red'
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    getIO({ shader: win.shaderType, argType: 'vec3', arg: `vec3input`, defaults: NS.DEFAULT_VALUES.VEC3, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC3, label: 'vec3' })
+  )
+
+  win.outputs.push(
+    getIO({ shader: win.shaderType, argType: 'vec3', arg: `vec3`, defaults: NS.DEFAULT_VALUES.VEC3, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC3, label: 'vec3' }),
+    getIO({ shader: win.shaderType, argType: 'vec3', arg: `vec3`, defaults: NS.DEFAULT_VALUES.VEC3, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC3, label: 'vec3' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  win.pos.x = 0
+  win.pos.y = 0
+
+  win.isDuplicate = true
+
+  win.fnReturnType = 'vec3'
+  win.fnID = getID()
+  win.fnName = 'duplicate_v3'
+  win.fnInner = `
+    return vec3input;
+  `
+
+  return win
+}
+
+export const makeDuplicateV2 = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Duplicate Vector 2 Output'
+  win.type = 'red'
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    getIO({ shader: win.shaderType, argType: 'vec2', arg: `vec2input`, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC2, label: 'vec2' })
+  )
+
+  win.outputs.push(
+    getIO({ shader: win.shaderType, argType: 'vec2', arg: `vec2`, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'vec2' }),
+    getIO({ shader: win.shaderType, argType: 'vec2', arg: `vec2`, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'vec2' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  win.pos.x = 0
+  win.pos.y = 0
+
+  win.isDuplicate = true
+
+  win.fnReturnType = 'vec2'
+  win.fnID = getID()
+  win.fnName = 'duplicate_v2'
+  win.fnInner = `
+    return vec2input;
+  `
+
+  return win
+}
+
+export const makeDuplicateFloat = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Duplicate Float Output'
+  win.type = 'red'
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.FRAGMENT
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    getIO({ shader: win.shaderType, argType: 'float', arg: `floatinput`, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC2, label: 'float' })
+  )
+
+  win.outputs.push(
+    getIO({ shader: win.shaderType, argType: 'float', arg: `float`, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'float' }),
+    getIO({ shader: win.shaderType, argType: 'float', arg: `float`, defaults: NS.DEFAULT_VALUES.VEC2, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC2, label: 'float' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  // // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+  win.pos.x = 0
+  win.pos.y = 0
+
+  win.isDuplicate = true
+
+  win.fnReturnType = 'float'
+  win.fnID = getID()
+  win.fnName = 'duplicate_float'
+  win.fnInner = `
+    return floatinput;
   `
 
   return win

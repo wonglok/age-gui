@@ -8,8 +8,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 1335,
-        "y": 137,
+        "x": 1338,
+        "y": 80,
         "w": 275,
         "h": 88,
         "s": 1
@@ -99,8 +99,8 @@
       "order": 0,
       "preview": true,
       "pos": {
-        "x": 985,
-        "y": 565,
+        "x": 982,
+        "y": 493,
         "w": 598,
         "h": 607,
         "s": 1
@@ -123,8 +123,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 966,
-        "y": 204,
+        "x": 981,
+        "y": 158,
         "w": 275,
         "h": 62,
         "s": 1
@@ -159,7 +159,7 @@
           "type": "ui-float",
           "vari": "float",
           "name": "floatValue",
-          "value": "-0.77",
+          "value": "2.0",
           "outputID": "_70157248_",
           "outputIDX": 0
         }
@@ -173,8 +173,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 514,
-        "y": 367,
+        "x": 510,
+        "y": 373,
         "w": 275,
         "h": 62,
         "s": 1
@@ -209,9 +209,9 @@
           "type": "ui-vec4",
           "vari": "vec4",
           "name": "vector4Value",
-          "value0": "1.78",
-          "value1": "-0.01",
-          "value2": "1.56",
+          "value0": "1",
+          "value1": "1",
+          "value2": "1",
           "value3": "1.0",
           "outputID": "_90104159_",
           "outputIDX": 0
@@ -226,8 +226,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 449,
-        "y": 123,
+        "x": 471,
+        "y": 3,
         "w": 275,
         "h": 62,
         "s": 1
@@ -262,9 +262,9 @@
           "type": "ui-vec4",
           "vari": "vec4",
           "name": "vector4Value",
-          "value0": "0.92",
-          "value1": "1",
-          "value2": "1",
+          "value0": "0.16",
+          "value1": "1.03",
+          "value2": "0.2",
           "value3": "1.0",
           "outputID": "_47933031_",
           "outputIDX": 0
@@ -279,8 +279,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 975,
-        "y": 53,
+        "x": 982,
+        "y": 36,
         "w": 275,
         "h": 88,
         "s": 1
@@ -289,12 +289,12 @@
         {
           "shader": "vertexShader",
           "argType": "vec4",
-          "arg": "v4const",
+          "arg": "woopSize",
           "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
           "boxID": "_87839477_",
           "io": "input",
           "type": "vec4",
-          "label": "v4const",
+          "label": "woopSize",
           "_id": "_34182198_"
         },
         {
@@ -331,7 +331,7 @@
       "fnReturnType": "vec4",
       "fnID": "_26352448_",
       "fnName": "fn_vec4",
-      "fnInner": "\n  return vec4(position.xyz * noise(position.xyz + iTime * 20.0) * 0.1 + position.xyz, 1.0);\n",
+      "fnInner": "\n  return vec4(position.xyz * noise(woopSize.xyz * position.xyz + iTime * 20.0) * 0.1 + position.xyz, 1.0);\n",
       "fnExt": "float mod289(float x){return x - floor(x * (1.0 / 289.0)) * 289.0;}\nvec4 mod289(vec4 x){return x - floor(x * (1.0 / 289.0)) * 289.0;}\nvec4 perm(vec4 x){return mod289(((x * 34.0) + 1.0) * x);}\n\nfloat noise(vec3 p){\n    vec3 a = floor(p);\n    vec3 d = p - a;\n    d = d * d * (3.0 - 2.0 * d);\n\n    vec4 b = a.xxyy + vec4(0.0, 1.0, 0.0, 1.0);\n    vec4 k1 = perm(b.xyxy);\n    vec4 k2 = perm(k1.xyxy + b.zzww);\n\n    vec4 c = k2 + a.zzzz;\n    vec4 k3 = perm(c);\n    vec4 k4 = perm(c + 1.0);\n\n    vec4 o1 = fract(k3 * (1.0 / 41.0));\n    vec4 o2 = fract(k4 * (1.0 / 41.0));\n\n    vec4 o3 = o2 * d.z + o1 * (1.0 - d.z);\n    vec2 o4 = o3.yw * d.x + o3.xz * (1.0 - d.x);\n\n    return o4.y * d.y + o4.x * (1.0 - d.y);\n}"
     },
     {
@@ -342,8 +342,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 977,
-        "y": 315,
+        "x": 975,
+        "y": 318,
         "w": 275,
         "h": 114,
         "s": 1
@@ -405,7 +405,7 @@
       "fnReturnType": "vec4",
       "fnID": "_71333649_",
       "fnName": "fn_vec4",
-      "fnInner": "\n\nvec4 water = diffuse * waterwaves(gl_FragCoord.xy * iNormal.xy, vec2(1024.0), iTime * 5.0);\n\nreturn water;\n\n  \n//",
+      "fnInner": "\n\nvec4 water = diffuse * waterwaves(gl_FragCoord.xy * iNormal.xy + iTime * 2.0, vec2(1024.0), iTime * 5.0);\n\nreturn water;\n\n  \n//",
       "fnExt": "// Found this on GLSL sandbox. I really liked it, changed a few things and made it tileable.\n// :)\n// by David Hoskins.\n\n\n// Water turbulence effect by joltz0r 2013-07-04, improved 2013-07-07\n\n\n// Redefine below to see the tiling...\n//#define SHOW_TILING\n\n#define TAU 6.28318530718  \n#define MAX_ITER 35\n\nvec4 waterwaves( in vec2 fragCoord, in vec2 iResolution, in float iTime)\n{\n  float time = iTime * .5+23.0;\n    // uv should be the 0-1 uv of texture...\n  vec2 uv = fragCoord.xy / iResolution.xy;\n\n#ifdef SHOW_TILING\n  vec2 p = mod(uv*TAU*2.0, TAU)-250.0;\n#else\n    vec2 p = mod(uv*TAU, TAU)-250.0;\n#endif\n  vec2 i = vec2(p);\n  float c = 1.0;\n  float inten = .005;\n\n  for (int n = 0; n < MAX_ITER; n++)\n  {\n    float t = time * (1.0 - (3.5 / float(n+1)));\n    i = p + vec2(cos(t - i.x) + sin(t + i.y), sin(t - i.y) + cos(t + i.x));\n    c += 1.0/length(vec2(p.x / (sin(i.x+t)/inten),p.y / (cos(i.y+t)/inten)));\n  }\n  c /= float(MAX_ITER);\n  c = 1.17-pow(c, 1.4);\n  vec3 colour = vec3(pow(abs(c), 8.0));\n    colour = clamp(colour + vec3(0.0, 0.35, 0.5), 0.0, 1.0);\n\n\n  #ifdef SHOW_TILING\n  // Flash tile borders...\n  vec2 pixel = 2.0 / iResolution.xy;\n  uv *= 2.0;\n\n  float f = floor(mod(iTime*.5, 2.0)); \t// Flash value.\n  vec2 first = step(pixel, uv) * f;\t\t   \t// Rule out first screen pixels and flash.\n  uv  = step(fract(uv), pixel);\t\t\t\t// Add one line of pixels per tile.\n  colour = mix(colour, vec3(1.0, 1.0, 0.0), (uv.x + uv.y) * first.x * first.y); // Yellow line\n\n  #endif\n  return vec4(colour, 1.0);\n}"
     },
     {
@@ -416,8 +416,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 431,
-        "y": -14,
+        "x": 480,
+        "y": 173,
         "w": 275,
         "h": 88,
         "s": 1
@@ -477,8 +477,8 @@
       "order": 0,
       "preview": false,
       "pos": {
-        "x": 216,
-        "y": 478,
+        "x": 469,
+        "y": -81,
         "w": 275,
         "h": 62,
         "s": 1
@@ -578,29 +578,6 @@
         "type": "float",
         "label": "float",
         "_id": "_48082433_"
-      }
-    },
-    {
-      "input": {
-        "shader": "vertexShader",
-        "argType": "vec4",
-        "arg": "v4const",
-        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
-        "boxID": "_87839477_",
-        "io": "input",
-        "type": "vec4",
-        "label": "v4const",
-        "_id": "_34182198_"
-      },
-      "output": {
-        "shader": "both",
-        "uisIndex": 0,
-        "defaults": "0.0",
-        "boxID": "_32663863_",
-        "io": "output",
-        "type": "vec4",
-        "label": "vec4",
-        "_id": "_47933031_"
       }
     },
     {
@@ -742,6 +719,29 @@
         "type": "vec4",
         "label": "vec4",
         "_id": "_74577576_"
+      }
+    },
+    {
+      "input": {
+        "shader": "vertexShader",
+        "argType": "vec4",
+        "arg": "woopSize",
+        "defaults": "vec4(1.0, 1.0, 1.0, 1.0)",
+        "boxID": "_87839477_",
+        "io": "input",
+        "type": "vec4",
+        "label": "woopSize",
+        "_id": "_34182198_"
+      },
+      "output": {
+        "shader": "both",
+        "uisIndex": 0,
+        "defaults": "0.0",
+        "boxID": "_32663863_",
+        "io": "output",
+        "type": "vec4",
+        "label": "vec4",
+        "_id": "_47933031_"
       }
     }
   ]

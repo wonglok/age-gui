@@ -91,8 +91,8 @@ export default {
   },
   mounted () {
     let close = (evt) => {
-      window.removeEventListener('close', close)
       if (evt.keyCode === 127) {
+        window.removeEventListener('keydown', close)
         this.close()
       }
     }

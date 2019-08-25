@@ -62,6 +62,9 @@
             <strong>Duplicate</strong>
           </p>
           <button @click="adder('makeDuplicateV4')">Vector 4</button>
+          <button @click="adder('makeDuplicateV3')">Vector 3</button>
+          <button @click="adder('makeDuplicateV2')">Vector 2</button>
+          <button @click="adder('makeDuplicateFloat')">Float</button>
         </div>
 
         <!-- <div class="age-addbox-menu-item">
