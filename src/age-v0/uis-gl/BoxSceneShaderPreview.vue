@@ -180,7 +180,7 @@ export default {
     window.addEventListener('compile-shader', () => {
       this.makeMat()
     }, false)
-    let mesh = this.mesh = new THREE.Points(geometry, material)
+    let mesh = this.mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
     scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444))
     var light = new THREE.DirectionalLight(0xffffff, 0.5)
