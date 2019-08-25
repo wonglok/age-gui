@@ -6,8 +6,9 @@
 <script>
 import * as AGE from '../api/age'
 import _ from 'lodash'
+import * as Audio from '../media/mic-history.js'
 
-let textureMAP = new Map()
+let texutreCache = new Map()
 
 let THREE = {
   ...require('three'),
@@ -74,38 +75,60 @@ export default {
       cancelAnimationFrame(this.rAFID[uni.name + uni._id] || 0)
       this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
     },
-    setupSampler2D ({ config, win, uniforms, uni }) {
-      if (!textureMAP.has(uni.url)) {
-        let texture = new THREE.TextureLoader().load(uni.url, (newTexture) => {
-          let ww = newTexture.image.width
-          let hh = newTexture.image.height
-          let size = 22
-          config.transparent = true
-          this.mesh.geometry = new THREE.PlaneBufferGeometry(size / (hh / ww), size, 32, 32)
-
-          this.$nextTick(() => {
-            texture.needsUpdate = true
-            this.$nextTick(() => {
-              this.mesh.material.needsUpdate = true
-            })
-          })
-        }, () => {
-        }, () => {
-        })
-        config.map = texture
-        textureMAP.set(uni.url, texture)
+    setupSampler2D ({ win, uniforms, uni }) {
+      if (!texutreCache.has(uni.url)) {
+        let texture = new THREE.TextureLoader().load(uni.url)
+        texutreCache.set(uni.url, texture)
+        uniforms[uni.name + uni._id] = {
+          value: texture
+        }
       } else {
-        config.map = textureMAP.get(uni.url)
+        uniforms[uni.name + uni._id] = {
+          value: texutreCache.get(uni.url)
+        }
       }
-      // uniforms[uni.name + uni._id] = {
-      //   value: texture
-      // }
-
-      config.transparent = false
+    },
+    async setupResolution ({ win, uniforms, uni }) {
+      let update = async () => {
+        uniforms[uni.name + uni._id] = {
+          value: new THREE.Vector2(1024, 1024)
+        }
+        let dom = await AGE.UI.getDOM({ domID: this.preview.domID })
+        let rect = dom.getBoundingClientRect()
+        uniforms[uni.name + uni._id] = {
+          value: new THREE.Vector2(rect.width, rect.height)
+        }
+        this.mesh.material.needsUpdate = true
+        // console.log(JSON.stringify(uniforms[uni.name + uni._id].value))
+      }
+      window.addEventListener('resize', () => {
+        update()
+      })
+      window.addEventListener('ui-layout', () => {
+        update()
+      })
+      update()
+    },
+    setupAudioUniform ({ win, uniforms, uni }) {
+      uniforms[uni.name + uni._id] = {
+        value: null
+      }
+      let loop = () => {
+        this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
+        let api = Audio.APIs[uni._id]
+        if (api) {
+          uniforms[uni.name + uni._id].value = api.update().texture
+          this.mesh.material.needsUpdate = true
+        }
+        // console.log(uniforms[uni.name + uni._id].value)
+      }
+      cancelAnimationFrame(this.rAFID[uni.name + uni._id] || 0)
+      this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
     },
     makeMat () {
-      let shader = this.shader = AGE.GEN.getCode({ wins: this.wins, connections: this.connections })
-      this.$emit('shader', shader)
+      let shader = {}
+      // let shader = this.shader = AGE.GEN.getCode({ wins: this.wins, connections: this.connections })
+      // this.$emit('shader', shader)
 
       for (var kn in this.rAFID) {
         cancelAnimationFrame(this.rAFID[kn] || 0)
@@ -113,23 +136,51 @@ export default {
 
       let uniforms = {
       }
-      let config = this.config
+      let config = {
+        uniforms
+      }
 
-      let conn = this.connections.find(e => e.output.boxID === this.win._id)
+      // this.wins.forEach(win => {
+      //   // console.log(win)
+      // })
 
-      this.wins.forEach(win => {
-        if (conn) {
-          if (win.hasUniforms) {
-            win.uniforms.forEach((uni) => {
-              this.setupSampler2D({ config, win, uniforms, uni })
-            })
+      let win = this.preview
+      if (win.hasUniforms) {
+        win.uniforms.forEach((uni) => {
+          if (uni.uniType === 'timer') {
+            this.setupTimer({ uniforms, uni })
+          } else if (uni.uniType === 'sampler2D') {
+            this.setupSampler2D({ win, uniforms, uni })
+          } else if (uni.uniType === 'resolution') {
+            this.setupResolution({ win, uniforms, uni })
+          } else if (uni.uniType === 'sampler2D-audio') {
+            this.setupAudioUniform({ win, uniforms, uni })
           }
-        }
-      })
+          shader = {
+            vertexShader: `
+              varying vec2 vUv;
+              void main(void) {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+              }
+            `,
+            fragmentShader: `
+              uniform sampler2D ${uni.name + uni._id};
+              varying vec2 vUv;
+              void main(void) {
+                vec4 color1 = texture2D(${uni.name + uni._id}, vUv);
+                gl_FragColor = vec4(color1.xyz, 1.0);
+              }
+            `
+          }
+        })
+      }
 
-      var material = new THREE.MeshBasicMaterial({
-        // vertexShader: shader.vertexShader,
-        // fragmentShader: shader.fragmentShader,
+      // https://res.cloudinary.com/loklok-keystone/image/upload/v1557616131/i8xtnul1wfce1zzakqtb.png
+
+      var material = new THREE.ShaderMaterial({
+        vertexShader: shader.vertexShader,
+        fragmentShader: shader.fragmentShader,
         transparent: true,
         ...config
         // color: new THREE.Color().setHSL(Math.random(), 1, 0.75),
@@ -137,10 +188,12 @@ export default {
         // metalness: 0,
         // flatShading: true
       })
+
       if (this.mesh) {
         this.mesh.material = material
         this.mesh.needsUpdate = true
       }
+
       return material
     }
   },
@@ -165,14 +218,13 @@ export default {
 
     // console.log(this.connections)
 
-    let geometry = new THREE.PlaneBufferGeometry(17, 17, 32, 32)
+    let geometry = new THREE.SphereBufferGeometry(8.5, 320, 320)
     let material = this.makeMat()
     window.addEventListener('compile-shader', () => {
       this.makeMat()
     }, false)
     let mesh = this.mesh = new THREE.Mesh(geometry, material)
     scene.add(mesh)
-
     scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444))
     var light = new THREE.DirectionalLight(0xffffff, 0.5)
     light.position.set(1, 1, 1)

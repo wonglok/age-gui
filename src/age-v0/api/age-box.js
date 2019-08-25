@@ -4,14 +4,6 @@ export const getIO = (args) => {
   return {
     ...args,
     _id: getID()
-    // boxID,
-    // arg,
-    // argType,
-    // io,
-    // type,
-    // code,
-    // defaults,
-    // label
   }
 }
 
@@ -264,8 +256,8 @@ export const makeTextureReader = ({ wins }) => {
   win.type = 'texture-reader'
   win.shaderType = NS.SHADER_TYPES.BOTH
   // win.previewType = NS.PREVIEW_TYPES.VERTEX
-  win.resize = true
-  win.preview = true
+  win.resize = false
+  win.preview = false
   // win.boxLogicType = 'module'
 
   win.inputs.push(
@@ -640,7 +632,8 @@ export const makeUniformTexture = ({ wins }) => {
 
   win.shaderType = NS.SHADER_TYPES.BOTH
   // win.previewType = NS.PREVIEW_TYPES.VERTEX
-  win.preview = false
+  win.preview = true
+  win.resize = true
   // win.boxLogicType = 'module'
 
   win.inputs.push(
@@ -674,6 +667,59 @@ export const makeUniformTexture = ({ wins }) => {
       uniType: 'sampler2D',
       vari: 'sampler2D',
       name: 'iTexture',
+      url: '',
+      outputID: win.outputs[0]._id,
+      outputIDX: 0
+    }
+  ]
+
+  // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+
+  return win
+}
+
+export const makeUniformAudioHistory = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Uniform AudioHistory'
+  win.type = 'green'
+
+  win.shaderType = NS.SHADER_TYPES.BOTH
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = true
+  win.resize = true
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    // getIO({ shader: win.shaderType, argType: 'vec3', arg: `newPos`, defaults: NS.DEFAULT_VALUES.gl_Position, spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' }),
+  )
+
+  win.outputs.push(
+    getIO({ shader: win.shaderType, uisIndex: 0, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.SAMPLER2D, label: 'sampler2D' }),
+    getIO({ shader: win.shaderType, uisIndex: 0, defaults: NS.DEFAULT_VALUES.float0, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.SAMPLER2D, label: 'sampler2D' })
+    // getIO({ shader: win.shaderType, defaults: '', spread: '', boxID: win._id, io: NS.IO_TYPES.INPUT, type: 'vec4', label: 'gl_FragCoord' })
+  )
+
+  win.isRoot = false
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  win.pos.y = 0
+
+  win.fnReturnType = ''
+  win.fnID = getID()
+  win.fnName = ''
+  win.fnInner = ``
+
+  win.hasUniforms = true
+  win.isAudio = true
+  win.uniforms = [
+    {
+      _id: getID(),
+      type: 'audio-sampler2D',
+      uniType: 'sampler2D-audio',
+      vari: 'sampler2D',
+      name: 'iAudio',
       url: '',
       outputID: win.outputs[0]._id,
       outputIDX: 0

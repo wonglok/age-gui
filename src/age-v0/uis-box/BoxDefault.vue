@@ -22,6 +22,7 @@
           </div>
           <div :key="ui.id" v-for="ui in $parent.win.uniforms || []" class="full center">
             <TextureLoader v-if="$parent.win.isTexture" :ui="ui"></TextureLoader>
+            <AudioLoader v-if="$parent.win.isAudio" :ui="ui"></AudioLoader>
           </div>
         </div>
         <div class="flex-list age-connector-list">
@@ -46,6 +47,7 @@ export default {
     connectorDOMs: {}
   },
   components: {
+    AudioLoader: require('./AudioLoader.vue').default,
     TextureLoader: require('./TextureLoader.vue').default,
     MagicInput: require('./MagicInput.vue').default,
     PreviewRect: require('./PreviewRect.vue').default,

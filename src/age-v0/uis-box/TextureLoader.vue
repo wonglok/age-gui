@@ -2,7 +2,7 @@
   <div>
     <input type="text" v-model="ui.url" @input="onInput" class="age-reset" style="width: 80px; font-size: 10px; border: black solid 1px;" />
     <br />
-    <input type="file" ref="file" class="age-reset" @change="onChange" v-show="false">
+    <input accept="image/*" type="file" ref="file" class="age-reset" @change="onChange" v-show="false">
     <button style="width: 80px; font-size: 10px; border: black solid 1px;" class="age-reset" @click="$refs['file'].click()">Opne File</button>
   </div>
 </template>

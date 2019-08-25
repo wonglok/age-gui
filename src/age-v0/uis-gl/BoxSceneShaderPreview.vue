@@ -6,6 +6,7 @@
 <script>
 import * as AGE from '../api/age'
 import _ from 'lodash'
+import * as Audio from '../media/mic-history.js'
 
 let texutreCache = new Map()
 
@@ -108,6 +109,22 @@ export default {
       })
       update()
     },
+    setupAudioUniform ({ win, uniforms, uni }) {
+      uniforms[uni.name + uni._id] = {
+        value: null
+      }
+      let loop = () => {
+        this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
+        let api = Audio.APIs[uni._id]
+        if (api) {
+          uniforms[uni.name + uni._id].value = api.update().texture
+          this.mesh.material.needsUpdate = true
+        }
+        // console.log(uniforms[uni.name + uni._id].value)
+      }
+      cancelAnimationFrame(this.rAFID[uni.name + uni._id] || 0)
+      this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
+    },
     makeMat () {
       let shader = this.shader = AGE.GEN.getCode({ wins: this.wins, connections: this.connections })
       this.$emit('shader', shader)
@@ -132,6 +149,8 @@ export default {
               this.setupSampler2D({ win, uniforms, uni })
             } else if (uni.uniType === 'resolution') {
               this.setupResolution({ win, uniforms, uni })
+            } else if (uni.uniType === 'sampler2D-audio') {
+              this.setupAudioUniform({ win, uniforms, uni })
             }
           })
         }

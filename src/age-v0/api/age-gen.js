@@ -202,7 +202,9 @@ export const makeUniforms = ({ win, wins, connections }) => {
     let uniforms = win.uniforms
 
     uniforms.forEach((ui) => {
-      if (ui.type === 'ui-sampler2D') {
+      if (ui.type === 'audio-sampler2D') {
+        str += `uniform ${ui.vari} ${ui.name}${ui._id}; \n`
+      } else if (ui.type === 'ui-sampler2D') {
         str += `uniform ${ui.vari} ${ui.name}${ui._id}; \n`
       } else if (ui.type === 'ui-float') {
         str += `uniform ${ui.vari} ${ui.name}${ui._id}; \n`

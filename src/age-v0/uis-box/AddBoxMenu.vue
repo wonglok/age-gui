@@ -15,6 +15,7 @@
           <button @click="addJSONTemplate('./templates/t2-two-v4-glFragColor.json')">FragColor Mixer</button>
           <button @click="addJSONTemplate('./templates/t3-textureloader.json')">Texture Mixer</button>
           <button @click="addJSONTemplate('./templates/t4-waterball.json')">Water Ball</button>
+          <button @click="addJSONTemplate('./templates/t5-audio-ball-amaze.json')">Space Microphone Ball Ball</button>
 
         </div>
 
@@ -26,6 +27,7 @@
           <button @click="adder('makeFragmentRoot')">Fragment Root</button>
           <button @click="adder('makePreviwBox')">Preview Box</button>
         </div>
+
         <div class="age-addbox-menu-item">
           <p>
             <strong>Input System</strong>
@@ -117,6 +119,7 @@
           <p>
             <strong>Uniforms</strong>
           </p>
+          <button @click="adder('makeUniformAudioHistory')">Mic Audio Texture</button>
         </div>
 
       </div>
@@ -176,6 +179,8 @@ export default {
         return (await import('./templates/t3-textureloader.json')).default
       } else if (v === './templates/t4-waterball.json') {
         return (await import('./templates/t4-waterball.json')).default
+      } else if (v === './templates/t5-audio-ball-amaze.json') {
+        return (await import('./templates/t5-audio-ball-amaze.json')).default
       }
     },
     async addJSONTemplate (str) {
