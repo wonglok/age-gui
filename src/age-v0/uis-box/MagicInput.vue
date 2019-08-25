@@ -1,21 +1,21 @@
 <template>
   <div v-if="ui.type === 'ui-float'">
-    <input class="age-reset ui-input nosel" ref="input" type="number" step="0.05" v-model="ui.value" @input="tryUpdate()" />
+    <input class="age-reset ui-input nosel" ref="input" type="number" @keydown.left="ui.value -= 0.01" @keydown.right="ui.value -= 0.01" step="0.05" v-model="ui.value" @input="tryUpdate()" />
   </div>
   <div class="flex-row vector-inputs" v-else-if="ui.type === 'ui-vec4'">
-    <input class="age-reset ui-input nosel" ref="input0" type="number" step="0.05" v-model="ui.value0" @input="tryUpdate()" />
-    <input class="age-reset ui-input nosel" ref="input1" type="number" step="0.05" v-model="ui.value1" @input="tryUpdate()" />
-    <input class="age-reset ui-input nosel" ref="input2" type="number" step="0.05" v-model="ui.value2" @input="tryUpdate()" />
-    <input class="age-reset ui-input nosel" ref="input3" type="number" step="0.05" v-model="ui.value3" @input="tryUpdate()" />
+    <input class="age-reset ui-input nosel" ref="input0" type="number" @keydown.left="ui.value0 -= 0.01" @keydown.right="ui.value0 -= 0.01" step="0.05" v-model="ui.value0" @input="tryUpdate()" />
+    <input class="age-reset ui-input nosel" ref="input1" type="number" @keydown.left="ui.value1 -= 0.01" @keydown.right="ui.value1 -= 0.01" step="0.05" v-model="ui.value1" @input="tryUpdate()" />
+    <input class="age-reset ui-input nosel" ref="input2" type="number" @keydown.left="ui.value2 -= 0.01" @keydown.right="ui.value2 -= 0.01" step="0.05" v-model="ui.value2" @input="tryUpdate()" />
+    <input class="age-reset ui-input nosel" ref="input3" type="number" @keydown.left="ui.value3 -= 0.01" @keydown.right="ui.value3 -= 0.01" step="0.05" v-model="ui.value3" @input="tryUpdate()" />
   </div>
   <div class="flex-row vector-inputs" v-else-if="ui.type === 'ui-vec3'">
-    <input class="age-reset ui-input nosel" ref="input0" type="number" step="0.05" v-model="ui.value0" @input="tryUpdate()" />
-    <input class="age-reset ui-input nosel" ref="input1" type="number" step="0.05" v-model="ui.value1" @input="tryUpdate()" />
-    <input class="age-reset ui-input nosel" ref="input2" type="number" step="0.05" v-model="ui.value2" @input="tryUpdate()" />
+    <input class="age-reset ui-input nosel" ref="input0" type="number" @keydown.left="ui.value0 -= 0.01" @keydown.right="ui.value0 -= 0.01" step="0.05" v-model="ui.value0" @input="tryUpdate()" />
+    <input class="age-reset ui-input nosel" ref="input1" type="number" @keydown.left="ui.value1 -= 0.01" @keydown.right="ui.value1 -= 0.01" step="0.05" v-model="ui.value1" @input="tryUpdate()" />
+    <input class="age-reset ui-input nosel" ref="input2" type="number" @keydown.left="ui.value2 -= 0.01" @keydown.right="ui.value2 -= 0.01" step="0.05" v-model="ui.value2" @input="tryUpdate()" />
   </div>
   <div class="flex-row vector-inputs" v-else-if="ui.type === 'ui-vec2'">
-    <input class="age-reset ui-input nosel" ref="input0" type="number" step="0.05" v-model="ui.value0" @input="tryUpdate()" />
-    <input class="age-reset ui-input nosel" ref="input1" type="number" step="0.05" v-model="ui.value1" @input="tryUpdate()" />
+    <input class="age-reset ui-input nosel" ref="input0" type="number" @keydown.left="ui.value0 -= 0.01" @keydown.right="ui.value0 -= 0.01" step="0.05" v-model="ui.value0" @input="tryUpdate()" />
+    <input class="age-reset ui-input nosel" ref="input1" type="number" @keydown.left="ui.value1 -= 0.01" @keydown.right="ui.value1 -= 0.01" step="0.05" v-model="ui.value1" @input="tryUpdate()" />
   </div>
 </template>
 
@@ -50,7 +50,7 @@ export default {
         onMM: ({ api, ev }) => {
           let kn = `value${idx}`
           this.ui[kn] = Number(-api.dY * 0.01) + Number(this.ui[kn])
-          this.ui[kn] = Number(api.dX * 0.005) + Number(this.ui[kn])
+          this.ui[kn] = Number(api.dX * 0.01) + Number(this.ui[kn])
           this.ui[kn] = Number(this.ui[kn]).toFixed(2)
           this.tryUpdate()
         }
