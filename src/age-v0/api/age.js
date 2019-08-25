@@ -72,6 +72,7 @@ export const boxColorTypes = {
   yellow: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
   default: `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
   'preview-box': `linear-gradient(251deg, rgba(255,221,192,0.72) 9%, #FF881B 100%)`,
+  'custom-function': `linear-gradient(251deg, rgba(255, 192, 250, 0.72) 9%, rgb(27, 234, 255) 100%)`,
   function: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`,
   green: `linear-gradient(251deg, rgba(192,255,210,0.72) 9%, #18CA1A 100%)`
 }
