@@ -61,6 +61,10 @@ export default {
   mounted () {
     // this.createDefaultWin()
     this.load()
+    if (this.wins.length === 0) {
+      this.overlay = 'add-module'
+    }
+
     this.setupDrag({ dom: this.$refs.dragArea })
 
     window.addEventListener('save-age-project', () => {
