@@ -11,11 +11,11 @@
           <p>
             <strong>Reset / Examples</strong>
           </p>
-          <button @click="addJSONTemplate('./templates/t1-basic-fragment-vertex-shader.json')">Basic Starter</button>
-          <button @click="addJSONTemplate('./templates/t2-two-v4-glFragColor.json')">FragColor Mixer</button>
-          <button @click="addJSONTemplate('./templates/t3-textureloader.json')">Texture Mixer</button>
-          <button @click="addJSONTemplate('./templates/t4-waterball.json')">Water Ball</button>
-          <button @click="addJSONTemplate('./templates/t5-audio-ball-amaze.json')">Space Microphone Ball Ball</button>
+          <button @click="addJSONTemplate('../code-templates/t1-basic-fragment-vertex-shader.json')">Basic Starter</button>
+          <button @click="addJSONTemplate('../code-templates/t2-two-v4-glFragColor.json')">FragColor Mixer</button>
+          <button @click="addJSONTemplate('../code-templates/t3-textureloader.json')">Texture Mixer</button>
+          <button @click="addJSONTemplate('../code-templates/t4-waterball.json')">Water Ball</button>
+          <button @click="addJSONTemplate('../code-templates/t5-audio-ball-amaze.json')">Space Microphone Ball Ball</button>
 
         </div>
 
@@ -171,16 +171,16 @@ export default {
       this.close()
     },
     async loadJSON (v) {
-      if (v === './templates/t1-basic-fragment-vertex-shader.json') {
-        return (await import('./templates/t1-basic-fragment-vertex-shader.json')).default
-      } else if (v === './templates/t2-two-v4-glFragColor.json') {
-        return (await import('./templates/t2-two-v4-glFragColor.json')).default
-      } else if (v === './templates/t3-textureloader.json') {
-        return (await import('./templates/t3-textureloader.json')).default
-      } else if (v === './templates/t4-waterball.json') {
-        return (await import('./templates/t4-waterball.json')).default
-      } else if (v === './templates/t5-audio-ball-amaze.json') {
-        return (await import('./templates/t5-audio-ball-amaze.json')).default
+      if (v === '../code-templates/t1-basic-fragment-vertex-shader.json') {
+        return (await import('../code-templates/t1-basic-fragment-vertex-shader.json')).default
+      } else if (v === '../code-templates/t2-two-v4-glFragColor.json') {
+        return (await import('../code-templates/t2-two-v4-glFragColor.json')).default
+      } else if (v === '../code-templates/t3-textureloader.json') {
+        return (await import('../code-templates/t3-textureloader.json')).default
+      } else if (v === '../code-templates/t4-waterball.json') {
+        return (await import('../code-templates/t4-waterball.json')).default
+      } else if (v === '../code-templates/t5-audio-ball-amaze.json') {
+        return (await import('../code-templates/t5-audio-ball-amaze.json')).default
       }
     },
     async addJSONTemplate (str) {
