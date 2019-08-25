@@ -75,15 +75,14 @@ export default {
       this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
     },
     setupSampler2D ({ config, win, uniforms, uni }) {
-      if (!textureMAP.has(uni.url) && !config.map) {
+      if (!textureMAP.has(uni.url)) {
         let texture = new THREE.TextureLoader().load(uni.url, (newTexture) => {
           let ww = newTexture.image.width
           let hh = newTexture.image.height
           let size = 22
           config.transparent = true
           this.mesh.geometry = new THREE.PlaneBufferGeometry(size / (hh / ww), size, 32, 32)
-          textureMAP.set(uni.url, uni.url)
-          config.map = texture
+
           this.$nextTick(() => {
             texture.needsUpdate = true
             this.$nextTick(() => {
@@ -91,18 +90,18 @@ export default {
             })
           })
         }, () => {
-
         }, () => {
         })
-
         config.map = texture
-        // uniforms[uni.name + uni._id] = {
-        //   value: texture
-        // }
-        config.transparent = false
+        textureMAP.set(uni.url, texture)
       } else {
-
+        config.map = textureMAP.get(uni.url)
       }
+      // uniforms[uni.name + uni._id] = {
+      //   value: texture
+      // }
+
+      config.transparent = false
     },
     makeMat () {
       let shader = this.shader = AGE.GEN.getCode({ wins: this.wins, connections: this.connections })
