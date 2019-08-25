@@ -6,9 +6,9 @@
 <script>
 import * as AGE from '../api/age'
 import _ from 'lodash'
-import * as Audio from '../media/mic-history.js'
+// import * as Audio from '../media/mic-history.js'
 
-let texutreCache = new Map()
+// let texutreCache = new Map()
 
 let THREE = {
   ...require('three'),
@@ -63,68 +63,68 @@ export default {
     }
   },
   methods: {
-    setupTimer ({ uniforms, uni }) {
-      uniforms[uni.name + uni._id] = {
-        value: window.performance.now() * 0.0001
-      }
-      let loop = () => {
-        this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
-        uniforms[uni.name + uni._id].value = window.performance.now() * 0.0001
-        // console.log(uniforms[uni.name + uni._id].value)
-      }
-      cancelAnimationFrame(this.rAFID[uni.name + uni._id] || 0)
-      this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
-    },
-    setupSampler2D ({ win, uniforms, uni }) {
-      if (!texutreCache.has(uni.url)) {
-        let texture = new THREE.TextureLoader().load(uni.url)
-        texutreCache.set(uni.url, texture)
-        uniforms[uni.name + uni._id] = {
-          value: texture
-        }
-      } else {
-        uniforms[uni.name + uni._id] = {
-          value: texutreCache.get(uni.url)
-        }
-      }
-    },
-    async setupResolution ({ win, uniforms, uni }) {
-      let update = async () => {
-        uniforms[uni.name + uni._id] = {
-          value: new THREE.Vector2(1024, 1024)
-        }
-        let dom = await AGE.UI.getDOM({ domID: this.preview.domID })
-        let rect = dom.getBoundingClientRect()
-        uniforms[uni.name + uni._id] = {
-          value: new THREE.Vector2(rect.width, rect.height)
-        }
-        this.mesh.material.needsUpdate = true
-        // console.log(JSON.stringify(uniforms[uni.name + uni._id].value))
-      }
-      window.addEventListener('resize', () => {
-        update()
-      })
-      window.addEventListener('ui-layout', () => {
-        update()
-      })
-      update()
-    },
-    setupAudioUniform ({ win, uniforms, uni }) {
-      uniforms[uni.name + uni._id] = {
-        value: null
-      }
-      let loop = () => {
-        this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
-        let api = Audio.APIs[uni._id]
-        if (api) {
-          uniforms[uni.name + uni._id].value = api.update().texture
-          this.mesh.material.needsUpdate = true
-        }
-        // console.log(uniforms[uni.name + uni._id].value)
-      }
-      cancelAnimationFrame(this.rAFID[uni.name + uni._id] || 0)
-      this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
-    },
+    // setupTimer ({ uniforms, uni }) {
+    //   uniforms[uni.name + uni._id] = {
+    //     value: window.performance.now() * 0.0001
+    //   }
+    //   let loop = () => {
+    //     this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
+    //     uniforms[uni.name + uni._id].value = window.performance.now() * 0.0001
+    //     // console.log(uniforms[uni.name + uni._id].value)
+    //   }
+    //   cancelAnimationFrame(this.rAFID[uni.name + uni._id] || 0)
+    //   this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
+    // },
+    // setupSampler2D ({ win, uniforms, uni }) {
+    //   if (!texutreCache.has(uni.url)) {
+    //     let texture = new THREE.TextureLoader().load(uni.url)
+    //     texutreCache.set(uni.url, texture)
+    //     uniforms[uni.name + uni._id] = {
+    //       value: texture
+    //     }
+    //   } else {
+    //     uniforms[uni.name + uni._id] = {
+    //       value: texutreCache.get(uni.url)
+    //     }
+    //   }
+    // },
+    // async setupResolution ({ win, uniforms, uni }) {
+    //   let update = async () => {
+    //     uniforms[uni.name + uni._id] = {
+    //       value: new THREE.Vector2(1024, 1024)
+    //     }
+    //     let dom = await AGE.UI.getDOM({ domID: this.preview.domID })
+    //     let rect = dom.getBoundingClientRect()
+    //     uniforms[uni.name + uni._id] = {
+    //       value: new THREE.Vector2(rect.width, rect.height)
+    //     }
+    //     this.mesh.material.needsUpdate = true
+    //     // console.log(JSON.stringify(uniforms[uni.name + uni._id].value))
+    //   }
+    //   window.addEventListener('resize', () => {
+    //     update()
+    //   })
+    //   window.addEventListener('ui-layout', () => {
+    //     update()
+    //   })
+    //   update()
+    // },
+    // setupAudioUniform ({ win, uniforms, uni }) {
+    //   uniforms[uni.name + uni._id] = {
+    //     value: null
+    //   }
+    //   let loop = () => {
+    //     this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
+    //     let api = Audio.APIs[uni._id]
+    //     if (api) {
+    //       uniforms[uni.name + uni._id].value = api.update().texture
+    //       this.mesh.material.needsUpdate = true
+    //     }
+    //     // console.log(uniforms[uni.name + uni._id].value)
+    //   }
+    //   cancelAnimationFrame(this.rAFID[uni.name + uni._id] || 0)
+    //   this.rAFID[uni.name + uni._id] = requestAnimationFrame(loop)
+    // },
     makeMat () {
       let shader = {}
       // let shader = this.shader = AGE.GEN.getCode({ wins: this.wins, connections: this.connections })
@@ -147,15 +147,27 @@ export default {
       let win = this.preview
       if (win.hasUniforms) {
         win.uniforms.forEach((uni) => {
-          if (uni.uniType === 'timer') {
-            this.setupTimer({ uniforms, uni })
-          } else if (uni.uniType === 'sampler2D') {
-            this.setupSampler2D({ win, uniforms, uni })
-          } else if (uni.uniType === 'resolution') {
-            this.setupResolution({ win, uniforms, uni })
-          } else if (uni.uniType === 'sampler2D-audio') {
-            this.setupAudioUniform({ win, uniforms, uni })
-          }
+          // if (uni.uniType === 'timer') {
+          //   this.setupTimer({ uniforms, uni })
+          // } else if (uni.uniType === 'sampler2D') {
+          //   this.setupSampler2D({ win, uniforms, uni })
+          // } else if (uni.uniType === 'resolution') {
+          //   this.setupResolution({ win, uniforms, uni })
+          // } else if (uni.uniType === 'sampler2D-audio') {
+          //   this.setupAudioUniform({ win, uniforms, uni })
+          // }
+          // if (uni.uniType === 'timer') {
+          //   AGE.Shader.setupTimer({ uniforms, uni, ctx: this })
+          // } else if (uni.uniType === 'sampler2D') {
+          //   AGE.Shader.setupSampler2D({ win, uniforms, uni, ctx: this })
+          // } else if (uni.uniType === 'resolution') {
+          //   AGE.Shader.setupResolution({ win, uniforms, uni, ctx: this })
+          // } else if (uni.uniType === 'sampler2D-audio') {
+          //   AGE.Shader.setupAudioUniform({ win, uniforms, uni, ctx: this })
+          // }
+
+          AGE.Shader.setupShaderMaterail({ win, uni, uniforms, ctx: this })
+
           shader = {
             vertexShader: `
               varying vec2 vUv;

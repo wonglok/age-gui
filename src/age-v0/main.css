@@ -96,6 +96,9 @@
 }
 .connectorsarea{
   background: rgb(255, 255, 255);
+  /* background-attachment: fixed;
+  background-color: rgb(255, 124, 168);
+  background-image: linear-gradient(rgb(255, 143, 178) 0%, rgb(167, 151, 255) 50%, rgb(0, 229, 255) 100%); */
 }
 .connectors-area{
   background-color: white;
@@ -207,6 +210,8 @@
   position: absolute;
   top: 0px;
   left: 0px;
+  z-index: 10000;
+  transform: translateZ(100px);
 }
 
 .age-addbox-close-plane {

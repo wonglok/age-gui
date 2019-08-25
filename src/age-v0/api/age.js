@@ -3,6 +3,7 @@
 export const BOX = require('./age-box.js')
 export const GEN = require('./age-gen.js')
 export const UI = require('./age-ui.js')
+export const Shader = require('./age-shader.js')
 
 /*
 ----------------------------------
