@@ -19,20 +19,27 @@
 
         <div class="age-addbox-menu-item">
           <p>
-            <strong>System</strong>
+            <strong>Base System</strong>
           </p>
           <button @click="adder('makeVertexRoot')">Vertex Root</button>
           <button @click="adder('makeFragmentRoot')">Fragment Root</button>
           <button @click="adder('makePreviwBox')">Preview Box</button>
-          <button @click="adder('makeTextureReader')">Texture Reader</button>
-          <button @click="adder('makeAttributPosition')">Position Attribute</button>
-          <button @click="adder('makeUniformResolution')">Resolution Uniform</button>
         </div>
         <div class="age-addbox-menu-item">
           <p>
-            <strong>System</strong>
+            <strong>Input System</strong>
           </p>
+          <button @click="adder('makeUniformTimer')">Uniform iTime</button>
+          <button @click="adder('makeUniformTexture')">Uniform iTexture</button>
+          <button @click="adder('makeTextureReader')">Texture Reader</button>
+          <button @click="adder('makeUniformResolution')">Resolution Uniform</button>
           <button @click="adder('makeVaryingV2UV')">UV Varying</button>
+        </div>
+        <div class="age-addbox-menu-item">
+          <p>
+            <strong>Varying System</strong>
+          </p>
+          <button @click="adder('makeAttributPosition')">Position Attribute</button>
           <button @click="adder('makeVaryingV3Noraml')">Normal Varying</button>
         </div>
 
@@ -108,8 +115,6 @@
           <p>
             <strong>Uniforms</strong>
           </p>
-          <button @click="adder('makeUniformTimer')">iTime</button>
-          <button @click="adder('makeUniformTexture')">Texture</button>
         </div>
 
       </div>
@@ -135,7 +140,7 @@ export default {
   },
   mounted () {
     let close = (evt) => {
-      if (evt.keyCode + '' === '127') {
+      if (evt.keyCode + '' === '27') {
         this.close()
         window.removeEventListener('keydown', close)
       }

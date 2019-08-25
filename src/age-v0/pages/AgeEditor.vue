@@ -104,6 +104,9 @@ export default {
     },
     setupDrag ({ dom }) {
       this.$refs.area.addEventListener('wheel', (evt) => {
+        if (this.overlay) {
+          return
+        }
         evt.preventDefault()
         this.offset.x += -evt.deltaX
         this.offset.y += -evt.deltaY

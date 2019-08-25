@@ -2,12 +2,12 @@
   <div class="full age-addbox-wrap scroller">
     <div class="age-addbox-close-plane full" @click="close()">
     </div>
-    <div class="age-addbox-content scroller">
+    <div class="age-addbox-content scroller" ref="scroller">
       <h1>
         Edit Module
       </h1>
       <p>
-        Resize
+        Resize Module Box
         <input type="checkbox" v-model="win.resize"  />
       </p>
         <!-- {
@@ -23,12 +23,11 @@
       }, -->
 
       <div v-if="win && win.type === 'custom-function'">
-        <p>
-          moduleID: {{ win._id }}
-        </p>
+        <div class="">
+        </div>
         <div :key="input._id" v-for="(input, idx) in win.inputs">
           <div>
-            Data Type:
+            Input Data Type:
             <select v-model="input.argType" @change="onChangeArgType({ input, value: $event.target.value })">
               <option value="float">Float</option>
               <option value="vec4">Vector4</option>
@@ -47,7 +46,13 @@
         </div>
         <button @click="addInput({ win })">Add Inputs</button>
         <!-- <textarea v-model="win.fnInner" cols="30" rows="10" @input="compile"></textarea> -->
+        <p>
+          Library
+        </p>
         <Brace style="height: 200px;" :mode="'glsl'" :getter="() => win.fnExt" :setter="(v) => { win.fnExt = v }"></Brace>
+        <p>
+          Function Body
+        </p>
         <Brace style="height: 200px;" :mode="'glsl'" :getter="() => win.fnInner" :setter="(v) => { win.fnInner = v }"></Brace>
       </div>
       <button @click="remove()">Remove This</button>
@@ -90,13 +95,17 @@ export default {
     }
   },
   mounted () {
+    // this.$refs['scroller'].addEventListener('scroller', (evt) => {
+    //   evt.stopPropagation()
+    // }, { passive: false })
     let close = (evt) => {
-      if (evt.keyCode === 127) {
+      if (evt.keyCode === 27) {
+        // console.log(evt)
         window.removeEventListener('keydown', close)
         this.close()
       }
     }
-    window.addEventListener('keydown', close)
+    window.addEventListener('keydown', close, { passive: false })
   },
   methods: {
     plot () {
@@ -129,6 +138,7 @@ export default {
     close () {
       this.compile()
       this.$parent.overlay = false
+      this.$forceUpdate()
       this.save()
     },
     remove () {
