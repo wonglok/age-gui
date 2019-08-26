@@ -4,20 +4,46 @@
     </div>
     <div class="age-addbox-content scroller">
       <h1>
-        Add Modules
+        Examples
       </h1>
       <div class="age-addbox-row">
         <div class="age-addbox-menu-item">
           <p>
-            <strong>Reset / Examples</strong>
+            <strong>Reset / Examples (Basic)</strong>
           </p>
           <button @click="addJSONTemplate('../code-templates/t1-basic-fragment-vertex-shader.json')">Basic Starter</button>
           <button @click="addJSONTemplate('../code-templates/t2-two-v4-glFragColor.json')">FragColor Mixer</button>
           <button @click="addJSONTemplate('../code-templates/t3-textureloader.json')">Texture Mixer</button>
           <button @click="addJSONTemplate('../code-templates/t4-waterball.json')">Water Ball</button>
+
+        </div>
+
+        <div class="age-addbox-menu-item">
+          <p>
+            <strong>Reset / Examples (GLSL Function)</strong>
+          </p>
+          <button @click="addJSONTemplate('../code-templates/t4-waterball.json')">Water Ball</button>
+        </div>
+
+        <div class="age-addbox-menu-item">
+          <p>
+            <strong>Reset / Examples (Mic)</strong>
+          </p>
           <button @click="addJSONTemplate('../code-templates/t5-audio-ball-amaze.json')">Space Microphone Ball Ball</button>
           <button @click="addJSONTemplate('../code-templates/t6-orb.json')">Mic + Magic Orb</button>
+        </div>
 
+      </div>
+      <h1>
+        Logic Modules
+      </h1>
+      <div class="age-addbox-row">
+        <div class="age-addbox-menu-item">
+          <p>
+            <strong>Functions</strong>
+          </p>
+          <button @click="adder('makeVertexFunction')">Vertex Function</button>
+          <button @click="adder('makeFragmentFunction')">Fragment Function</button>
         </div>
 
         <div class="age-addbox-menu-item">
@@ -31,21 +57,39 @@
 
         <div class="age-addbox-menu-item">
           <p>
-            <strong>Input System</strong>
+            <strong>Uniforms</strong>
           </p>
           <button @click="adder('makeUniformTimer')">Uniform iTime</button>
-          <button @click="adder('makeUniformTexture')">Uniform iTexture</button>
-          <button @click="adder('makeTextureReader')">Texture Reader</button>
-          <button @click="adder('makeUniformResolution')">Resolution Uniform</button>
-          <button @click="adder('makeVaryingV2UV')">UV Varying</button>
+          <button @click="adder('makeUniformResolution')">Uniform iResolution</button>
+
         </div>
 
         <div class="age-addbox-menu-item">
           <p>
-            <strong>Varying System</strong>
+            <strong>Texture</strong>
           </p>
-          <button @click="adder('makeAttributPosition')">Position Attribute</button>
-          <button @click="adder('makeVaryingV3Noraml')">Normal Varying</button>
+          <button @click="adder('makeUniformAudioHistory')">Uniform Mic Texture</button>
+          <button @click="adder('makeUniformTexture')">Uniform iTexture</button>
+          <button @click="adder('makeTextureReader')">Texture Reader</button>
+        </div>
+
+        <div class="age-addbox-menu-item">
+          <p>
+            <strong>Attributes and Vaaryings</strong>
+          </p>
+          <button @click="adder('makeAttributPosition')">Attribute Position </button>
+        </div>
+
+        <div class="age-addbox-menu-item">
+          <p>
+            <strong>Varying</strong>
+          </p>
+          <button @click="adder('makeVaryingV2UV')">UV Varying</button>
+          <button @click="adder('makeVaryingV3Noraml')">Varying Normal </button>
+
+          <button @click="adder('makeVaryingV4')">Varying 4</button>
+          <button @click="adder('makeVaryingV3')">Varying 3</button>
+          <button @click="adder('makeVaryingV2')">Varying 2</button>
         </div>
 
         <div class="age-addbox-menu-item">
@@ -77,50 +121,6 @@
           <button @click="adder('makeDuplicateV3')">Vector 3</button>
           <button @click="adder('makeDuplicateV2')">Vector 2</button>
           <button @click="adder('makeDuplicateFloat')">Float</button>
-        </div>
-
-        <!-- <div class="age-addbox-menu-item">
-          <p>
-            <strong>Spread</strong>
-          </p>
-          <button @click="adder('makeSpreadV4')">Vector 4</button>
-          <button @click="adder('makeSpreadV3')">Vector 3</button>
-          <button @click="adder('makeSpreadV2')">Vector 2</button>
-        </div> -->
-
-        <!--
-
-        <div class="age-addbox-menu-item">
-          <p>
-            <strong>Merge</strong>
-          </p>
-          <button @click="adder('makeMergeV4')">Vector 4</button>
-          <button @click="adder('makeMergeV3')">Vector 3</button>
-          <button @click="adder('makeMergeV2')">Vector 2</button>
-        </div> -->
-
-        <div class="age-addbox-menu-item">
-          <p>
-            <strong>Function</strong>
-          </p>
-          <button @click="adder('makeVertexFunction')">Vertex Function</button>
-          <button @click="adder('makeFragmentFunction')">Fragment Function</button>
-        </div>
-
-        <div class="age-addbox-menu-item">
-          <p>
-            <strong>Varying</strong>
-          </p>
-          <button @click="adder('makeVaryingV4')">Varying 4</button>
-          <button @click="adder('makeVaryingV3')">Varying 3</button>
-          <button @click="adder('makeVaryingV2')">Varying 2</button>
-        </div>
-
-        <div class="age-addbox-menu-item">
-          <p>
-            <strong>Uniforms</strong>
-          </p>
-          <button @click="adder('makeUniformAudioHistory')">Mic Audio Texture</button>
         </div>
 
       </div>

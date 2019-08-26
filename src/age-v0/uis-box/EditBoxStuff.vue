@@ -10,7 +10,7 @@
         Resize Module Box
         <input type="checkbox" v-model="win.resize"  />
       </p>
-        <!-- {
+      <!-- {
         "shader": "vertexShader",
         "argType": "vec4",
         "arg": "vec4_a",
