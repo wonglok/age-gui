@@ -23,11 +23,25 @@
       }, -->
 
       <div v-if="win && win.type === 'custom-function'">
-        <div class="">
+        <div :key="output._id" v-for="(output) in [win.outputs[0]]">
+          Return Value / Output Data Type:
+          <select v-model="output.argType" @change="onChangeArgType({ output, value: $event.target.value })">
+            <option value="float">Float</option>
+            <option value="vec4">Vector4</option>
+            <option value="vec3">Vector3</option>
+            <option value="vec2">Vector2</option>
+          </select>
+
+          Argument Name:
+          <input type="text" v-model="output.arg" @output="onChangeArgName({ output, value: output.arg })">
+
+          <!-- Defaults:
+          <input type="text" v-model="output.defaults"> -->
         </div>
+
         <div :key="input._id" v-for="(input, idx) in win.inputs">
           <div>
-            Input Data Type:
+            Arguemnts / Input Data Type:
             <select v-model="input.argType" @change="onChangeArgType({ input, value: $event.target.value })">
               <option value="float">Float</option>
               <option value="vec4">Vector4</option>
@@ -44,6 +58,7 @@
             <button @click="removeInput({ input, idx, inputs: win.inputs })">Remove</button>
           </div>
         </div>
+
         <button @click="addInput({ win })">Add Inputs</button>
         <!-- <textarea v-model="win.fnInner" cols="30" rows="10" @input="compile"></textarea> -->
         <p>
