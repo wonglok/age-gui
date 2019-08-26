@@ -1,5 +1,5 @@
 <template>
-  <div class="full age-layers">
+  <div class="full age-layers preview-area">
     <BoxesEngine :scenes="scenes" class="full age-layer" bloom="bubbles" @ready="(v) => { engine = v; }">
     </BoxesEngine>
 

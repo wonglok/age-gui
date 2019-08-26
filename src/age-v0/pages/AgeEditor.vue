@@ -1,9 +1,9 @@
 <template>
   <div class="age-editor full overflowhidden" ref="area">
     <ConnectionLines :offset="offset" ref="lines" @dom="setupDrag" class="age-layer" :connections="connections" :connectorDOMs="connectorDOMs"></ConnectionLines>
-    <PreviewArea class="age-layer" :wins="wins" :previewDOMs="previewDOMs" :connections="connections"></PreviewArea>
     <div ref="dragArea" class="age-drag-area age-layer full"></div>
     <Box @gear="onGear({ win, wins, connections })" :offset="offset" @drop="onDropConnection" @clicker="onClickConnector" class="age-layer" :connections="connections" :previewDOMs="previewDOMs" :connectorDOMs="connectorDOMs" :wins="wins" v-for="(win) in wins" :key="win._id" :win="win"></Box>
+    <PreviewArea class="age-layer noclick" :wins="wins" :previewDOMs="previewDOMs" :connections="connections"></PreviewArea>
     <div class="posabs top-right">
       <button @click="overlay = 'add-module'">+</button>
       <button @click="goHome()">Home</button>

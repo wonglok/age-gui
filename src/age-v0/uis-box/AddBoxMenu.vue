@@ -16,6 +16,7 @@
           <button @click="addJSONTemplate('../code-templates/t3-textureloader.json')">Texture Mixer</button>
           <button @click="addJSONTemplate('../code-templates/t4-waterball.json')">Water Ball</button>
           <button @click="addJSONTemplate('../code-templates/t5-audio-ball-amaze.json')">Space Microphone Ball Ball</button>
+          <button @click="addJSONTemplate('../code-templates/t6-orb.json')">Mic + Magic Orb</button>
 
         </div>
 
@@ -181,6 +182,8 @@ export default {
         return (await import('../code-templates/t4-waterball.json')).default
       } else if (v === '../code-templates/t5-audio-ball-amaze.json') {
         return (await import('../code-templates/t5-audio-ball-amaze.json')).default
+      } else if (v === '../code-templates/t6-orb.json') {
+        return (await import('../code-templates/t6-orb.json')).default
       }
     },
     async addJSONTemplate (str) {
