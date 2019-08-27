@@ -1,3 +1,23 @@
+<!--
+
+/**
+ * Copyright 2019 WONG LOK
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+ */
+ -->
+
 <template>
   <div class="full age-addbox-wrap scroller">
     <div class="age-addbox-close-plane full" @click="close()">
@@ -10,13 +30,14 @@
         Resize Module Box
         <input type="checkbox" v-model="win.resize"  />
       </p>
+      <div class="edit-mod-taller"></div>
 
       <div v-if="win && win.type === 'custom-function'">
         <h2>
           Function Output
         </h2>
         <div :key="output._id" v-for="(output) in win.outputs">
-          Return Value / Output Data Type:
+          Output Data Type:
 
           <select v-model="output.argType" @change="onChangeArgType({ output, value: $event.target.value })">
             <option value="float">Float</option>
@@ -38,7 +59,7 @@
 
         <div :key="input._id" v-for="(input, idx) in win.inputs">
           <div>
-            Arguemnts / Input Data Type:
+            Input Data Type:
             <select v-model="input.argType" @change="onChangeArgType({ input, value: $event.target.value })">
               <option value="float">Float</option>
               <option value="vec4">Vector4</option>

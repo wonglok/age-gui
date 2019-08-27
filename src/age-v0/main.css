@@ -299,3 +299,19 @@
 .age-drag-area{
   cursor: grab;
 }
+
+.edit-preview-box{
+  position: absolute;
+  top: 70px;
+  right: 70px;
+
+  width: 250px;
+  height: 250px;
+  z-index: 300;
+  outline: #ccc solid 1px;
+}
+
+
+.edit-mod-taller{
+  height: 80px;
+}

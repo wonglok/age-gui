@@ -14,6 +14,7 @@
     </div>
     <AddBoxMenu :offset="offset" @save="onSave()" @connections="connections = $event" @wins="wins = $event" :connections="connections" :wins="wins" class="age-layer" v-if="overlay === 'add-module'"></AddBoxMenu>
     <EditBoxStuff @save="onSave()" :winID="currentWinID" :connections="connections" :wins="wins" class="age-layer" v-if="overlay === 'fix-module'"></EditBoxStuff>
+    <SinglePreviewArea :style="getEditPreviewStyle()" :wins="wins" :connections="connections"></SinglePreviewArea>
   </div>
 </template>
 
@@ -24,6 +25,7 @@ import copy from 'copy-to-clipboard'
 
 export default {
   components: {
+    SinglePreviewArea: require('../uis-gl/SinglePreviewArea.vue').default,
     PreviewArea: require('../uis-gl/PreviewArea.vue').default,
     AddBoxMenu: require('../uis-box/AddBoxMenu.vue').default,
     EditBoxStuff: require('../uis-box/EditBoxStuff.vue').default,
@@ -80,6 +82,19 @@ export default {
     })
   },
   methods: {
+    getEditPreviewStyle () {
+      let show = this.overlay === 'fix-module'
+      if (show) {
+        return {
+          opacity: 1
+        }
+      } else {
+        return {
+          opacity: 0,
+          pointerEvents: 'none'
+        }
+      }
+    },
     trySave: _.debounce(function () {
       this.save()
     }, 10),

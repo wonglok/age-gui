@@ -1,3 +1,19 @@
+/**
+ * Copyright 2019 WONG LOK
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+ */
 import { getID, NS } from './age'
 
 export const getIO = (args) => {
@@ -66,6 +82,43 @@ export const makeAttributPosition = ({ wins }) => {
 
   win.fnInner = `
   return position;
+`
+  // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
+
+  return win
+}
+
+export const makeAttributNormal = ({ wins }) => {
+  let win = getWin()
+  win.title = 'Vertex Shader Normal Attbitue'
+  win.type = 'red'
+  win.shaderType = NS.SHADER_TYPES.VERTEX
+  // win.previewType = NS.PREVIEW_TYPES.VERTEX
+  win.preview = false
+  // win.boxLogicType = 'module'
+
+  win.inputs.push(
+    // getIO({ shader: win.shaderType, argType: 'vec4', arg: `newPos`, defaults: NS.DEFAULT_VALUES.gl_Position, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.VEC4, label: 'gl_Position' }),
+    // getIO({ shader: win.shaderType, argType: 'float', arg: `newPtSize`, defaults: NS.DEFAULT_VALUES.gl_PointSize, boxID: win._id, io: NS.IO_TYPES.INPUT, type: NS.DATA_TYPES.FLOAT, label: 'gl_PointSize' })
+  )
+
+  win.outputs.push(
+    getIO({ shader: win.shaderType, argType: 'vec4', arg: `newPos`, defaults: NS.DEFAULT_VALUES.VEC3, boxID: win._id, io: NS.IO_TYPES.OUTPUT, type: NS.DATA_TYPES.VEC3, label: 'position' })
+  )
+
+  win.isRoot = true
+  wins.push(win)
+
+  win.pos.w = 275
+  win.pos.h = 150
+  // win.pos.y = (wins.length - 1) * (win.pos.h + 10 + 200 + 120)
+
+  win.fnReturnType = 'vec3'
+  win.fnID = getID()
+  win.fnName = 'vertex_attribute'
+
+  win.fnInner = `
+  return normal;
 `
   // win.pos.x = (wins.length - 1) * (win.pos.w + 10)
 

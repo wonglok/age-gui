@@ -74,7 +74,7 @@ export default {
         camPosition: {
           'x': 0,
           'y': 0,
-          'z': 500
+          'z': 20
         },
         bloomModes: {
           // 0.112 1.7297 0.6778
@@ -154,38 +154,38 @@ export default {
     // setupAudio () {
     //   this.audio = AuAu.setup()
     // },
-    // setupControl () {
-    //   var control = new THREE.OrbitControls(this.camera, this.$refs['mounter'])
-    //   this.control = control
-    //   control.enableDamping = true
-    //   control.enableKeys = false
-    // },
     setupControl () {
-      // var control = new THREE.OrbitControls(this.camera, this.toucher)
-      var control = new THREE.MapControls(this.camera, this.toucher || this.$refs['mounter'])
-      // control.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
-      control.enableDamping = true // an animation loop is required when either damping or auto-rotation are enabled
-      control.dampingFactor = 0.65
-      control.screenSpacePanning = true
-      control.minDistance = 1
-      control.enableRotate = false
-      control.keys.UP = 40
-      control.keys.BOTTOM = 38
-      control.keys.LEFT = 39
-      control.keys.RIGHT = 37
-
-      // control.maxDistance = 500
-      // control.maxPolarAngle = Math.PI / 2
-
-      // control.keyPanSpeed = 20.0
-      // // control.enableRotate = fals
-      // control.enableDamping = true
-      // control.dampingFactor = 1.3
-      // control.enableKeys = true
-      // control.enablePan = true
-
+      var control = new THREE.OrbitControls(this.camera, this.$refs['mounter'])
       this.control = control
+      control.enableDamping = true
+      control.enableKeys = false
     },
+    // setupControl () {
+    //   // var control = new THREE.OrbitControls(this.camera, this.toucher)
+    //   var control = new THREE.MapControls(this.camera, this.toucher || this.$refs['mounter'])
+    //   // control.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
+    //   control.enableDamping = true // an animation loop is required when either damping or auto-rotation are enabled
+    //   control.dampingFactor = 0.65
+    //   control.screenSpacePanning = true
+    //   control.minDistance = 1
+    //   control.enableRotate = false
+    //   control.keys.UP = 40
+    //   control.keys.BOTTOM = 38
+    //   control.keys.LEFT = 39
+    //   control.keys.RIGHT = 37
+
+    //   // control.maxDistance = 500
+    //   // control.maxPolarAngle = Math.PI / 2
+
+    //   // control.keyPanSpeed = 20.0
+    //   // // control.enableRotate = fals
+    //   // control.enableDamping = true
+    //   // control.dampingFactor = 1.3
+    //   // control.enableKeys = true
+    //   // control.enablePan = true
+
+    //   this.control = control
+    // },
     setupRenderer () {
       this.renderer = new THREE.WebGLRenderer({
         antialias: true,
@@ -269,7 +269,8 @@ export default {
       this.rAFID = window.requestAnimationFrame(rAF)
     },
     render () {
-      let { scene, camera, renderer, composer, mouse, rect, control } = this
+      // let { scene, camera, renderer, composer, mouse, rect, control } = this
+      let { scene, camera, renderer, mouse, rect, control } = this
       if (control) {
         control.update()
       }
@@ -280,11 +281,12 @@ export default {
 
       this.execStack.forEach(e => e({ mouse, rect }))
 
-      if (scene && camera && renderer && composer) {
-        composer.render()
-      } else if (scene && camera && renderer) {
-        renderer.render(scene, camera)
-      }
+      renderer.render(scene, camera)
+      // if (scene && camera && renderer && composer) {
+      //   composer.render()
+      // } else if (scene && camera && renderer) {
+      //   renderer.render(scene, camera)
+      // }
     }
   }
 }
