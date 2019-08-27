@@ -24,12 +24,12 @@ limitations under the License.
     </div>
     <div class="age-addbox-content scroller">
       <h1>
-        Examples
+        Reset / Examples
       </h1>
       <div class="age-addbox-row">
         <div class="age-addbox-menu-item">
           <p>
-            <strong>Reset / Examples (Basic)</strong>
+            <strong>Examples (Basic)</strong>
           </p>
           <button @click="addJSONTemplate('../code-templates/t1-basic-fragment-vertex-shader.json')">Basic Starter</button>
           <button @click="addJSONTemplate('../code-templates/t2-two-v4-glFragColor.json')">FragColor Mixer</button>
@@ -37,16 +37,16 @@ limitations under the License.
         </div>
         <div class="age-addbox-menu-item">
           <p>
-            <strong>Reset / Examples (GLSL Function)</strong>
+            <strong>Examples (GLSL Function)</strong>
           </p>
           <button @click="addJSONTemplate('../code-templates/t4-waterball.json')">Water Ball</button>
         </div>
         <div class="age-addbox-menu-item">
           <p>
-            <strong>Reset / Examples (Mic)</strong>
+            <strong>Examples (Mic)</strong>
           </p>
-          <button @click="addJSONTemplate('../code-templates/t5-audio-ball-amaze.json')">Space Microphone Ball Ball</button>
-          <button @click="addJSONTemplate('../code-templates/t6-orb.json')">Mic + Magic Orb</button>
+          <button @click="addJSONTemplate('../code-templates/t5-audio-ball-amaze.json')">Space Ball</button>
+          <button @click="addJSONTemplate('../code-templates/t6-orb.json')">Magic Orb</button>
         </div>
       </div>
       <h1>

@@ -5,18 +5,18 @@
     <div class="full-menu-item">
       Home
     </div>
-    <div class="full-menu-item">
+    <!-- <div class="full-menu-item">
       Get Started
-    </div>
+    </div> -->
     <div class="full-menu-item">
       Github
     </div>
-    <div class="full-menu-item">
+    <!-- <div class="full-menu-item">
       Login
     </div>
     <div class="full-menu-item">
       Sign Up
-    </div>
+    </div> -->
     <div class="posabs full-menu-close">
       <img src="../icons/close.svg" @click="$emit('overlay', false)" alt="">
     </div>

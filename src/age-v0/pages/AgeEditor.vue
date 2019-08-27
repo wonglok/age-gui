@@ -14,7 +14,7 @@
     </div>
     <AddBoxMenu :offset="offset" @save="onSave()" @connections="connections = $event" @wins="wins = $event" :connections="connections" :wins="wins" class="age-layer" v-if="overlay === 'add-module'"></AddBoxMenu>
     <EditBoxStuff @save="onSave()" :winID="currentWinID" :connections="connections" :wins="wins" class="age-layer" v-if="overlay === 'fix-module'"></EditBoxStuff>
-    <SinglePreviewArea :style="getEditPreviewStyle()" :wins="wins" :connections="connections"></SinglePreviewArea>
+    <SinglePreviewArea :running="overlay === 'fix-module'" :style="getEditPreviewStyle()" :wins="wins" :connections="connections"></SinglePreviewArea>
   </div>
 </template>
 

@@ -15,6 +15,7 @@
 }
 
 .nav-top-item{
+  color: black;
   height: 56px;
   display: inline-flex;
   align-items: center;
@@ -314,4 +315,24 @@
 
 .edit-mod-taller{
   height: 80px;
+}
+
+.linker,
+.linker:active,
+.linker:visited{
+  text-decoration: none;
+}
+
+.hero-btn{
+  cursor: pointer;
+  font-size: 25px;
+  font-weight: bold;
+  border: white solid 1px;
+  display: inline-block;
+  padding: 20px 40px;
+  width: 220px;
+}
+
+.hero-btn:hover{
+  background-color: rgba(255,255,255,0.1);
 }

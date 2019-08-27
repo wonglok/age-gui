@@ -38,6 +38,9 @@ let THREE = {
 
 export default {
   props: {
+    running: {
+      default: true
+    },
     bloom: {
       default: 'default'
     },
@@ -269,6 +272,9 @@ export default {
       this.rAFID = window.requestAnimationFrame(rAF)
     },
     render () {
+      if (!this.running) {
+        return
+      }
       // let { scene, camera, renderer, composer, mouse, rect, control } = this
       let { scene, camera, renderer, mouse, rect, control } = this
       if (control) {

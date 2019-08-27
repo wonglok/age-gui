@@ -1,6 +1,6 @@
 <template>
   <div class="edit-preview-box">
-    <Engine class="full" @ready="engine = $event"></Engine>
+    <Engine class="full" :running="running" @ready="engine = $event"></Engine>
     <SingleShaderPreview v-if="engine" :engine="engine" :wins="wins" :connections="connections"></SingleShaderPreview>
   </div>
 </template>
@@ -8,6 +8,9 @@
 <script>
 export default {
   props: {
+    running: {
+      default: true
+    },
     wins: {},
     connections: {}
   },
