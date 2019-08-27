@@ -10,21 +10,14 @@
         Resize Module Box
         <input type="checkbox" v-model="win.resize"  />
       </p>
-      <!-- {
-        "shader": "vertexShader",
-        "argType": "vec4",
-        "arg": "vec4_a",
-        "defaults": "vec4(0.0, 0.0, 0.0, 0.0)",
-        "boxID": "_87839477_",
-        "io": "input",
-        "type": "vec4",
-        "label": "vec4",
-        "_id": "_34182198_"
-      }, -->
 
       <div v-if="win && win.type === 'custom-function'">
-        <div :key="output._id" v-for="(output) in [win.outputs[0]]">
+        <h2>
+          Function Output
+        </h2>
+        <div :key="output._id" v-for="(output) in win.outputs">
           Return Value / Output Data Type:
+
           <select v-model="output.argType" @change="onChangeArgType({ output, value: $event.target.value })">
             <option value="float">Float</option>
             <option value="vec4">Vector4</option>
@@ -38,6 +31,10 @@
           <!-- Defaults:
           <input type="text" v-model="output.defaults"> -->
         </div>
+
+        <h2>
+          Function Input
+        </h2>
 
         <div :key="input._id" v-for="(input, idx) in win.inputs">
           <div>

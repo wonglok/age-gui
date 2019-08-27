@@ -107,6 +107,9 @@ body, html {
   box-sizing: border-box;
 }
 
+.w100{
+  width: 100%;
+}
 .max100{
   max-width: 100%;
 }

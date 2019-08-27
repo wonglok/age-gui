@@ -14,17 +14,13 @@
           <button @click="addJSONTemplate('../code-templates/t1-basic-fragment-vertex-shader.json')">Basic Starter</button>
           <button @click="addJSONTemplate('../code-templates/t2-two-v4-glFragColor.json')">FragColor Mixer</button>
           <button @click="addJSONTemplate('../code-templates/t3-textureloader.json')">Texture Mixer</button>
-          <button @click="addJSONTemplate('../code-templates/t4-waterball.json')">Water Ball</button>
-
         </div>
-
         <div class="age-addbox-menu-item">
           <p>
             <strong>Reset / Examples (GLSL Function)</strong>
           </p>
           <button @click="addJSONTemplate('../code-templates/t4-waterball.json')">Water Ball</button>
         </div>
-
         <div class="age-addbox-menu-item">
           <p>
             <strong>Reset / Examples (Mic)</strong>
@@ -32,7 +28,6 @@
           <button @click="addJSONTemplate('../code-templates/t5-audio-ball-amaze.json')">Space Microphone Ball Ball</button>
           <button @click="addJSONTemplate('../code-templates/t6-orb.json')">Mic + Magic Orb</button>
         </div>
-
       </div>
       <h1>
         Logic Modules

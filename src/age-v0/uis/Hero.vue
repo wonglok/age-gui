@@ -5,11 +5,14 @@
         Graphics Code (GLSL) is hard to guess.
       </h1>
       <h2>
-        <router-link to="/v0/age">We make it more Visual.</router-link>
+        We make it more Visual.
       </h2>
+      <h3>
+        <router-link to="/v0/age">Try Out</router-link>
+      </h3>
     </div>
     <div>
-      <img class="max100" src="../img/demo-layout.svg" alt="">
+      <img class="max100 w100" src="../img/demo-layout.svg" alt="">
     </div>
   </div>
 </template>
