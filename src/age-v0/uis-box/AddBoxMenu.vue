@@ -203,7 +203,7 @@ export default {
       }
     },
     async addJSONTemplate (str) {
-      if (window.prompt(`type "reset" to reset`)) {
+      if (window.prompt(`type "reset" to reset`).toLowerCase() === 'reset') {
         let { wins, connections } = await this.loadJSON(str)
         console.log(wins, connections)
         this.$emit('wins', [])

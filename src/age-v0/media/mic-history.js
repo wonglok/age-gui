@@ -19,14 +19,14 @@ import * as THREE from 'three'
 
 export const setup = () => {
   var api = {}
-  var fftSize = 2048 // up to 2048 with pow2
+  var fftSize = 128 // up to 2048 with pow2
   var listener = new THREE.AudioListener()
 
   var analyser = null
   var texture = null
   var sound = null
   var dataPerScan = fftSize / 2.0
-  var maxHistory = 60 * 5
+  var maxHistory = 60 * 1.5
   var savedBits = new Uint8Array(new Array(dataPerScan * maxHistory))
   // var bitsArr = new Array(dataPerScan * maxHistory * 3)
   var historyArr = [
