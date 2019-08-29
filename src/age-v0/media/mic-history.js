@@ -26,7 +26,7 @@ export const setup = () => {
   var texture = null
   var sound = null
   var dataPerScan = fftSize / 2.0
-  var maxHistory = 60 * 1.5
+  var maxHistory = 60 * 5
   var savedBits = new Uint8Array(new Array(dataPerScan * maxHistory))
   // var bitsArr = new Array(dataPerScan * maxHistory * 3)
   var historyArr = [
