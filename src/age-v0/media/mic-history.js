@@ -19,7 +19,7 @@ import * as THREE from 'three'
 
 export const setup = () => {
   var api = {}
-  var fftSize = 128 // up to 2048 with pow2
+  var fftSize = 512 // up to 2048 with pow2
   var listener = new THREE.AudioListener()
 
   var analyser = null
