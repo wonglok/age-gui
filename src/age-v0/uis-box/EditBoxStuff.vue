@@ -36,6 +36,7 @@ limitations under the License.
         <h2>
           Function Output
         </h2>
+
         <div :key="output._id" v-for="(output) in win.outputs">
           Output Data Type:
 
@@ -88,7 +89,7 @@ limitations under the License.
         </p>
         <Brace style="height: 200px;" :mode="'glsl'" :getter="() => win.fnInner" :setter="(v) => { win.fnInner = v }"></Brace>
       </div>
-      <button @click="remove()">Remove This</button>
+      <button @click="removeWin({ win })">Remove This</button>
       <div>
         <p>JSON</p>
         <pre>{{ win }}</pre>
@@ -174,15 +175,24 @@ export default {
       this.$forceUpdate()
       this.save()
     },
-    remove () {
-      this.win.inputs.forEach((conn) => {
+    remove ({ win }) {
+      win.inputs.forEach((conn) => {
         this.$parent.onClickConnector(conn)
       })
-      this.win.outputs.forEach((conn) => {
+      win.outputs.forEach((conn) => {
         this.$parent.onClickConnector(conn)
       })
-      this.wins.splice(this.wins.findIndex(w => w._id === this.winID), 1)
+      this.wins.splice(this.wins.findIndex(w => w._id === win._id), 1)
       this.$root.$forceUpdate()
+    },
+    removeWin ({ win }) {
+      this.remove({ win })
+
+      if (this.win.alsoRemove) {
+        let anotherWinID = this.win.alsoRemove
+        let anotherWin = this.wins.find(w => w._id === anotherWinID)
+        this.remove({ win: anotherWin })
+      }
       this.close()
     }
   }

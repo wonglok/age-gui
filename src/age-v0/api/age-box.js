@@ -1387,10 +1387,14 @@ export const makeVaryingV4 = ({ wins }) => {
 
     return win
   }
+  let vertex = vertexWindow()
+  let fragment = fragmentWindow()
+  vertex.alsoRemove = fragment._id
+  fragment.alsoRemove = vertex._id
   return {
     hasBoth: true,
-    vertex: vertexWindow(),
-    fragment: fragmentWindow()
+    vertex,
+    fragment
   }
 }
 
@@ -1474,10 +1478,14 @@ export const makeVaryingV3 = ({ wins }) => {
 
     return win
   }
+  let vertex = vertexWindow()
+  let fragment = fragmentWindow()
+  vertex.alsoRemove = fragment._id
+  fragment.alsoRemove = vertex._id
   return {
     hasBoth: true,
-    vertex: vertexWindow(),
-    fragment: fragmentWindow()
+    vertex,
+    fragment
   }
 }
 
@@ -1561,10 +1569,14 @@ export const makeVaryingV2 = ({ wins }) => {
     return win
   }
 
+  let vertex = vertexWindow()
+  let fragment = fragmentWindow()
+  vertex.alsoRemove = fragment._id
+  fragment.alsoRemove = vertex._id
   return {
     hasBoth: true,
-    vertex: vertexWindow(),
-    fragment: fragmentWindow()
+    vertex,
+    fragment
   }
 }
 
@@ -1651,10 +1663,14 @@ export const makeVaryingV2UV = ({ wins }) => {
     return win
   }
 
+  let vertex = vertexWindow()
+  let fragment = fragmentWindow()
+  vertex.alsoRemove = fragment._id
+  fragment.alsoRemove = vertex._id
   return {
     hasBoth: true,
-    vertex: vertexWindow(),
-    fragment: fragmentWindow()
+    vertex,
+    fragment
   }
 }
 
@@ -1741,10 +1757,14 @@ export const makeVaryingV3Noraml = ({ wins }) => {
     return win
   }
 
+  let vertex = vertexWindow()
+  let fragment = fragmentWindow()
+  vertex.alsoRemove = fragment._id
+  fragment.alsoRemove = vertex._id
   return {
     hasBoth: true,
-    vertex: vertexWindow(),
-    fragment: fragmentWindow()
+    vertex,
+    fragment
   }
 }
 
