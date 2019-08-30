@@ -99,8 +99,8 @@
       "order": 0,
       "preview": true,
       "pos": {
-        "x": 1018,
-        "y": 464,
+        "x": 950,
+        "y": 466,
         "w": 365,
         "h": 410,
         "s": 1
@@ -280,7 +280,7 @@
       "preview": false,
       "pos": {
         "x": 525,
-        "y": 89,
+        "y": 88,
         "w": 275,
         "h": 88,
         "s": 1
@@ -405,7 +405,7 @@
       "fnReturnType": "vec4",
       "fnID": "_71333649_",
       "fnName": "fn_vec4",
-      "fnInner": "\nvec4 water = diffuse * waterwaves(gl_FragCoord.xy * (iNormal.xy + iNormal.zz), vec2(2048.0), iTime * 25.0);\n\nreturn water;\n",
+      "fnInner": "\nvec4 water = waterwaves(gl_FragCoord.xy * (iNormal.xy + iNormal.zz), vec2(2048.0), iTime * 25.0);\n\nreturn water * 0.5 + water * diffuse * 0.5;\n",
       "fnExt": "// Found this on GLSL sandbox. I really liked it, changed a few things and made it tileable.\n// :)\n// by David Hoskins.\n\n\n// Water turbulence effect by joltz0r 2013-07-04, improved 2013-07-07\n\n\n// Redefine below to see the tiling...\n//#define SHOW_TILING\n\n#define TAU 6.28318530718  \n#define MAX_ITER 35\n\nvec4 waterwaves( in vec2 fragCoord, in vec2 iResolution, in float iTime)\n{\n  float time = iTime * .5+23.0;\n    // uv should be the 0-1 uv of texture...\n  vec2 uv = fragCoord.xy / iResolution.xy;\n\n#ifdef SHOW_TILING\n  vec2 p = mod(uv*TAU*2.0, TAU)-250.0;\n#else\n    vec2 p = mod(uv*TAU, TAU)-250.0;\n#endif\n  vec2 i = vec2(p);\n  float c = 1.0;\n  float inten = .005;\n\n  for (int n = 0; n < MAX_ITER; n++)\n  {\n    float t = time * (1.0 - (3.5 / float(n+1)));\n    i = p + vec2(cos(t - i.x) + sin(t + i.y), sin(t - i.y) + cos(t + i.x));\n    c += 1.0/length(vec2(p.x / (sin(i.x+t)/inten),p.y / (cos(i.y+t)/inten)));\n  }\n  c /= float(MAX_ITER);\n  c = 1.17-pow(c, 1.4);\n  vec3 colour = vec3(pow(abs(c), 8.0));\n    colour = clamp(colour + vec3(0.0, 0.35, 0.5), 0.0, 1.0);\n\n\n  #ifdef SHOW_TILING\n  // Flash tile borders...\n  vec2 pixel = 2.0 / iResolution.xy;\n  uv *= 2.0;\n\n  float f = floor(mod(iTime*.5, 2.0)); \t// Flash value.\n  vec2 first = step(pixel, uv) * f;\t\t   \t// Rule out first screen pixels and flash.\n  uv  = step(fract(uv), pixel);\t\t\t\t// Add one line of pixels per tile.\n  colour = mix(colour, vec3(1.0, 1.0, 0.0), (uv.x + uv.y) * first.x * first.y); // Yellow line\n\n  #endif\n  return vec4(colour, 1.0);\n}"
     },
     {

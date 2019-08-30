@@ -193,6 +193,7 @@ export default {
         let anotherWin = this.wins.find(w => w._id === anotherWinID)
         this.remove({ win: anotherWin })
       }
+
       this.close()
     }
   }
