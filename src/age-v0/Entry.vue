@@ -4,7 +4,12 @@
   </div>
 </template>
 
+<script>
+import './util.css'
+import './main.css'
+export default {
+}
+</script>
+
 <style>
-@import url('./util.css');
-@import url('./main.css');
 </style>

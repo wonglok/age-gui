@@ -3,8 +3,8 @@
     <div class="padbox space-between">
       <div>
         <rotuer-link tag="div" to="/" class="nav-top-item click">Assisted Graphics Engineering</rotuer-link>
-        <a href="https://wonglok.com" target="_blank" class="linker nav-top-item click">by Lok Lok</a>
-        <a href="https://instagram.com/wonglok831" target="_blank" class="linker nav-top-item click">IG.</a>
+        <a href="https://instagram.com/wonglok831" target="_blank" class="linker nav-top-item click">by Lok Lok</a>
+        <a href="https://instagram.com/effectnode" target="_blank" class="linker nav-top-item click">IG.</a>
       </div>
 
       <div>
